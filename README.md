@@ -3,13 +3,13 @@ TCC de IBN.
 
 ## KPIs
 Métricas para medir o assurance:
-- Delay
-- Throughput
-- Link Utilisation
-- Packet Loss
-- Packet Size
-- No of Failures
-- Comp. Res. Utilisation
+- [X] Delay
+- [X] Throughput
+- [X] Link Utilisation
+- [ ] Packet Loss
+- [ ] Packet Size
+- [X] No of Failures
+- [X] Comp. Res. Utilisation
 
 ## Exemplo de Intent (JSON)
 ```json
