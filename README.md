@@ -1,6 +1,11 @@
 # tcc-ibn
 TCC de IBN.
 
+# Como Rodar o Programa
+```bash
+sudo -E python3 run.py
+```
+
 ## KPIs
 Métricas para medir o assurance:
 - [X] Delay
