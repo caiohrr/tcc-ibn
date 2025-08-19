@@ -1,10 +1,17 @@
 from Validator import Validator
 from Executer import Executer
+from Viewer import Viewer
 
-topo = Validator('Topology.json')
+# Load and validate topology
+topo_input = input('Topology: ')
+# print(f'{topo_input}.json')
+topo = Validator(f'{topo_input}.json')
 assert topo.STATUS == 0, f"Invalid topology (STATUS={topo.STATUS})"
 
-exe = Executer(topo)
-exe.executeTopology()   # opens the Mininet CLI
-# TIP: after you exit the CLI, you should stop/cleanup (see note below)
+# Launch viewer
+viewer = Viewer(topo.MNHOSTS, topo.MNSWITCHES, topo.MNOVSES, topo.MNCONTROLLER, topo.CONNECTIONS)
+viewer.view()
 
+# If you still want to execute it in Mininet after closing the viewer:
+exe = Executer(topo)
+exe.executeTopology()

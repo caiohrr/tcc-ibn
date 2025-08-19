@@ -3,7 +3,7 @@ TCC de IBN.
 
 # Como Rodar o Programa
 ```bash
-sudo -E python3 run.py
+sudo -E uv run python run.py
 ```
 
 ## KPIs
