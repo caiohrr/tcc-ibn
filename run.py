@@ -9,8 +9,8 @@ topo = Validator(f'{topo_input}.json')
 assert topo.STATUS == 0, f"Invalid topology (STATUS={topo.STATUS})"
 
 # Launch viewer
-viewer = Viewer(topo.MNHOSTS, topo.MNSWITCHES, topo.MNOVSES, topo.MNCONTROLLER, topo.CONNECTIONS)
-viewer.view()
+# viewer = Viewer(topo.MNHOSTS, topo.MNSWITCHES, topo.MNOVSES, topo.MNCONTROLLER, topo.CONNECTIONS)
+# viewer.view()
 
 # If you still want to execute it in Mininet after closing the viewer:
 exe = Executer(topo)
