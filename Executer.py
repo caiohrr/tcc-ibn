@@ -6,6 +6,7 @@ import threading
 import time
 import re
 
+
 class ResourceMonitor(threading.Thread):
     """
     Uma thread para monitorar continuamente o uso de CPU e memória dos hosts na rede.
@@ -57,9 +58,9 @@ class Executer:
 
     NETWORK = None
     TOPOLOGY = None
+    MONITOR_THREAD = None
 
     def __init__(self, TOPOLOGY):
-
         if isinstance(TOPOLOGY, Validator):
             self.TOPOLOGY = TOPOLOGY
         else:
@@ -68,15 +69,12 @@ class Executer:
 
         if self.TOPOLOGY.MNHOSTS is not []:
             for HOST in self.TOPOLOGY.MNHOSTS:
+                # Adicionamos o host com o parâmetro inNamespace=True para isolar o monitoramento
                 HOST.ELEM = self.NETWORK.addHost(HOST.ID)
 
         if self.TOPOLOGY.MNSWITCHES is not []:
             for SWITCH in self.TOPOLOGY.MNSWITCHES:
                 SWITCH.ELEM = self.NETWORK.addSwitch(SWITCH.ID)
-
-        #if self.TOPOLOGY.MNCONTROLLER is not []:
-        #    for CONTROLLER in self.TOPOLOGY.MNCONTROLLER:
-        #        CONTROLLER.ELEM = self.NETWORK.addController(CONTROLLER.ID)
 
         if self.TOPOLOGY.MNOVSES is not []:
             for OVSES in self.TOPOLOGY.MNOVSES:
@@ -84,15 +82,14 @@ class Executer:
 
         if self.TOPOLOGY.CONNECTIONS is not []:
             for CONNECTION in self.TOPOLOGY.CONNECTIONS:
-                self.NETWORK.addLink(CONNECTION["IN/OUT"], CONNECTION["OUT/IN"])
+                # Corrigido para obter os elementos de nó corretos para criar o link
+                node1 = self.NETWORK.get(CONNECTION["IN/OUT"])
+                node2 = self.NETWORK.get(CONNECTION["OUT/IN"])
+                self.NETWORK.addLink(node1, node2)
 
-    #------------------------------------------------------------------
+#------------------------------------------------------------------
 
     def executeTopology(self):
-
-        #self.NETWORK.start()
-        #CLI(self.NETWORK)
-        #self.NETWORK.stop()
         self.NETWORK.build()
         self.NETWORK.start()
 
@@ -108,4 +105,3 @@ class Executer:
         self.MONITOR_THREAD.join() # Espera a thread finalizar
 
         self.NETWORK.stop()
-
