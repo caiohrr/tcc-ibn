@@ -1,8 +1,24 @@
 import json
+from pathlib import Path
 
-with open("/home/caio2409/Ufpr/TCC/tcc-ibn/Topology-simple_star.json") as json_file:
+dir_path = Path() / ".." / "topologies"
+
+prefix = input("digite o nome da topologia: ")
+
+files = sorted([f for f in dir_path.iterdir() if f.is_file()])
+
+matching_file = next((f for f in files if f.name.startswith(prefix)), None)
+
+if matching_file is None:
+    raise FileNotFoundError(f"No file found starting with '{prefix}' in {dir_path}")
+
+filename = matching_file.name
+file_path = dir_path / filename
+
+with open(file_path) as json_file:
     json_data = json.load(json_file)
 
+# print(f"file path: {file_path}")
 
 hosts_list = []
 switches_list = []

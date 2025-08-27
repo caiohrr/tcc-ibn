@@ -1,0 +1,49 @@
+{
+	"ID":"TOPOLOGY01",
+	"COMPONENTS":{
+		"HOSTS":[
+			{
+				"ID":"HOST01",
+				"IP":"192.168.122.01/24"
+			},
+			{
+				"ID":"HOST02",
+				"IP":"192.168.122.02/24"
+			},
+			{
+
+				"ID":"HOST03",
+				"IP":"192.168.122.03/24"
+			}
+
+		],
+		"SWITCHES":[],
+		"CONTROLLERS":["CONTROLLER01"],
+		"OVSSWITCHES":[
+			{
+				"ID":"OVSS01",
+				"CONTROLLER":"CONTROLLER01"
+			},
+			{
+				"ID":"OVSS02",
+				"CONTROLLER":"CONTROLLER01"
+			}
+		]
+	},
+	"CONNECTIONS":[
+		{
+			"IN/OUT":"HOST01",
+			"OUT/IN":"OVSS01"
+		},
+		{
+			"IN/OUT":"HOST02",
+			"OUT/IN":"OVSS01"
+		},
+		{
+			"IN/OUT":"HOST03",
+			"OUT/IN":"OVSS02"
+		}
+	
+	]
+}
+
