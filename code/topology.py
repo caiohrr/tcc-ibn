@@ -3,9 +3,11 @@ from mininet.net import Mininet
 from mininet.node import Controller
 from mininet.cli import CLI
 from mininet.log import setLogLevel, info
+
 def topology01():
 
 	net = Mininet(controller=Controller, waitConnected=True)
+
 	info('*** Adding 1 controllers\n')
 	controller01 = net.addController('controller01')
 
@@ -15,6 +17,10 @@ def topology01():
 	HOST03 = net.addHost('HOST03', ip='192.168.122.03/24')
 
 	info('*** Adding 0 switches\n')
+
+	info('*** Adding 0 ovsswitches\n')
+	OVSS01 = net.addSwitch('OVSS01')
+	OVSS02 = net.addSwitch('OVSS02')
 
 	info('*** Creating 3 links\n')
 	net.addLink(HOST01, OVSS01)
