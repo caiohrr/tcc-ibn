@@ -3,25 +3,23 @@ from mininet.net import Mininet
 from mininet.node import Controller
 from mininet.cli import CLI
 from mininet.log import setLogLevel, info
-def simplestar():
+def topology01():
 
 	net = Mininet(controller=Controller, waitConnected=True)
-	info('*** Adding 0 controllers\n')
+	info('*** Adding 1 controllers\n')
+	controller01 = net.addController('controller01')
 
-	info('*** Adding 4 hosts\n')
-	h1 = net.addHost('h1', ip='10.0.0.1/24')
-	h2 = net.addHost('h2', ip='10.0.0.2/24')
-	h3 = net.addHost('h3', ip='10.0.0.3/24')
-	h4 = net.addHost('h4', ip='10.0.0.4/24')
+	info('*** Adding 3 hosts\n')
+	HOST01 = net.addHost('HOST01', ip='192.168.122.01/24')
+	HOST02 = net.addHost('HOST02', ip='192.168.122.02/24')
+	HOST03 = net.addHost('HOST03', ip='192.168.122.03/24')
 
-	info('*** Adding 1 switches\n')
-	s1 = net.addSwitch('s1')
+	info('*** Adding 0 switches\n')
 
-	info('*** Creating 4 links\n')
-	net.addLink(h1, s1)
-	net.addLink(h2, s1)
-	net.addLink(h3, s1)
-	net.addLink(h4, s1)
+	info('*** Creating 3 links\n')
+	net.addLink(HOST01, OVSS01)
+	net.addLink(HOST02, OVSS01)
+	net.addLink(HOST03, OVSS02)
 
 	info('*** Starting network\n')
 	net.start()
@@ -34,4 +32,4 @@ def simplestar():
 
 if __name__ == '__main__':
 	setLogLevel('info')
-	simplestar()
+	topology01()
