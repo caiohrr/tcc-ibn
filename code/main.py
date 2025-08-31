@@ -10,7 +10,6 @@ class Topology:
         self.hosts = self._parse_hosts(components)
         self.switches = self._parse_switches(components)
         self.controllers = self._parse_controllers(components)
-        self.ovsswitches = self._parse_ovsswitches(components)
         self.connections = self._parse_connections()
 
     def _parse_id(self) -> str:
@@ -22,49 +21,34 @@ class Topology:
 
     def _parse_switches(self, components: Dict) -> List[str]:
         switches = components.get("SWITCHES", [])
-        return [switch.lower() for switch in switches]
+        return [{
+            "id": switch_info.get("ID").lower(),
+            "type": switch_info.get("TYPE"),
+            "controller": switch_info.get("CONTROLLER", "").lower(),
+            "params": switch_info.get("PARAMS", "")
+        } for switch_info in switches]
 
     def _parse_controllers(self, components: Dict) -> List[str]:
         controllers = components.get("CONTROLLERS", [])
-        return [controller.lower() for controller in controllers]
-
-    def _parse_ovsswitches(self, components: Dict) -> List[Dict[str, str]]:
-        ovsswitches = components.get("OVSSWITCHES", [])
-        return [{"id": ovs["ID"], "controller": ovs["CONTROLLER"]} for ovs in ovsswitches]
+        return [controller for controller in controllers]
 
     def _parse_connections(self) -> List[Dict[str, str]]:
         return self._json_data.get("CONNECTIONS", [])
 
     def print_details(self):
-        print("Hosts:")
-        for host in self.hosts:
-            print(f"ID: {host['id']}")
-            print(f"IP: {host['ip']}")
-        
-        print("\nSwitches:")
-        for switch in self.switches:
-            print(f"SWITCH: {switch}")
-        
-        print("\nControllers:")
-        for controller in self.controllers:
-            print(f"CONTROLLER: {controller}")
-        
-        print("\nOVS Switches:")
-        for ovs in self.ovsswitches:
-            print(f"ID: {ovs['id']}")
-            print(f"CONTROLLER: {ovs['controller']}")
-        
-        print("\nConnections:")
-        for conn in self.connections:
-            print(f"IN/OUT: {conn['IN/OUT']}")
-            print(f"OUT/IN: {conn['OUT/IN']}")
-        
-        print("\nLists:")
-        print(self.hosts)
-        print(self.switches)
-        print(self.controllers)
-        print(self.ovsswitches)
-        print(self.connections)
+        for attr, value in self.__dict__.items():
+            if not callable(value) and not attr.startswith("_"):
+                print(f"{attr.capitalize()}:")
+                if isinstance(value, list):
+                    for item in value:
+                        if isinstance(item, dict):
+                            for k, v in item.items():
+                                print(f"    {k.upper()}: {v}")
+                        else:
+                            print(f"    {item}")
+                        print()
+                else:
+                    print(f"    {value}")
 
 
 def find_matching_file(dir_path: Path, prefix: str) -> Optional[Path]:
@@ -80,7 +64,10 @@ def load_json_file(file_path: Path) -> Dict:
         return json.load(json_file)
 
 
-def generate_mininet_script(topology: Topology, output_file: str = "topology.py"):
+def generate_mininet_script(
+    topology: Topology,
+    output_file: str = "topology.py"
+):
     with open(output_file, "w+") as mn_file:
         mn_file.write(
             """
@@ -112,17 +99,10 @@ from mininet.log import setLogLevel, info
             mn_file.write(f"\t{switch} = net.addSwitch('{switch}')\n")
         mn_file.write("\n")
 
-        mn_file.write(f"\tinfo('*** Adding {len(topology.switches)} ovsswitches\\n')\n")
-        for ovsswitch in topology.ovsswitches:
-            id = ovsswitch["id"]
-            mn_file.write(f"\t{id} = net.addSwitch('{id}')\n")
-        mn_file.write("\n")
-
         mn_file.write(f"\tinfo('*** Creating {len(topology.connections)} links\\n')\n")
         for connection in topology.connections:
-            in_out = connection["IN/OUT"]
-            out_in = connection["OUT/IN"]
-            mn_file.write(f"\tnet.addLink({in_out}, {out_in})\n")
+            endpoints = connection.get("ENDPOINTS")
+            mn_file.write(f"\tnet.addLink({endpoints[0]}, {endpoints[1]})\n")
         mn_file.write("\n")
 
         mn_file.write(f"\tinfo('*** Starting network\\n')\n")
