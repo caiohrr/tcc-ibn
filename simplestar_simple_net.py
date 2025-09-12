@@ -1,6 +1,6 @@
 """
 Script Mininet gerado automaticamente.
-Topologia: Simplestar_robust
+Topologia: Simplestar_simple
 """
 from mininet.net import Mininet
 from mininet.node import Controller, RemoteController, OVSKernelSwitch, UserSwitch
@@ -8,19 +8,17 @@ from mininet.cli import CLI
 from mininet.log import setLogLevel, info
 from mininet.link import TCLink
 
-def simplestar_robust_topology():
+def simplestar_simple_topology():
 
 	'Cria e configura a topologia de rede.'
-	net = Mininet(controller=Controller, switch=OVSKernelSwitch, link=TCLink, waitConnected=True)
+	net = Mininet(controller=None, switch=OVSKernelSwitch, link=TCLink, waitConnected=False)
 
-	info('*** Adding 1 controllers\n')
-	c0 = net.addController('c0', controller=RemoteController, ip='127.0.0.1', port=6653)
-
+	info('*** No controller defined. OVS will be configured for standalone mode.\n')
 	info('*** Adding 4 hosts\n')
-	h1 = net.addHost('h1', ip='10.0.0.1/24', mac='00:00:00:00:00:01')
-	h2 = net.addHost('h2', ip='10.0.0.2/24', mac='00:00:00:00:00:02')
-	h3 = net.addHost('h3', ip='10.0.0.3/24', mac='00:00:00:00:00:03')
-	h4 = net.addHost('h4', ip='10.0.0.4/24', mac='00:00:00:00:00:04')
+	h1 = net.addHost('h1', mac='00:00:00:00:00:01')
+	h2 = net.addHost('h2', mac='00:00:00:00:00:02')
+	h3 = net.addHost('h3', mac='00:00:00:00:00:03')
+	h4 = net.addHost('h4', mac='00:00:00:00:00:04')
 
 	info('*** Adding 1 switches\n')
 	s1 = net.addSwitch('s1')
@@ -34,6 +32,9 @@ def simplestar_robust_topology():
 	info('*** Starting network\n')
 	net.start()
 
+	info('*** Configuring switches for standalone mode\n')
+	net.get('s1').cmd('ovs-ofctl add-flow s1 "priority=0,actions=normal"')
+
 	info('*** Running CLI\n')
 	CLI(net)
 
@@ -42,4 +43,4 @@ def simplestar_robust_topology():
 
 if __name__ == '__main__':
 	setLogLevel('info')
-	simplestar_robust_topology()
+	simplestar_simple_topology()
