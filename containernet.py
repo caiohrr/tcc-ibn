@@ -406,8 +406,8 @@ class MininetScriptGenerator:
     
     def _write_imports(self, file, additional_imports):
         file.write(
-                "from containernet.net import Containernet\n"
-                "from containernet.node import Controller, RemoteController, OVSKernelSwitch, UserSwitch, Docker\n"
+                "from mininet.net import Containernet\n"
+                "from mininet.node import Controller, RemoteController, OVSKernelSwitch, UserSwitch, Docker\n"
                 "from mininet.cli import CLI\n"
                 "from mininet.log import setLogLevel, info\n"
                 "from mininet.link import TCLink\n"
@@ -430,7 +430,7 @@ class MininetScriptGenerator:
                 if ctype == 'RemoteController':
                     ip = params.get('IP', '127.0.0.1')
                     port = params.get('PORT', 6653)
-                    file.write(f"\t{cid} = net.addController('{cid}', controller=RemoteController, "
+                    file.write(f"\t{cid} = net.addController('{cid}', controller=Controller, "
                                                              f"ip='{ip}', port={port})\n")
                 else:
                     file.write(f"\t{cid} = net.addController('{cid}')\n")
@@ -455,7 +455,7 @@ class MininetScriptGenerator:
                     else:
                         params_list.append(f"{key}={value}")
 
-            file.write(f"\t{host['id']} = net.addHost({', '.join(params_list)})\n")
+            file.write(f"\t{host['id']} = net.addDocker({', '.join(params_list)}, dimage=\"ubuntu:trusty\")\n")
         file.write("\n")
 
     def _write_switches(self, file, topology):
