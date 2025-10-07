@@ -38,8 +38,8 @@ O projeto foi desenvolvido a partir de conceitos explorados inicialmente em um t
 1. **Clone o repositório:**
 
    ```bash
-   git clone <url-do-seu-repositorio>
-   cd <nome-do-repositorio>
+   git clone https://github.com/caiohrr/tcc-ibn
+   cd tcc-ibn
    ```
 
 2. **Instale as dependências:**
