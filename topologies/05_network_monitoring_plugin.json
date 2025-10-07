@@ -1,0 +1,100 @@
+{
+    "ID": "AdvancedNetwork",
+    "VERSION": "2.0",
+    "DESCRIPTION": "Advanced network topology with plugin support for QoS, monitoring, and NAT",
+    
+    "PLUGINS": [
+        {
+            "name": "NetworkMonitoring",
+            "params": {
+                "enable_monitoring": true,
+                "interval": 10,
+                "duration": 300,
+                "save_stats": true,
+                "output_file": "network_monitoring.json"
+            }
+        }
+    ],
+    
+    "COMPONENTS": {
+        "HOSTS": [
+            {
+                "ID": "h1",
+                "IP": "10.0.0.1/24",
+                "MAC": "00:00:00:00:00:01",
+                "CPU": 0.5,
+                "MEMORY": "512MB"
+            },
+            {
+                "ID": "h2",
+                "IP": "10.0.0.2/24",
+                "MAC": "00:00:00:00:00:02",
+                "CPU": 0.25,
+                "MEMORY": "256MB"
+            },
+            {
+                "ID": "h3",
+                "IP": "10.0.0.3/24",
+                "MAC": "00:00:00:00:00:03"
+            },
+            {
+                "ID": "h4",
+                "IP": "10.0.0.4/24",
+                "MAC": "00:00:00:00:00:04"
+            }
+        ],
+        
+        "SWITCHES": [
+            {
+                "ID": "s1",
+                "TYPE": "OVSKernelSwitch"
+            },
+            {
+                "ID": "s2",
+                "TYPE": "OVSKernelSwitch"
+            }
+        ],
+        
+        "CONTROLLERS": []
+    },
+    
+    "CONNECTIONS": [
+        {
+            "ENDPOINTS": ["h1", "s1"],
+            "PARAMS": { 
+                "BANDWIDTH": 1000, 
+                "DELAY": "1ms",
+                "LOSS": 0
+            }
+        },
+        {
+            "ENDPOINTS": ["h2", "s1"],
+            "PARAMS": { 
+                "BANDWIDTH": 500, 
+                "DELAY": "2ms",
+                "LOSS": 0.1
+            }
+        },
+        {
+            "ENDPOINTS": ["s1", "s2"],
+            "PARAMS": { 
+                "BANDWIDTH": 10000, 
+                "DELAY": "0.5ms"
+            }
+        },
+        {
+            "ENDPOINTS": ["h3", "s2"],
+            "PARAMS": { 
+                "BANDWIDTH": 1000, 
+                "DELAY": "1ms"
+            }
+        },
+        {
+            "ENDPOINTS": ["h4", "s2"],
+            "PARAMS": { 
+                "BANDWIDTH": 750, 
+                "DELAY": "1.5ms"
+            }
+        }
+    ]
+}
