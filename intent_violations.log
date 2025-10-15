@@ -1,0 +1,1030 @@
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 17:19:10
+   Intent: conn_h1-s1
+   Type: CONNECTIVITY
+   Component: h1-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 17:19:10
+   Intent: bw_h1-s1
+   Type: BANDWIDTH
+   Component: h1-s1
+   Expected: 10.0
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 17:19:15
+   Intent: bw_h1-s1
+   Type: BANDWIDTH
+   Component: h1-s1
+   Expected: 10.0
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 17:19:32
+   Intent: bw_h1-s1
+   Type: BANDWIDTH
+   Component: h1-s1
+   Expected: 10.0
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 17:19:48
+   Intent: bw_h1-s1
+   Type: BANDWIDTH
+   Component: h1-s1
+   Expected: 10.0
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 17:20:04
+   Intent: bw_h1-s1
+   Type: BANDWIDTH
+   Component: h1-s1
+   Expected: 10.0
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 17:20:20
+   Intent: bw_h1-s1
+   Type: BANDWIDTH
+   Component: h1-s1
+   Expected: 10.0
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 17:20:36
+   Intent: bw_h1-s1
+   Type: BANDWIDTH
+   Component: h1-s1
+   Expected: 10.0
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 17:20:52
+   Intent: bw_h1-s1
+   Type: BANDWIDTH
+   Component: h1-s1
+   Expected: 10.0
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 17:21:09
+   Intent: bw_h1-s1
+   Type: BANDWIDTH
+   Component: h1-s1
+   Expected: 10.0
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 17:21:25
+   Intent: bw_h1-s1
+   Type: BANDWIDTH
+   Component: h1-s1
+   Expected: 10.0
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 17:21:41
+   Intent: bw_h1-s1
+   Type: BANDWIDTH
+   Component: h1-s1
+   Expected: 10.0
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 17:25:23
+   Intent: conn_h1-s1
+   Type: CONNECTIVITY
+   Component: h1-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 17:25:28
+   Intent: conn_h1-s1
+   Type: CONNECTIVITY
+   Component: h1-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 17:25:33
+   Intent: conn_h2-s1
+   Type: CONNECTIVITY
+   Component: h2-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 17:25:38
+   Intent: conn_h2-s1
+   Type: CONNECTIVITY
+   Component: h2-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 17:25:43
+   Intent: conn_h3-s1
+   Type: CONNECTIVITY
+   Component: h3-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 17:25:48
+   Intent: conn_h3-s1
+   Type: CONNECTIVITY
+   Component: h3-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 17:25:53
+   Intent: conn_h4-s1
+   Type: CONNECTIVITY
+   Component: h4-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 17:25:58
+   Intent: conn_h4-s1
+   Type: CONNECTIVITY
+   Component: h4-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 17:26:37
+   Intent: conn_h2-s1
+   Type: CONNECTIVITY
+   Component: h2-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 17:31:05
+   Intent: conn_h1-s1
+   Type: CONNECTIVITY
+   Component: h1-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 17:31:10
+   Intent: conn_h2-s1
+   Type: CONNECTIVITY
+   Component: h2-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 17:33:00
+   Intent: conn_h1-s1
+   Type: CONNECTIVITY
+   Component: h1-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 17:33:05
+   Intent: conn_h3-s1
+   Type: CONNECTIVITY
+   Component: h3-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 17:33:10
+   Intent: conn_h4-s1
+   Type: CONNECTIVITY
+   Component: h4-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 17:33:15
+   Intent: conn_h4-s1
+   Type: CONNECTIVITY
+   Component: h4-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 17:52:51
+   Intent: conn_h1-s1
+   Type: CONNECTIVITY
+   Component: h1-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 17:52:56
+   Intent: conn_h1-s1
+   Type: CONNECTIVITY
+   Component: h1-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 17:53:01
+   Intent: conn_h2-s1
+   Type: CONNECTIVITY
+   Component: h2-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 17:53:06
+   Intent: conn_h2-s1
+   Type: CONNECTIVITY
+   Component: h2-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 17:53:11
+   Intent: conn_h3-s1
+   Type: CONNECTIVITY
+   Component: h3-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 17:53:16
+   Intent: conn_h3-s1
+   Type: CONNECTIVITY
+   Component: h3-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 17:53:21
+   Intent: conn_h4-s1
+   Type: CONNECTIVITY
+   Component: h4-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 17:53:26
+   Intent: conn_h4-s1
+   Type: CONNECTIVITY
+   Component: h4-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 17:57:27
+   Intent: conn_h1-s1
+   Type: CONNECTIVITY
+   Component: h1-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 17:57:32
+   Intent: conn_h1-s1
+   Type: CONNECTIVITY
+   Component: h1-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 18:03:48
+   Intent: conn_h1-s1
+   Type: CONNECTIVITY
+   Component: h1-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 18:03:53
+   Intent: conn_h1-s1
+   Type: CONNECTIVITY
+   Component: h1-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 18:03:58
+   Intent: conn_h2-s1
+   Type: CONNECTIVITY
+   Component: h2-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 18:04:03
+   Intent: conn_h2-s1
+   Type: CONNECTIVITY
+   Component: h2-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 18:04:08
+   Intent: conn_h3-s1
+   Type: CONNECTIVITY
+   Component: h3-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 18:04:13
+   Intent: conn_h3-s1
+   Type: CONNECTIVITY
+   Component: h3-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 18:04:18
+   Intent: conn_h4-s1
+   Type: CONNECTIVITY
+   Component: h4-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 18:04:23
+   Intent: conn_h4-s1
+   Type: CONNECTIVITY
+   Component: h4-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 18:06:18
+   Intent: conn_h1-s1
+   Type: CONNECTIVITY
+   Component: h1-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 18:06:23
+   Intent: conn_h1-s1
+   Type: CONNECTIVITY
+   Component: h1-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 18:06:28
+   Intent: conn_h2-s1
+   Type: CONNECTIVITY
+   Component: h2-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 18:06:33
+   Intent: conn_h2-s1
+   Type: CONNECTIVITY
+   Component: h2-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 18:08:13
+   Intent: conn_h2-s1
+   Type: CONNECTIVITY
+   Component: h2-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 18:08:18
+   Intent: conn_h2-s1
+   Type: CONNECTIVITY
+   Component: h2-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 18:08:23
+   Intent: conn_h3-s1
+   Type: CONNECTIVITY
+   Component: h3-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 18:08:28
+   Intent: conn_h3-s1
+   Type: CONNECTIVITY
+   Component: h3-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 18:08:33
+   Intent: conn_h4-s1
+   Type: CONNECTIVITY
+   Component: h4-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 18:08:38
+   Intent: conn_h4-s1
+   Type: CONNECTIVITY
+   Component: h4-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 18:08:48
+   Intent: conn_h2-s1
+   Type: CONNECTIVITY
+   Component: h2-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 18:08:53
+   Intent: conn_h3-s1
+   Type: CONNECTIVITY
+   Component: h3-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 18:10:54
+   Intent: conn_h3-s1
+   Type: CONNECTIVITY
+   Component: h3-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 18:10:59
+   Intent: conn_h4-s1
+   Type: CONNECTIVITY
+   Component: h4-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 18:12:09
+   Intent: conn_h2-s1
+   Type: CONNECTIVITY
+   Component: h2-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 18:12:14
+   Intent: conn_h4-s1
+   Type: CONNECTIVITY
+   Component: h4-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 18:13:52
+   Intent: conn_h2-s1
+   Type: CONNECTIVITY
+   Component: h2-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 18:13:57
+   Intent: conn_h2-s1
+   Type: CONNECTIVITY
+   Component: h2-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 18:14:02
+   Intent: conn_h3-s1
+   Type: CONNECTIVITY
+   Component: h3-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 18:14:07
+   Intent: conn_h3-s1
+   Type: CONNECTIVITY
+   Component: h3-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 18:14:12
+   Intent: conn_h4-s1
+   Type: CONNECTIVITY
+   Component: h4-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 18:14:17
+   Intent: conn_h4-s1
+   Type: CONNECTIVITY
+   Component: h4-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 18:17:13
+   Intent: conn_h2-s1
+   Type: CONNECTIVITY
+   Component: h2-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 18:17:18
+   Intent: conn_h2-s1
+   Type: CONNECTIVITY
+   Component: h2-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 18:17:23
+   Intent: conn_h3-s1
+   Type: CONNECTIVITY
+   Component: h3-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 18:17:28
+   Intent: conn_h3-s1
+   Type: CONNECTIVITY
+   Component: h3-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 18:17:33
+   Intent: conn_h4-s1
+   Type: CONNECTIVITY
+   Component: h4-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 18:17:38
+   Intent: conn_h4-s1
+   Type: CONNECTIVITY
+   Component: h4-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 18:17:48
+   Intent: conn_h2-s1
+   Type: CONNECTIVITY
+   Component: h2-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 18:17:53
+   Intent: conn_h2-s1
+   Type: CONNECTIVITY
+   Component: h2-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 18:17:58
+   Intent: conn_h3-s1
+   Type: CONNECTIVITY
+   Component: h3-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 18:18:03
+   Intent: conn_h3-s1
+   Type: CONNECTIVITY
+   Component: h3-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 18:18:08
+   Intent: conn_h4-s1
+   Type: CONNECTIVITY
+   Component: h4-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 18:18:13
+   Intent: conn_h4-s1
+   Type: CONNECTIVITY
+   Component: h4-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 18:18:47
+   Intent: conn_h1-s1
+   Type: CONNECTIVITY
+   Component: h1-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 18:18:52
+   Intent: conn_h1-s1
+   Type: CONNECTIVITY
+   Component: h1-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 18:18:57
+   Intent: conn_h2-s1
+   Type: CONNECTIVITY
+   Component: h2-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 18:19:02
+   Intent: conn_h2-s1
+   Type: CONNECTIVITY
+   Component: h2-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 18:25:49
+   Intent: conn_h2-s1
+   Type: CONNECTIVITY
+   Component: h2-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 18:25:54
+   Intent: conn_h2-s1
+   Type: CONNECTIVITY
+   Component: h2-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 18:25:59
+   Intent: conn_h3-s1
+   Type: CONNECTIVITY
+   Component: h3-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 18:26:04
+   Intent: conn_h3-s1
+   Type: CONNECTIVITY
+   Component: h3-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 18:26:09
+   Intent: conn_h4-s1
+   Type: CONNECTIVITY
+   Component: h4-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 18:26:14
+   Intent: conn_h4-s1
+   Type: CONNECTIVITY
+   Component: h4-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 18:26:24
+   Intent: conn_h2-s1
+   Type: CONNECTIVITY
+   Component: h2-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 18:26:29
+   Intent: conn_h4-s1
+   Type: CONNECTIVITY
+   Component: h4-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 18:26:39
+   Intent: conn_h3-s1
+   Type: CONNECTIVITY
+   Component: h3-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 18:27:09
+   Intent: conn_h4-s1
+   Type: CONNECTIVITY
+   Component: h4-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 18:31:07
+   Intent: conn_h2-s1
+   Type: CONNECTIVITY
+   Component: h2-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 18:31:12
+   Intent: conn_h2-s1
+   Type: CONNECTIVITY
+   Component: h2-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 18:31:17
+   Intent: conn_h3-s1
+   Type: CONNECTIVITY
+   Component: h3-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 18:31:22
+   Intent: conn_h3-s1
+   Type: CONNECTIVITY
+   Component: h3-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 18:31:27
+   Intent: conn_h4-s1
+   Type: CONNECTIVITY
+   Component: h4-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 18:31:32
+   Intent: conn_h4-s1
+   Type: CONNECTIVITY
+   Component: h4-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 18:31:52
+   Intent: conn_h2-s1
+   Type: CONNECTIVITY
+   Component: h2-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 18:31:57
+   Intent: conn_h2-s1
+   Type: CONNECTIVITY
+   Component: h2-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 18:32:02
+   Intent: conn_h3-s1
+   Type: CONNECTIVITY
+   Component: h3-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------
+
+⚠️  INTENT VIOLATION DETECTED
+   Time: 2025-10-13 18:32:07
+   Intent: conn_h3-s1
+   Type: CONNECTIVITY
+   Component: h3-s1
+   Expected: True
+   Actual: 0.00
+   Severity: MEDIUM
+--------------------------------------------------

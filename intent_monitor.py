@@ -218,6 +218,8 @@ class IntentMonitor:
         
         self.monitoring_active = True
         
+        self._kickstart_network()
+
         # Start monitoring thread
         self.monitor_thread = threading.Thread(target=self._monitoring_loop, daemon=True)
         self.monitor_thread.start()
@@ -444,7 +446,7 @@ class IntentMonitor:
         try:
             host = self.net.get(host_id)
             if host and hasattr(host, 'cmd'):
-                if not self._check_shell_health(host):
+                if not self._ncheck_shell_health(host):
                     return IntentStatus.UNKNOWN, None
                     
                 result = host.cmd("free -m | grep Mem | awk '{print $3}'")
@@ -530,48 +532,128 @@ class IntentMonitor:
             return False
     
     def _recover_connectivity(self, violation: IntentViolation) -> bool:
-        """Recover connectivity issues."""
+        """Recover connectivity issues using Mininet API when possible.
+
+        Strategy:
+        1. Try to use self.net.configLinkStatus(endpointA, endpointB, 'up')
+           — this keeps Mininet internal state consistent.
+        2. Find the actual link object (self.net.links) that connects the endpoints.
+        3. Ensure both interfaces (link.intf1, link.intf2) are administratively UP
+           at kernel level (ip link set ... up).
+        4. If a switch is involved, re-apply a default flow (normal) to allow L2 forwarding.
+        5. Verify recovery with a ping when endpoints are hosts with IPs, otherwise
+           check interface 'state UP' on the host side as a weaker verification.
+        """
         if not self.net:
             return False
-        
+
         try:
             endpoints = self.intents.get(violation.intent_id, {}).get('endpoints', [])
-            if len(endpoints) == 2:
-                print(f"   → Recovering connectivity for {endpoints[0]}<->{endpoints[1]}")
-                
-                # Get nodes
-                nodes = [self.net.get(ep) for ep in endpoints]
-                
-                # Check and restart shells if needed
-                for node in nodes:
-                    if node and not self._check_shell_health(node):
-                        if not self._restart_host_shell(node):
-                            print(f"     - Failed to restart shell for {node.name}")
-                            return False
-                
-                # Bring up all interfaces
-                for node in nodes:
+            if len(endpoints) != 2:
+                return False
+
+            ep1, ep2 = endpoints
+            print(f"   → Recovering connectivity for {ep1}<->{ep2}")
+
+            # 1) Try Mininet API to configure link status (keeps Mininet internal state consistent)
+            try:
+                if hasattr(self.net, 'configLinkStatus'):
+                    print("     - Using Mininet API to set link up")
+                    try:
+                        self.net.configLinkStatus(ep1, ep2, 'up')
+                        # small pause to let Mininet apply changes
+                        time.sleep(0.3)
+                    except Exception as e:
+                        print(f"     - configLinkStatus warning/error: {e}")
+            except Exception:
+                # defensive: continue to manual approach
+                pass
+
+            # 2) Find the specific link connecting these endpoints
+            link = next(
+                (l for l in getattr(self.net, 'links', [])
+                 if {l.intf1.node.name, l.intf2.node.name} == {ep1, ep2}),
+                None
+            )
+            if not link:
+                print("     - Could not find link object for endpoints; trying interface-level recovery")
+                # fallback: try to bring up interfaces by constructing names from endpoints
+                # (best-effort; may fail if naming differs)
+                for node_name in (ep1, ep2):
+                    node = self.net.get(node_name)
                     if node:
                         for intf in node.intfList():
                             if intf.name != 'lo':
-                                print(f"     - Bringing up {intf.name} on {node.name}")
+                                print(f"     - (fallback) Bringing up {intf.name} on {node.name}")
                                 node.cmd(f'ip link set {intf.name} up')
-                        
-                        # If switch, ensure flow rules
+                time.sleep(0.5)
+            else:
+                # 3) Bring up the exact interfaces for this link
+                for intf in (link.intf1, link.intf2):
+                    try:
+                        print(f"     - Bringing up {intf.name} on {intf.node.name}")
+                        intf.node.cmd(f'ip link set {intf.name} up')
+                    except Exception as e:
+                        print(f"     - Error bringing up {intf.name}: {e}")
+
+                # 4) If a switch is involved, ensure normal forwarding rule exists
+                for node in (link.intf1.node, link.intf2.node):
+                    try:
                         if node.name.startswith('s'):
                             node.cmd(f'ovs-ofctl add-flow {node.name} "priority=0,actions=normal"')
-                
-                time.sleep(1)  # Allow network to stabilize
-                
-                # Verify recovery
-                h1, h2 = nodes
-                if h1 and h2 and hasattr(h2, 'IP'):
+                    except Exception as e:
+                        print(f"     - Could not add default flow on {node.name}: {e}")
+
+                time.sleep(0.7)  # allow stabilization
+
+            # 5) Verification
+            h1 = self.net.get(ep1)
+            h2 = self.net.get(ep2)
+
+            # If both endpoints are hosts with IPs, prefer a ping verification
+            if h1 and h2 and hasattr(h1, 'IP') and hasattr(h2, 'IP') and h1.IP() and h2.IP():
+                try:
                     result = h1.cmd(f'ping -c 1 -W 1 {h2.IP()}')
-                    return '1 received' in result
-                
+                    success = '1 received' in result or '1 packets received' in result
+                    return bool(success)
+                except Exception:
+                    pass
+
+            # If one endpoint is a switch (no IP), check that host side interface is UP
+            for host_ep in (ep1, ep2):
+                node = self.net.get(host_ep)
+                if node and hasattr(node, 'cmd'):
+                    for intf in node.intfList():
+                        if intf.name == 'lo':
+                            continue
+                        try:
+                            out = node.cmd(f'ip link show {intf.name}')
+                            if 'state UP' in out:
+                                # if any non-loopback intf on the host is UP, consider recovery likely
+                                return True
+                        except Exception:
+                            continue
+
+            # As a last-ditch check: if we found a link earlier, consider success if both kernel interfaces report UP
+            if link:
+                all_up = True
+                for intf in (link.intf1, link.intf2):
+                    try:
+                        out = intf.node.cmd(f'ip link show {intf.name}')
+                        if 'state UP' not in out:
+                            all_up = False
+                            break
+                    except Exception:
+                        all_up = False
+                        break
+                if all_up:
+                    return True
+
         except Exception as e:
             print(f"   ❌ Recovery error: {e}")
+
         return False
+
     
     def _recover_link_param(self, violation: IntentViolation, param_type: str) -> bool:
         """Generic recovery function for link parameters."""
@@ -732,3 +814,18 @@ class IntentMonitor:
             json.dump(self.get_intent_report(), f, indent=2, default=str)
         
         print(f"📄 Report exported to {filename}")
+
+    def _kickstart_network(self):
+        """Send initial pings between hosts to populate ARP tables."""
+        if not self.net:
+            return
+        
+        print("🚀 Kickstarting network connectivity (warming up ARP tables)...")
+        hosts = self.net.hosts
+        for i, h1 in enumerate(hosts):
+            for h2 in hosts[i+1:]:
+                # Quick ping between hosts, suppress output
+                h1.cmd(f'ping -c 1 -W 1 {h2.IP()} >/dev/null 2>&1 &')
+        time.sleep(2)
+        print("✅ Network kickstart complete — ARP tables initialized.\n")
+
