@@ -9,12 +9,13 @@ import threading
 import time
 import subprocess
 import re
+import os
+import statistics
 from typing import Dict, List, Any, Optional, Tuple, Callable
 from dataclasses import dataclass, field
 from enum import Enum
 from datetime import datetime
 from collections import deque
-import statistics
 
 
 class IntentStatus(Enum):
@@ -109,7 +110,11 @@ class IntentMonitor:
         
         # Recovery strategies
         self.recovery_strategies = self._initialize_recovery_strategies()
-        
+
+       # Ensure log directory exists
+        self.log_dir = "log"
+        os.makedirs(self.log_dir, exist_ok=True) 
+
     def _parse_intents(self) -> Dict[str, Dict]:
         """Parse intents from topology configuration."""
         intents = {}
@@ -740,7 +745,8 @@ class IntentMonitor:
             f"   Severity: {violation.severity}"
         )
         print(message)
-        with open("intent_violations.log", "a") as f:
+        log_file = os.path.join(self.log_dir, "intent_violations.log")
+        with open(log_file, "a") as f:
             f.write(message + "\n" + "-" * 50 + "\n")
     
     def _notify_operator(self, violation: IntentViolation, reason: str):
@@ -786,7 +792,7 @@ class IntentMonitor:
             report['summary'][status.value] += 1
             intent_spec = self.intents.get(intent_id, {})
             report['intents'][intent_id] = {
-                'type': intent_spec.get('type', IntentType.UNKNOWN).value,
+                'type': intent_spec.get('type', IntentStatus.UNKNOWN).value,
                 'status': status.value,
                 'expected': intent_spec.get('expected'),
                 'component': self._get_component_id(intent_spec)
@@ -808,7 +814,9 @@ class IntentMonitor:
     def export_report(self, filename: str = None):
         """Export intent monitoring report to file."""
         if filename is None:
-            filename = f"intent_report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
+            filename = os.path.join(self.log_dir, f"intent_report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json")
+        else:
+            filename = os.path.join(self.log_dir, filename)
         
         with open(filename, 'w') as f:
             json.dump(self.get_intent_report(), f, indent=2, default=str)
