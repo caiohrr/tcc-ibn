@@ -1,9 +1,13 @@
+# main-v2.py
 import json
 import importlib
 import inspect
 from pathlib import Path
-from typing import List, Dict, Optional, Any, Protocol
+from typing import List, Dict, Optional, Any, Protocol, Callable
 from abc import ABC, abstractmethod
+
+# Import the Intent Monitor
+# from intent_monitor import IntentMonitor # This is now imported in the generated script
 
 # ========================== Plugin System ==========================
 
@@ -72,6 +76,30 @@ class ComponentPlugin(PluginInterface):
         """Generate Mininet code for the custom component."""
         pass
 
+# ======================================================================
+# === NEW PLUGIN TYPE ADDED HERE =======================================
+# ======================================================================
+class MonitorRecoveryPlugin(PluginInterface):
+    """Base class for intent monitor and recovery plugins."""
+    
+    @abstractmethod
+    def get_check_functions(self) -> Dict[str, Callable]:
+        """
+        Return a dictionary mapping intent types to check functions.
+        Example: {'MY_CUSTOM_INTENT': self.my_check_function}
+        """
+        pass
+    
+    @abstractmethod
+    def get_recovery_functions(self) -> Dict[str, Callable]:
+        """
+        Return a dictionary mapping intent types to recovery functions.
+        Example: {'MY_CUSTOM_INTENT': self.my_recovery_function}
+        """
+        pass
+# ======================================================================
+# ======================================================================
+
 
 class PluginManager:
     """Manages loading and execution of plugins."""
@@ -82,6 +110,8 @@ class PluginManager:
         self.topology_plugins = []
         self.script_plugins = []
         self.component_plugins = {}
+        # === MODIFIED HERE ===
+        self.monitor_recovery_plugins = [] 
         
         # Ensure plugins directory exists
         self.plugins_dir.mkdir(exist_ok=True)
@@ -109,9 +139,10 @@ class PluginManager:
                 
                 # Find all plugin classes in the module
                 for name, obj in inspect.getmembers(module):
+                    # === MODIFIED HERE (added MonitorRecoveryPlugin to the list) ===
                     if (inspect.isclass(obj) and 
                         issubclass(obj, PluginInterface) and 
-                        obj not in [PluginInterface, TopologyPlugin, ScriptGeneratorPlugin, ComponentPlugin]):
+                        obj not in [PluginInterface, TopologyPlugin, ScriptGeneratorPlugin, ComponentPlugin, MonitorRecoveryPlugin]):
                         
                         plugin_instance = obj()
                         plugin_name = plugin_instance.get_name()
@@ -124,12 +155,16 @@ class PluginManager:
                             self.script_plugins.append(plugin_instance)
                         elif isinstance(plugin_instance, ComponentPlugin):
                             self.component_plugins[plugin_name] = plugin_instance
+                        # === MODIFIED HERE ===
+                        elif isinstance(plugin_instance, MonitorRecoveryPlugin):
+                            self.monitor_recovery_plugins.append(plugin_instance)
                         
-                        print(f"✓ Loaded plugin: {plugin_name} v{plugin_instance.get_version()}")
+                        print(f"✔ Loaded plugin: {plugin_name} v{plugin_instance.get_version()}")
             
             except Exception as e:
                 print(f"✗ Failed to load plugin from {plugin_file.name}: {e}")
     
+    # ... (rest of PluginManager class is unchanged) ...
     def get_plugin(self, name: str) -> Optional[PluginInterface]:
         """Get a specific plugin by name."""
         return self.loaded_plugins.get(name)
@@ -169,8 +204,7 @@ class PluginManager:
         
         return additions
 
-
-# ========================== Core Topology Class ==========================
+# ... (rest of main_v2.py is unchanged, no further modifications are needed) ...
 
 class Topology:
     """Represents the network topology, read from a JSON file."""
@@ -196,6 +230,12 @@ class Topology:
         
         # Get plugin configurations
         self.plugins_config = self._json_data.get("PLUGINS", [])
+        
+        # Get monitoring configuration
+        self.monitoring_config = self._json_data.get("MONITORING", {})
+        self.enable_monitoring = self.monitoring_config.get("enabled", True)
+        self.monitor_interval = self.monitoring_config.get("interval", 5)
+        self.recovery_enabled = self.monitoring_config.get("recovery_enabled", True)
         
         # Execute topology plugins
         if self.plugins_config:
@@ -303,6 +343,12 @@ class Topology:
             for plugin in self.plugins_config:
                 print(f"  - {plugin.get('name')} with params: {plugin.get('params', {})}")
         
+        # Print monitoring configuration
+        print(f"\nMonitoring Configuration:")
+        print(f"  - Enabled: {self.enable_monitoring}")
+        print(f"  - Interval: {self.monitor_interval}s")
+        print(f"  - Recovery: {self.recovery_enabled}")
+        
         print("\n" + "-" * 40)
 
 
@@ -335,7 +381,7 @@ class MininetScriptGenerator:
         with open(output_file, "w+", encoding='utf-8') as mn_file:
             # Write header and imports
             self._write_header(mn_file, topology)
-            self._write_imports(mn_file, plugin_additions["imports"])
+            self._write_imports(mn_file, plugin_additions["imports"], topology.enable_monitoring)
             
             # Write topology function
             mn_file.write(f"def {topology.id}_topology():\n\n")
@@ -382,9 +428,21 @@ class MininetScriptGenerator:
             if not has_controllers:
                 self._write_standalone_config(mn_file, topology)
             
+            # Add intent monitoring if enabled
+            if topology.enable_monitoring:
+                self._write_intent_monitoring(mn_file, topology)
+            
             # CLI and cleanup
             mn_file.write("\tinfo('*** Running CLI\\n')\n")
             mn_file.write("\tCLI(net)\n\n")
+            
+            # Stop monitoring if enabled
+            if topology.enable_monitoring:
+                mn_file.write("\tinfo('*** Stopping intent monitor\\n')\n")
+                mn_file.write("\tif 'monitor' in locals():\n")
+                mn_file.write("\t\tmonitor.stop_monitoring()\n")
+                mn_file.write("\t\tmonitor.export_report()\n\n")
+            
             mn_file.write("\tinfo('*** Stopping network\\n')\n")
             mn_file.write("\tnet.stop()\n\n")
             
@@ -400,10 +458,11 @@ class MininetScriptGenerator:
             f'Topology: {topology.id.capitalize()}\n'
             f'Version: {topology.version}\n'
             f'Description: {topology.description}\n'
+            f'Intent Monitoring: {"Enabled" if topology.enable_monitoring else "Disabled"}\n'
             '"""\n'
         )
     
-    def _write_imports(self, file, additional_imports):
+    def _write_imports(self, file, additional_imports, enable_monitoring):
         file.write(
             "from mininet.net import Mininet\n"
             "from mininet.node import Controller, RemoteController, OVSKernelSwitch, UserSwitch\n"
@@ -412,11 +471,61 @@ class MininetScriptGenerator:
             "from mininet.link import TCLink\n"
         )
         
+        # Add intent monitoring imports if enabled
+        if enable_monitoring:
+            file.write("import json\n")
+            file.write("from intent_monitor import IntentMonitor\n")
+        
         # Add plugin imports
         for import_stmt in additional_imports:
             file.write(f"{import_stmt}\n")
         
         file.write("\n")
+    
+    def _write_intent_monitoring(self, file, topology):
+        """Write intent monitoring setup code."""
+        file.write("\t# Setup intent monitoring\n")
+        file.write("\tinfo('*** Setting up intent monitoring\\n')\n")
+        
+        # Create topology data for monitor
+        file.write("\ttopology_data = {\n")
+        file.write(f"\t\t'id': '{topology.id}',\n")
+        file.write(f"\t\t'version': '{topology.version}',\n")
+        file.write(f"\t\t'description': '{topology.description}',\n")
+        file.write("\t\t'hosts': [\n")
+        for host in topology.hosts:
+            file.write(f"\t\t\t{host},\n")
+        file.write("\t\t],\n")
+        file.write("\t\t'switches': [\n")
+        for switch in topology.switches:
+            file.write(f"\t\t\t{switch},\n")
+        file.write("\t\t],\n")
+        file.write("\t\t'controllers': [\n")
+        for controller in topology.controllers:
+            file.write(f"\t\t\t{controller},\n")
+        file.write("\t\t],\n")
+        file.write("\t\t'connections': [\n")
+        for conn in topology.connections:
+            file.write(f"\t\t\t{conn},\n")
+        file.write("\t\t]\n")
+        file.write("\t}\n\n")
+        
+        # Create topology object for monitor
+        file.write("\tclass TopologyWrapper:\n")
+        file.write("\t\tdef __init__(self, data):\n")
+        file.write("\t\t\tself.__dict__.update(data)\n\n")
+        
+        file.write("\ttopology_wrapper = TopologyWrapper(topology_data)\n")
+        file.write("\tmonitor = IntentMonitor(topology_wrapper, net)\n")
+        
+        # Configure monitoring parameters
+        if topology.monitor_interval:
+            file.write(f"\tmonitor.monitor_interval = {topology.monitor_interval}\n")
+        
+        if not topology.recovery_enabled:
+            file.write("\tmonitor.recovery_enabled = False\n")
+        
+        file.write("\tmonitor.start_monitoring()\n\n")
     
     def _write_controllers(self, file, topology):
         if topology.controllers:
@@ -547,17 +656,17 @@ def main():
         topology.print_details()
         
         # Generate Mininet script
+        output_filename = f"{topology.id}_mn_script.py"
         generator = MininetScriptGenerator(plugin_manager)
-        output_filename = f"{topology.id}_net.py"
         generator.generate(topology, output_filename)
         
-        print(f"\n✅ Mininet script successfully generated: '{output_filename}'")
-        
-    except (FileNotFoundError, json.JSONDecodeError, KeyError, ValueError) as e:
-        print(f"❌ Error generating script: {e}")
-    except Exception as e:
-        print(f"An unexpected error occurred: {e}")
+        print(f"\n✔ Mininet script '{output_filename}' generated successfully.")
+        print(f"  To run the emulation, execute: sudo python3 {output_filename}")
 
+    except FileNotFoundError as e:
+        print(f"\nError: {e}")
+    except Exception as e:
+        print(f"\nAn unexpected error occurred: {e}")
 
 if __name__ == "__main__":
     main()
