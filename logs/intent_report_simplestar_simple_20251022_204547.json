@@ -1,0 +1,294 @@
+[
+    {
+        "timestamp": "2025-10-22T20:44:38.254865",
+        "log": "  [\u2714] OK: Connectivity between h1 and h2",
+        "intent": {
+            "type": "CONNECTIVITY",
+            "target": [
+                "h1",
+                "h2"
+            ],
+            "description": "Connectivity between h1 and h2",
+            "status": "OK"
+        }
+    },
+    {
+        "timestamp": "2025-10-22T20:44:38.254865",
+        "log": "  [\u2714] OK: Connectivity between h1 and h3",
+        "intent": {
+            "type": "CONNECTIVITY",
+            "target": [
+                "h1",
+                "h3"
+            ],
+            "description": "Connectivity between h1 and h3",
+            "status": "OK"
+        }
+    },
+    {
+        "timestamp": "2025-10-22T20:44:38.254865",
+        "log": "  [\u2714] OK: Connectivity between h1 and h4",
+        "intent": {
+            "type": "CONNECTIVITY",
+            "target": [
+                "h1",
+                "h4"
+            ],
+            "description": "Connectivity between h1 and h4",
+            "status": "OK"
+        }
+    },
+    {
+        "timestamp": "2025-10-22T20:44:38.254865",
+        "log": "  [\u2714] OK: Connectivity between h2 and h3",
+        "intent": {
+            "type": "CONNECTIVITY",
+            "target": [
+                "h2",
+                "h3"
+            ],
+            "description": "Connectivity between h2 and h3",
+            "status": "OK"
+        }
+    },
+    {
+        "timestamp": "2025-10-22T20:44:38.254865",
+        "log": "  [\u2714] OK: Connectivity between h2 and h4",
+        "intent": {
+            "type": "CONNECTIVITY",
+            "target": [
+                "h2",
+                "h4"
+            ],
+            "description": "Connectivity between h2 and h4",
+            "status": "OK"
+        }
+    },
+    {
+        "timestamp": "2025-10-22T20:44:38.254865",
+        "log": "  [\u2714] OK: Connectivity between h3 and h4",
+        "intent": {
+            "type": "CONNECTIVITY",
+            "target": [
+                "h3",
+                "h4"
+            ],
+            "description": "Connectivity between h3 and h4",
+            "status": "OK"
+        }
+    },
+    {
+        "timestamp": "2025-10-22T20:44:38.254865",
+        "log": "  [\u2714] OK: Bandwidth >= 100 Mbps for link h1-s1",
+        "intent": {
+            "type": "BANDWIDTH",
+            "target": [
+                "h1",
+                "s1"
+            ],
+            "value": 100,
+            "description": "Bandwidth >= 100 Mbps for link h1-s1",
+            "status": "OK"
+        }
+    },
+    {
+        "timestamp": "2025-10-22T20:44:38.254865",
+        "log": "  [\u2714] OK: Delay <= 5ms for link h1-s1",
+        "intent": {
+            "type": "DELAY",
+            "target": [
+                "h1",
+                "s1"
+            ],
+            "value": "5ms",
+            "description": "Delay <= 5ms for link h1-s1",
+            "status": "OK"
+        }
+    },
+    {
+        "timestamp": "2025-10-22T20:44:38.254865",
+        "log": "  [\u2714] OK: Bandwidth >= 50 Mbps for link h2-s1",
+        "intent": {
+            "type": "BANDWIDTH",
+            "target": [
+                "h2",
+                "s1"
+            ],
+            "value": 50,
+            "description": "Bandwidth >= 50 Mbps for link h2-s1",
+            "status": "OK"
+        }
+    },
+    {
+        "timestamp": "2025-10-22T20:44:38.254865",
+        "log": "  [\u2714] OK: Delay <= 10ms for link h2-s1",
+        "intent": {
+            "type": "DELAY",
+            "target": [
+                "h2",
+                "s1"
+            ],
+            "value": "10ms",
+            "description": "Delay <= 10ms for link h2-s1",
+            "status": "OK"
+        }
+    },
+    {
+        "timestamp": "2025-10-22T20:44:38.254865",
+        "log": "  [\u2714] OK: Packet Loss <= 1% for link h2-s1",
+        "intent": {
+            "type": "PACKET_LOSS",
+            "target": [
+                "h2",
+                "s1"
+            ],
+            "value": 1,
+            "description": "Packet Loss <= 1% for link h2-s1",
+            "status": "OK"
+        }
+    },
+    {
+        "timestamp": "2025-10-22T20:44:38.254865",
+        "log": "  [\u2714] OK: Bandwidth >= 100 Mbps for link h3-s1",
+        "intent": {
+            "type": "BANDWIDTH",
+            "target": [
+                "h3",
+                "s1"
+            ],
+            "value": 100,
+            "description": "Bandwidth >= 100 Mbps for link h3-s1",
+            "status": "OK"
+        }
+    },
+    {
+        "timestamp": "2025-10-22T20:44:38.254865",
+        "log": "  [\u2714] OK: Delay <= 5ms for link h3-s1",
+        "intent": {
+            "type": "DELAY",
+            "target": [
+                "h3",
+                "s1"
+            ],
+            "value": "5ms",
+            "description": "Delay <= 5ms for link h3-s1",
+            "status": "OK"
+        }
+    },
+    {
+        "timestamp": "2025-10-22T20:44:38.254865",
+        "log": "  [\u2714] OK: Bandwidth >= 80 Mbps for link h4-s1",
+        "intent": {
+            "type": "BANDWIDTH",
+            "target": [
+                "h4",
+                "s1"
+            ],
+            "value": 80,
+            "description": "Bandwidth >= 80 Mbps for link h4-s1",
+            "status": "OK"
+        }
+    },
+    {
+        "timestamp": "2025-10-22T20:44:38.254865",
+        "log": "  [\u2714] OK: Delay <= 7ms for link h4-s1",
+        "intent": {
+            "type": "DELAY",
+            "target": [
+                "h4",
+                "s1"
+            ],
+            "value": "7ms",
+            "description": "Delay <= 7ms for link h4-s1",
+            "status": "OK"
+        }
+    },
+    {
+        "timestamp": "2025-10-22T20:44:38.254865",
+        "log": "  [\u2714] OK: CPU usage <= 50.0% for host h1",
+        "intent": {
+            "type": "CPU_USAGE",
+            "target": "h1",
+            "value": 0.5,
+            "description": "CPU usage <= 50.0% for host h1",
+            "status": "OK"
+        }
+    },
+    {
+        "timestamp": "2025-10-22T20:44:38.254865",
+        "log": "  [\u2717] BROKEN: Memory usage <= 128MB for host h2",
+        "intent": {
+            "type": "MEMORY_USAGE",
+            "target": "h2",
+            "value": 128,
+            "description": "Memory usage <= 128MB for host h2",
+            "status": "BROKEN"
+        }
+    },
+    {
+        "timestamp": "2025-10-22T20:44:38.254865",
+        "log": "  [\u2714] OK: CPU usage <= 33.0% for host h3",
+        "intent": {
+            "type": "CPU_USAGE",
+            "target": "h3",
+            "value": 0.33,
+            "description": "CPU usage <= 33.0% for host h3",
+            "status": "OK"
+        }
+    },
+    {
+        "timestamp": "2025-10-22T20:44:38.254865",
+        "log": "  [\u2717] BROKEN: Memory usage <= 300MB for host h3",
+        "intent": {
+            "type": "MEMORY_USAGE",
+            "target": "h3",
+            "value": 300,
+            "description": "Memory usage <= 300MB for host h3",
+            "status": "BROKEN"
+        }
+    },
+    {
+        "timestamp": "2025-10-22T20:45:00.743188",
+        "log": "  [\u2717] BROKEN: Memory usage <= 128MB for host h2",
+        "intent": {
+            "type": "MEMORY_USAGE",
+            "target": "h2",
+            "value": 128,
+            "description": "Memory usage <= 128MB for host h2",
+            "status": "BROKEN"
+        }
+    },
+    {
+        "timestamp": "2025-10-22T20:45:00.743188",
+        "log": "  [\u2717] BROKEN: Memory usage <= 300MB for host h3",
+        "intent": {
+            "type": "MEMORY_USAGE",
+            "target": "h3",
+            "value": 300,
+            "description": "Memory usage <= 300MB for host h3",
+            "status": "BROKEN"
+        }
+    },
+    {
+        "timestamp": "2025-10-22T20:45:23.065626",
+        "log": "  [\u2717] BROKEN: Memory usage <= 128MB for host h2",
+        "intent": {
+            "type": "MEMORY_USAGE",
+            "target": "h2",
+            "value": 128,
+            "description": "Memory usage <= 128MB for host h2",
+            "status": "BROKEN"
+        }
+    },
+    {
+        "timestamp": "2025-10-22T20:45:23.065626",
+        "log": "  [\u2717] BROKEN: Memory usage <= 300MB for host h3",
+        "intent": {
+            "type": "MEMORY_USAGE",
+            "target": "h3",
+            "value": 300,
+            "description": "Memory usage <= 300MB for host h3",
+            "status": "BROKEN"
+        }
+    }
+]
