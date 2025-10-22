@@ -1,0 +1,77 @@
+{
+    "ID": "DualStar_Enhanced",
+    "VERSION": "1.1",
+    "DESCRIPTION": "A dual star topology with two switches and multiple hosts.",
+    "COMPONENTS": {
+        "HOSTS": [
+            {
+                "ID": "h1",
+                "IP": "192.168.1.1/24",
+                "MAC": "00:00:00:00:00:11"
+            },
+            {
+                "ID": "h2",
+                "IP": "192.168.1.2/24",
+                "MAC": "00:00:00:00:00:12"
+            },
+            {
+                "ID": "h3",
+                "IP": "192.168.1.3/24",
+                "MAC": "00:00:00:00:00:13"
+            },
+            {
+                "ID": "h4",
+                "IP": "192.168.1.4/24",
+                "MAC": "00:00:00:00:00:14"
+            }
+        ],
+        "SWITCHES": [
+            {
+                "ID": "s1",
+                "TYPE": "OVSSwitch",
+                "PARAMS": {
+                    "PROTOCOLS": "OpenFlow13"
+                }
+            },
+            {
+                "ID": "s2",
+                "TYPE": "OVSSwitch",
+                "PARAMS": {
+                    "PROTOCOLS": "OpenFlow13"
+                }
+            }
+        ],
+        "CONTROLLERS": [
+            {
+                "ID": "c0",
+                "TYPE": "Controller",
+                "PARAMS": {
+                    "IP": "127.0.0.1",
+                    "PORT": 6653
+                }
+            }
+        ]
+    },
+    "CONNECTIONS": [
+        {
+            "ENDPOINTS": ["h1", "s1"],
+            "PARAMS": { "BANDWIDTH": 200, "DELAY": "2ms" }
+        },
+        {
+            "ENDPOINTS": ["h2", "s1"],
+            "PARAMS": { "BANDWIDTH": 100, "DELAY": "3ms", "LOSS": 0.5 }
+        },
+        {
+            "ENDPOINTS": ["h3", "s2"],
+            "PARAMS": { "BANDWIDTH": 150, "DELAY": "4ms" }
+        },
+        {
+            "ENDPOINTS": ["h4", "s2"],
+            "PARAMS": { "BANDWIDTH": 120, "DELAY": "5ms" }
+        },
+        {
+            "ENDPOINTS": ["s1", "s2"],
+            "PARAMS": { "BANDWIDTH": 500, "DELAY": "1ms" }
+        }
+    ]
+}

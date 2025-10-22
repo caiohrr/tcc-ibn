@@ -21,7 +21,7 @@ def simplestar_simple_topology():
 	info('*** No controller defined. OVS will be configured for standalone mode.\n')
 
 	info('*** Adding 4 hosts\n')
-	h1 = net.addHost('h1', mac='00:00:00:00:00:01', cpu=0.05)
+	h1 = net.addHost('h1', mac='00:00:00:00:00:01', cpu=0.5)
 	h2 = net.addHost('h2', mac='00:00:00:00:00:02', mem='128M')
 	h3 = net.addHost('h3', mac='00:00:00:00:00:03', cpu=0.33, mem='300M')
 	h4 = net.addHost('h4', mac='00:00:00:00:00:04')
@@ -48,7 +48,7 @@ def simplestar_simple_topology():
 		'version': '1.0',
 		'description': 'Uma topologia estrela com parâmetros de link e recursos de host, sem ips para os hosts.',
 		'hosts': [
-			{'id': 'h1', 'ip': None, 'mac': '00:00:00:00:00:01', 'max_cpu': 0.05},
+			{'id': 'h1', 'ip': None, 'mac': '00:00:00:00:00:01', 'max_cpu': 0.5},
 			{'id': 'h2', 'ip': None, 'mac': '00:00:00:00:00:02', 'max_ram': 128},
 			{'id': 'h3', 'ip': None, 'mac': '00:00:00:00:00:03', 'max_cpu': 0.33, 'max_ram': 300},
 			{'id': 'h4', 'ip': None, 'mac': '00:00:00:00:00:04'},

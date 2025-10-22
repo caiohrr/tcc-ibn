@@ -1,0 +1,184 @@
+{
+  "ID": "sample_monitored_topology",
+  "VERSION": "2.0",
+  "DESCRIPTION": "Sample topology with monitoring and intent parameters for testing IBN system",
+  
+  "COMPONENTS": {
+    "HOSTS": [
+      {
+        "ID": "h1",
+        "IP": "10.0.0.1/24",
+        "MAC": "00:00:00:00:00:01"
+      },
+      {
+        "ID": "h2", 
+        "IP": "10.0.0.2/24",
+        "MAC": "00:00:00:00:00:02"
+      },
+      {
+        "ID": "h3",
+        "IP": "10.0.0.3/24",
+        "MAC": "00:00:00:00:00:03"
+      },
+      {
+        "ID": "server1",
+        "IP": "10.0.1.10/24",
+        "MAC": "00:00:00:00:01:10"
+      }
+    ],
+    
+    "SWITCHES": [
+      {
+        "ID": "s1",
+        "TYPE": "OVSKernelSwitch",
+        "PARAMS": {}
+      },
+      {
+        "ID": "s2", 
+        "TYPE": "OVSKernelSwitch",
+        "PARAMS": {}
+      }
+    ],
+    
+    "CONTROLLERS": [
+      {
+        "ID": "c0",
+        "TYPE": "Controller",
+        "PARAMS": {}
+      }
+    ]
+  },
+  
+  "CONNECTIONS": [
+    {
+      "ENDPOINTS": ["h1", "s1"],
+      "PARAMS": {
+        "bandwidth": 100,
+        "delay": "1ms"
+      }
+    },
+    {
+      "ENDPOINTS": ["h2", "s1"],
+      "PARAMS": {
+        "bandwidth": 100,
+        "delay": "1ms"
+      }
+    },
+    {
+      "ENDPOINTS": ["h3", "s2"],
+      "PARAMS": {
+        "bandwidth": 100,
+        "delay": "2ms"
+      }
+    },
+    {
+      "ENDPOINTS": ["server1", "s2"],
+      "PARAMS": {
+        "bandwidth": 1000,
+        "delay": "0.5ms"
+      }
+    },
+    {
+      "ENDPOINTS": ["s1", "s2"],
+      "PARAMS": {
+        "bandwidth": 1000,
+        "delay": "5ms"
+      }
+    }
+  ],
+  
+  "INTENT": {
+    "connectivity_required": [
+      ["h1", "h2"],
+      ["h1", "server1"],
+      ["h2", "server1"],
+      ["h3", "server1"]
+    ],
+    
+    "isolated_hosts": [
+      {
+        "host": "h3",
+        "forbidden_hosts": ["h1", "h2"]
+      }
+    ],
+    
+    "min_bandwidth": 80,
+    
+    "max_latency": 10,
+    
+    "critical_paths": [
+      "h1-server1",
+      "h2-server1"
+    ],
+    
+    "max_cpu_usage": 75,
+    
+    "max_memory_usage": 1000,
+    
+    "required_components": {
+      "controllers": {
+        "min_count": 1,
+        "status": "active"
+      },
+      "switches": {
+        "min_count": 2,
+        "status": "active"  
+      }
+    },
+    
+    "bandwidth_sla": {
+      "h1-server1": {
+        "min_mbps": 90,
+        "max_latency_ms": 5
+      },
+      "h2-server1": {
+        "min_mbps": 90,
+        "max_latency_ms": 5
+      }
+    },
+    
+    "resource_alerts": {
+      "cpu_warning_threshold": 60,
+      "memory_warning_threshold": 800,
+      "disk_warning_threshold": 70
+    }
+  },
+  
+  "PLUGINS": [
+    {
+      "name": "ConnectivityMonitor",
+      "params": {
+        "check_interval": 30,
+        "ping_timeout": 5
+      }
+    },
+    {
+      "name": "BandwidthMonitor", 
+      "params": {
+        "test_duration": 10,
+        "iperf_protocol": "TCP"
+      }
+    },
+    {
+      "name": "LatencyMonitor",
+      "params": {
+        "ping_count": 5,
+        "check_interval": 20
+      }
+    },
+    {
+      "name": "ResourceMonitor",
+      "params": {
+        "check_interval": 60,
+        "include_hosts": true
+      }
+    },
+    {
+      "name": "TopologyMonitor",
+      "params": {
+        "check_interval": 120,
+        "verify_flows": true
+      }
+    }
+  ]
+}

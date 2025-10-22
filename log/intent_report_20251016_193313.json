@@ -1,0 +1,120 @@
+{
+  "timestamp": "2025-10-16T19:33:13.466267",
+  "summary": {
+    "SATISFIED": 4,
+    "VIOLATED": 0,
+    "RECOVERING": 0,
+    "UNRECOVERABLE": 0,
+    "UNKNOWN": 0,
+    "total": 4
+  },
+  "intents": {
+    "conn_h1-s1": {
+      "type": "CONNECTIVITY",
+      "status": "SATISFIED",
+      "expected": true,
+      "component": "h1-s1"
+    },
+    "conn_h2-s1": {
+      "type": "CONNECTIVITY",
+      "status": "SATISFIED",
+      "expected": true,
+      "component": "h2-s1"
+    },
+    "conn_h3-s1": {
+      "type": "CONNECTIVITY",
+      "status": "SATISFIED",
+      "expected": true,
+      "component": "h3-s1"
+    },
+    "conn_h4-s1": {
+      "type": "CONNECTIVITY",
+      "status": "SATISFIED",
+      "expected": true,
+      "component": "h4-s1"
+    }
+  },
+  "violations": [
+    {
+      "intent_id": "conn_h1-s1",
+      "intent_type": "CONNECTIVITY",
+      "expected": true,
+      "actual": false,
+      "timestamp": "2025-10-16T19:30:43.217709",
+      "component_id": "h1-s1",
+      "severity": "MEDIUM"
+    },
+    {
+      "intent_id": "conn_h1-s1",
+      "intent_type": "CONNECTIVITY",
+      "expected": true,
+      "actual": false,
+      "timestamp": "2025-10-16T19:31:03.242943",
+      "component_id": "h1-s1",
+      "severity": "MEDIUM"
+    },
+    {
+      "intent_id": "conn_h1-s1",
+      "intent_type": "CONNECTIVITY",
+      "expected": true,
+      "actual": false,
+      "timestamp": "2025-10-16T19:31:08.247386",
+      "component_id": "h1-s1",
+      "severity": "MEDIUM"
+    },
+    {
+      "intent_id": "conn_h2-s1",
+      "intent_type": "CONNECTIVITY",
+      "expected": true,
+      "actual": false,
+      "timestamp": "2025-10-16T19:31:13.265267",
+      "component_id": "h2-s1",
+      "severity": "MEDIUM"
+    },
+    {
+      "intent_id": "conn_h2-s1",
+      "intent_type": "CONNECTIVITY",
+      "expected": true,
+      "actual": false,
+      "timestamp": "2025-10-16T19:31:18.276072",
+      "component_id": "h2-s1",
+      "severity": "MEDIUM"
+    },
+    {
+      "intent_id": "conn_h3-s1",
+      "intent_type": "CONNECTIVITY",
+      "expected": true,
+      "actual": false,
+      "timestamp": "2025-10-16T19:31:23.281999",
+      "component_id": "h3-s1",
+      "severity": "MEDIUM"
+    },
+    {
+      "intent_id": "conn_h3-s1",
+      "intent_type": "CONNECTIVITY",
+      "expected": true,
+      "actual": false,
+      "timestamp": "2025-10-16T19:31:28.287677",
+      "component_id": "h3-s1",
+      "severity": "MEDIUM"
+    },
+    {
+      "intent_id": "conn_h4-s1",
+      "intent_type": "CONNECTIVITY",
+      "expected": true,
+      "actual": false,
+      "timestamp": "2025-10-16T19:31:33.293594",
+      "component_id": "h4-s1",
+      "severity": "MEDIUM"
+    },
+    {
+      "intent_id": "conn_h2-s1",
+      "intent_type": "CONNECTIVITY",
+      "expected": true,
+      "actual": false,
+      "timestamp": "2025-10-16T19:32:38.422130",
+      "component_id": "h2-s1",
+      "severity": "MEDIUM"
+    }
+  ]
+}
