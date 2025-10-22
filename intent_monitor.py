@@ -29,7 +29,7 @@ class IntentMonitor:
         self.report = []
         
         # Monitoring control
-        self.monitor_interval = 60  # seconds
+        self.monitor_interval = 30  # seconds
         self.recovery_enabled = True
         self._monitoring_active = False
         self._timer = None
@@ -62,7 +62,7 @@ class IntentMonitor:
             'BANDWIDTH': self.recover_link_params,
             'DELAY': self.recover_link_params,
             'PACKET_LOSS': self.recover_link_params,
-            'CPU_USAGE': self.recover_resource,
+            'CPU_USAGE': self.recover_cpu_usage,
             'MEMORY_USAGE': self.recover_resource,
             'LINK_UTILIZATION': self.recover_traffic_routing,
         }
@@ -118,19 +118,22 @@ class IntentMonitor:
                 })
 
         # --- Host Resource Intents (Example Structure) ---
-        # This is an example of how you could define host resource intents in your JSON.
-        # "HOSTS": [{ "ID": "h1", "MAX_CPU": 80, "MAX_MEM": 90 }]
+        # "HOSTS": [{ "ID": "h1", "MAX_CPU": 0.5, "MAX_RAM": 128 }]
         for host_data in self.topology.hosts:
-            if host_data.get('max_cpu'):
+            # === MODIFIED HERE ===
+            if host_data.get('max_cpu'): 
                 self.intents.append({
-                    'type': 'CPU_USAGE', 'target': host_data['id'], 'value': host_data['max_cpu'],
-                    'description': f"CPU usage <= {host_data['max_cpu']}% for host {host_data['id']}",
+                    'type': 'CPU_USAGE', 'target': host_data['id'],
+                    'value': host_data['max_cpu'], 
+                    'description': f"CPU usage <= {host_data['max_cpu']*100}% for host {host_data['id']}",
                     'status': 'UNKNOWN'
                 })
-            if host_data.get('max_mem'):
+            # === MODIFIED HERE ===
+            if host_data.get('max_ram'): 
                 self.intents.append({
-                    'type': 'MEMORY_USAGE', 'target': host_data['id'], 'value': host_data['max_mem'],
-                    'description': f"Memory usage <= {host_data['max_mem']}% for host {host_data['id']}",
+                    'type': 'MEMORY_USAGE', 'target': host_data['id'],
+                    'value': host_data['max_ram'],
+                    'description': f"Memory usage <= {host_data['max_ram']}MB for host {host_data['id']}",
                     'status': 'UNKNOWN'
                 })
         
@@ -201,9 +204,7 @@ class IntentMonitor:
             json.dump(self.report, f, indent=4)
         print(f"✔ Intent monitoring report saved to '{report_filename}'")
         
-    # ======================================================================
-    # SKELETON CHECK FUNCTIONS - TO BE IMPLEMENTED BY YOU
-    # ======================================================================
+    # Monitoring functions
     
     def check_connectivity(self, intent):
         """Checks if two hosts can ping each other."""
@@ -300,7 +301,7 @@ class IntentMonitor:
         match = re.search(r'(\d+)% packet loss', result)
         if match:
             loss = int(match.group(1))
-            #print(f"[INFO] Packet loss {host1_id} -> {host2_id}: {loss}% . MAX LOSS = {max_loss}")
+            print(f"[INFO] Packet loss {host1_id} -> {host2_id}: {loss}% . MAX LOSS = {max_loss}")
             return loss <= max_loss
         else:
             print("[ERROR] Could not parse ping output")
@@ -309,11 +310,31 @@ class IntentMonitor:
     
     def check_cpu_usage(self, intent):
         """Checks a host's CPU usage."""
-        # This is more complex in Mininet as hosts are processes.
-        # You might run a command inside the host to simulate load and check it.
-        # Or, monitor the CPU of the process on the root machine.
-        raise NotImplementedError("CPU usage check logic is not implemented.")
+        host_id = intent['target']
+        max_cpu = intent.get('value', 80)  # default threshold
+        max_cpu *= 100
         
+        host = self.net.get(host_id)
+        
+        # Get CPU usage from the host's perspective
+        result = host.cmd("top -bn1 | grep 'Cpu(s)' | awk '{print $2}'")
+        
+        try:
+            # Extract the CPU usage percentage (remove '%' if present)
+            cpu_usage = float(result.strip().replace('%', ''))
+            
+            print(f"[INFO] CPU usage for {host_id}: {cpu_usage}%")
+            
+            if cpu_usage <= max_cpu:
+                return True
+            else:
+                print(f"[WARN] CPU usage exceeded threshold ({max_cpu}%)!")
+                return False
+        except (ValueError, IndexError) as e:
+            print(f"[ERROR] Could not parse CPU usage for {host_id}: {e}")
+
+        return False
+       
     def check_memory_usage(self, intent):
         """Checks a host's memory usage."""
         # Similar to CPU usage, this is tricky in standard Mininet.
@@ -354,26 +375,81 @@ class IntentMonitor:
             print(f"[WARN] Link utilization exceeded threshold ({max_util_bps/1e6:.2f} Mbps)!")
             return False
 
-    # ======================================================================
-    # SKELETON RECOVERY FUNCTIONS - TO BE IMPLEMENTED BY YOU
-    # ======================================================================
-    
     def recover_connectivity(self, intent):
-        """Attempts to recover connectivity between two hosts."""
-        # Recovery could involve:
-        # 1. Checking if switch flow rules are correct (if using a controller).
-        # 2. Flushing and re-adding default 'normal' flow rules for OVS.
-        # 3. Checking if interfaces are up.
-        print(f"    - ACTION: Placeholder for recovering connectivity for {intent['target']}.")
-        pass
+        """
+        Attempts to recover connectivity by ensuring host interfaces are 'UP'.
+        """
+        host1_id, host2_id = intent['target']
+        host1 = self.net.get(host1_id)
+        host2 = self.net.get(host2_id)
+
+        try:
+            # Get the first interface for each host
+            iface1 = host1.intfNames()[0]
+            iface2 = host2.intfNames()[0]
+
+            print(f"  -> ACTION: Ensuring interfaces are UP for {host1_id}({iface1}) and {host2_id}({iface2}).")
+            host1.cmd(f"ip link set {iface1} up")
+            host2.cmd(f"ip link set {iface2} up")
         
+        except Exception as e:
+            print(f"  -> ERROR: Failed to bring interfaces up for {host1_id}-{host2_id}: {e}")        
+
+
     def recover_link_params(self, intent):
-        """Attempts to recover link parameters like BW, delay, loss."""
-        # In Mininet, this would mean re-applying the link configuration.
-        # This is difficult to do on a live link without tearing it down.
-        # A more realistic action could be to reroute traffic if possible.
-        print(f"    - ACTION: Placeholder for recovering link parameters for {intent['target']}.")
-        pass
+        #"""Attempts to recover link parameters like BW, delay, loss."""
+        ## In Mininet, this would mean re-applying the link configuration.
+        ## This is difficult to do on a live link without tearing it down.
+        ## A more realistic action could be to reroute traffic if possible.
+        #host1_id, host2_id = intent['target']
+
+        #host1 = self.net.get(host1_id)
+        #host2 = self.net.get(host2_id)
+
+        #host1.cmd(f"ip link set {host1_id}-eth0 down")
+        #host1.cmd(f"ip link set {host1_id}-eth0 up")
+        #host1.cmd(f"{host1_id} tc qdisc del dev {host1_id}-eth0 parent 5:1")
+
+        #host2.cmd(f"ip link set {host2_id}-eth0 down")
+        #host2.cmd(f"ip link set {host2_id}-eth0 up")
+        #host1.cmd(f"{host2_id} tc qdisc del dev {host2_id}-eth0 parent 5:1")
+
+
+        ##print(f"    - ACTION: Placeholder for recovering link parameters for {intent['target']}.")
+
+        """
+        Attempts to recover link parameters (BW, delay, loss) by resetting
+        the 'tc' queueing disciplines on the link.
+        """
+        node1_id, node2_id = intent['target']
+        node1 = self.net.get(node1_id)
+        node2 = self.net.get(node2_id)
+
+        try:
+            # Find the link between the two nodes
+            links = self.net.linksBetween(node1, node2)
+            if not links:
+                print(f"  -> ERROR: Could not find link between {node1_id} and {node2_id}.")
+                return
+            
+            link = links[0] # Assume only one direct link
+            intf1, intf2 = link.intf1, link.intf2
+            
+            # Delete all 'tc' qdisc rules from the 'root' of both interfaces.
+            # This resets them to the default (no bandwidth/delay/loss shaping).
+            print(f"  -> ACTION: Resetting TC qdisc rules on link {intf1.name} (at {node1_id}) and {intf2.name} (at {node2_id}).")
+            node1.cmd(f"tc qdisc del dev {intf1.name} root")
+            node2.cmd(f"tc qdisc del dev {intf2.name} root")
+            print(f"  -> INFO: TC rules on {intf1.name} and {intf2.name} reset to default.")
+            
+            # NOTE: A more advanced recovery would re-apply the *original*
+            # parameters from the topology file, but that's more complex.
+            # This simple "reset" is often enough to clear a bad state.
+
+        except Exception as e:
+            print(f"  -> ERROR: Failed to reset TC rules for {node1_id}-{node2_id}: {e}")
+            print(f"  -> INFO: This can happen if no rules were set. Usually safe to ignore.")
+
 
     def recover_resource(self, intent):
         """Attempts to recover host resources (CPU/Memory)."""
@@ -382,6 +458,56 @@ class IntentMonitor:
         # 2. Migrating services to another host (in a more advanced setup).
         print(f"    - ACTION: Placeholder for recovering resources on host {intent['target']}.")
         pass
+
+    def recover_cpu_usage(self, intent):
+        """
+        Identifies the top 3 CPU-consuming processes on the host and
+        prints a warning to the network operator.
+        """
+        host_id = intent['target']
+        intent_type = intent['type']
+        value = intent['value']
+        host = self.net.get(host_id)
+
+        print(f"  -> RECOVERY: High {intent_type} detected on host {host_id} (threshold: {value}%).")
+        print(f"  -> ACTION: Identifying top 3 CPU-consuming processes on {host_id}...")
+
+        try:
+            # Command to get top 3 processes:
+            # -bn1: batch mode, 1 iteration
+            # tail -n +8: Skip the 7 header lines of 'top'
+            # head -n 3: Take just the top 3 processes
+            # awk: Print PID (col 1), %CPU (col 9), and Command (col 12)
+            command = "top -bn1 | tail -n +8 | head -n 3 | awk '{print $1, $9, $12}'"
+            
+            result = host.cmd(command).strip()
+
+            if not result:
+                print(f"  -> INFO: No high-CPU processes found or 'top' command failed on {host_id}.")
+                return
+
+            print(f"  -> WARNING: Top 3 CPU consumers on {host_id}:")
+            
+            # Split the result into lines and parse each one
+            top_processes = result.split('\n')
+            for i, line in enumerate(top_processes):
+                if not line.strip():
+                    continue
+                try:
+                    # Parse the line, e.g., "1234 99.9 yes"
+                    parts = line.split()
+                    pid = parts[0]
+                    cpu_percent = parts[1]
+                    comm = parts[2]
+                    
+                    # Print a formatted warning
+                    print(f"    {i+1}. PID: {pid:<8} | %CPU: {cpu_percent:<6} | COMMAND: {comm}")
+                
+                except (IndexError, ValueError) as e:
+                    print(f"    - Error parsing 'top' output line: '{line}'. Error: {e}")
+
+        except Exception as e:
+            print(f"  -> ERROR: Failed to execute 'top' command on {host_id}: {e}")
 
     def recover_traffic_routing(self, intent):
         """Attempts to recover by rerouting traffic."""

@@ -76,9 +76,6 @@ class ComponentPlugin(PluginInterface):
         """Generate Mininet code for the custom component."""
         pass
 
-# ======================================================================
-# === NEW PLUGIN TYPE ADDED HERE =======================================
-# ======================================================================
 class MonitorRecoveryPlugin(PluginInterface):
     """Base class for intent monitor and recovery plugins."""
     
@@ -97,8 +94,6 @@ class MonitorRecoveryPlugin(PluginInterface):
         Example: {'MY_CUSTOM_INTENT': self.my_recovery_function}
         """
         pass
-# ======================================================================
-# ======================================================================
 
 
 class PluginManager:
@@ -165,6 +160,7 @@ class PluginManager:
                 print(f"✗ Failed to load plugin from {plugin_file.name}: {e}")
     
     # ... (rest of PluginManager class is unchanged) ...
+
     def get_plugin(self, name: str) -> Optional[PluginInterface]:
         """Get a specific plugin by name."""
         return self.loaded_plugins.get(name)
@@ -204,7 +200,6 @@ class PluginManager:
         
         return additions
 
-# ... (rest of main_v2.py is unchanged, no further modifications are needed) ...
 
 class Topology:
     """Represents the network topology, read from a JSON file."""
@@ -554,17 +549,33 @@ class MininetScriptGenerator:
                 params_list.append(f"ip='{host['ip']}'")
             if host.get('mac'):
                 params_list.append(f"mac='{host['mac']}'")
+
+            # Add CPU limit if specified
+            if host.get('max_cpu') is not None:
+                try:
+                    # Mininet expects CPU as a fraction (e.g., 0.34)
+                    cpu_fraction = float(host['max_cpu'])
+                    params_list.append(f"cpu={cpu_fraction}")
+                except ValueError:
+                    print(f"Warning: Invalid MAX_CPU value '{host['max_cpu']}' for host {host['id']}. Skipping.")
             
-            # Add any additional parameters
+            if host.get('max_ram') is not None:
+                try:
+                    # Mininet expects RAM as a string with unit (e.g., '100M')
+                    ram_mb = int(host['max_ram'])
+                    params_list.append(f"mem='{ram_mb}M'")
+                except ValueError:
+                    print(f"Warning: Invalid MAX_RAM value '{host['max_ram']}' for host {host['id']}. Skipping.")
+
             for key, value in host.items():
-                if key not in ['id', 'ip', 'mac']:
+                if key not in ['id', 'ip', 'mac', 'max_cpu', 'max_ram']: 
                     if isinstance(value, str):
                         params_list.append(f"{key}='{value}'")
                     else:
                         params_list.append(f"{key}={value}")
             
             file.write(f"\t{host['id']} = net.addHost({', '.join(params_list)})\n")
-        file.write("\n")
+        file.write("\n") 
     
     def _write_switches(self, file, topology):
         file.write(f"\tinfo('*** Adding {len(topology.switches)} switches\\n')\n")
