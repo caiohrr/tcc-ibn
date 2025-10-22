@@ -3,11 +3,11 @@ import threading
 import time
 import json
 import re
-import os  # <-- ADDED
+import os
 from datetime import datetime
 from pathlib import Path
 
-# Assuming main-v2.py is in the same directory or accessible in the path
+# Assuming main.py is in the same directory or accessible in the path
 # We need the PluginManager and the new MonitorRecoveryPlugin interface
 from main import PluginManager, MonitorRecoveryPlugin 
 
@@ -64,7 +64,7 @@ class IntentMonitor:
             'DELAY': self.recover_link_params,
             'PACKET_LOSS': self.recover_link_params,
             'CPU_USAGE': self.recover_cpu_usage,
-            'MEMORY_USAGE': self.recover_resource,
+            'MEMORY_USAGE': self.recover_memory_usage,
             'LINK_UTILIZATION': self.recover_traffic_routing,
         }
 
@@ -384,7 +384,7 @@ class IntentMonitor:
             print(f"  -> ERROR: Failed to reset TC rules for {node1_id}-{node2_id}: {e}")
             print(f"  -> INFO: This can happen if no rules were set. Usually safe to ignore.")
 
-    def recover_resource(self, intent):
+    def recover_memory_usage(self, intent):
         """
         Identifies the top 3 Memory-consuming processes on the host and
         prints a warning to the network operator. (Recovery for MEMORY_USAGE)
