@@ -1,0 +1,38 @@
+{
+  "timestamp": "2025-10-16T19:38:53.543977",
+  "summary": {
+    "SATISFIED": 4,
+    "VIOLATED": 0,
+    "RECOVERING": 0,
+    "UNRECOVERABLE": 0,
+    "UNKNOWN": 0,
+    "total": 4
+  },
+  "intents": {
+    "conn_h1-s1": {
+      "type": "CONNECTIVITY",
+      "status": "SATISFIED",
+      "expected": true,
+      "component": "h1-s1"
+    },
+    "conn_h2-s1": {
+      "type": "CONNECTIVITY",
+      "status": "SATISFIED",
+      "expected": true,
+      "component": "h2-s1"
+    },
+    "conn_h3-s1": {
+      "type": "CONNECTIVITY",
+      "status": "SATISFIED",
+      "expected": true,
+      "component": "h3-s1"
+    },
+    "conn_h4-s1": {
+      "type": "CONNECTIVITY",
+      "status": "SATISFIED",
+      "expected": true,
+      "component": "h4-s1"
+    }
+  },
+  "violations": []
+}
