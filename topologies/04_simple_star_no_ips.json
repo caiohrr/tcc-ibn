@@ -7,18 +7,18 @@
                     {
                         "ID": "h1",
                         "MAC": "00:00:00:00:00:01",
-                        "MAX_CPU": 0.5
+                        "MAX_CPU": 0.9
                     },
                     {
                         "ID": "h2",
                         "MAC": "00:00:00:00:00:02",
-                        "MAX_RAM": 128 
+                        "MAX_RAM": 8192
                     },
                     {
                         "ID": "h3",
                         "MAC": "00:00:00:00:00:03",
-                        "MAX_CPU": 0.33,
-                        "MAX_RAM": 300
+                        "MAX_CPU": 0.99,
+                        "MAX_RAM": 4096
                     },
                     {
                         "ID": "h4",
@@ -40,7 +40,7 @@
                 },
                 {
                     "ENDPOINTS": ["h2", "s1"],
-                    "PARAMS": { "BANDWIDTH": 50, "DELAY": "10ms", "LOSS": 1 }
+                    "PARAMS": { "BANDWIDTH": 3, "DELAY": "10ms", "LOSS": 1 }
                 },
                 {
                     "ENDPOINTS": ["h3", "s1"],

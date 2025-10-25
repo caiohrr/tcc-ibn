@@ -21,9 +21,9 @@ def simplestar_simple_topology():
 	info('*** No controller defined. OVS will be configured for standalone mode.\n')
 
 	info('*** Adding 4 hosts\n')
-	h1 = net.addHost('h1', mac='00:00:00:00:00:01', cpu=0.5)
-	h2 = net.addHost('h2', mac='00:00:00:00:00:02', mem='128M')
-	h3 = net.addHost('h3', mac='00:00:00:00:00:03', cpu=0.33, mem='300M')
+	h1 = net.addHost('h1', mac='00:00:00:00:00:01', cpu=0.9)
+	h2 = net.addHost('h2', mac='00:00:00:00:00:02', mem='8192M')
+	h3 = net.addHost('h3', mac='00:00:00:00:00:03', cpu=0.99, mem='4096M')
 	h4 = net.addHost('h4', mac='00:00:00:00:00:04')
 
 	info('*** Adding 1 switches\n')
@@ -31,7 +31,7 @@ def simplestar_simple_topology():
 
 	info('*** Creating 4 links\n')
 	net.addLink(h1, s1, bw=100, delay='5ms')
-	net.addLink(h2, s1, bw=50, delay='10ms', loss=1)
+	net.addLink(h2, s1, bw=3, delay='10ms', loss=1)
 	net.addLink(h3, s1, bw=100, delay='5ms')
 	net.addLink(h4, s1, bw=80, delay='7ms')
 
@@ -48,9 +48,9 @@ def simplestar_simple_topology():
 		'version': '1.0',
 		'description': 'Uma topologia estrela com parâmetros de link e recursos de host, sem ips para os hosts.',
 		'hosts': [
-			{'id': 'h1', 'ip': None, 'mac': '00:00:00:00:00:01', 'max_cpu': 0.5},
-			{'id': 'h2', 'ip': None, 'mac': '00:00:00:00:00:02', 'max_ram': 128},
-			{'id': 'h3', 'ip': None, 'mac': '00:00:00:00:00:03', 'max_cpu': 0.33, 'max_ram': 300},
+			{'id': 'h1', 'ip': None, 'mac': '00:00:00:00:00:01', 'max_cpu': 0.9},
+			{'id': 'h2', 'ip': None, 'mac': '00:00:00:00:00:02', 'max_ram': 8192},
+			{'id': 'h3', 'ip': None, 'mac': '00:00:00:00:00:03', 'max_cpu': 0.99, 'max_ram': 4096},
 			{'id': 'h4', 'ip': None, 'mac': '00:00:00:00:00:04'},
 		],
 		'switches': [
@@ -60,7 +60,7 @@ def simplestar_simple_topology():
 		],
 		'connections': [
 			{'ENDPOINTS': ['h1', 's1'], 'PARAMS': {'BANDWIDTH': 100, 'DELAY': '5ms'}},
-			{'ENDPOINTS': ['h2', 's1'], 'PARAMS': {'BANDWIDTH': 50, 'DELAY': '10ms', 'LOSS': 1}},
+			{'ENDPOINTS': ['h2', 's1'], 'PARAMS': {'BANDWIDTH': 3, 'DELAY': '10ms', 'LOSS': 1}},
 			{'ENDPOINTS': ['h3', 's1'], 'PARAMS': {'BANDWIDTH': 100, 'DELAY': '5ms'}},
 			{'ENDPOINTS': ['h4', 's1'], 'PARAMS': {'BANDWIDTH': 80, 'DELAY': '7ms'}},
 		]

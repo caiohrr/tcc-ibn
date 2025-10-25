@@ -102,7 +102,7 @@ class IntentMonitor:
             if params.get('BANDWIDTH'):
                 self.intents.append({
                     'type': 'BANDWIDTH', 'target': endpoints, 'value': params['BANDWIDTH'],
-                    'description': f"Bandwidth >= {params['BANDWIDTH']} Mbps for link {endpoints[0]}-{endpoints[1]}",
+                    'description': f"Bandwidth <= {params['BANDWIDTH']} Mbps for link {endpoints[0]}-{endpoints[1]}",
                     'status': 'UNKNOWN'
                 })
             if params.get('DELAY'):
@@ -242,21 +242,36 @@ class IntentMonitor:
         return is_successful
 
     def check_bandwidth(self, intent):
-        """Checks if a link meets the minimum bandwidth requirement."""
+        """Checks if a link exceeds its configured bandwidth cap."""
         host1_id, host2_id = intent['target']
-        min_bw_mbps = 0 
+        max_bw_mbps = intent['value']
         host1 = self.net.get(host1_id)
         iface = host1.intfNames()[0]
+
+        # Measure tx bytes over a precise time window
         tx_bytes_1 = int(host1.cmd(f"cat /sys/class/net/{iface}/statistics/tx_bytes").strip())
+        t1 = time.time()
         time.sleep(1)
         tx_bytes_2 = int(host1.cmd(f"cat /sys/class/net/{iface}/statistics/tx_bytes").strip())
-        bw_bps = (tx_bytes_2 - tx_bytes_1) * 8
+        t2 = time.time()
+
+        elapsed = t2 - t1
+        bw_bps = (tx_bytes_2 - tx_bytes_1) * 8 / elapsed
         bw_mbps = bw_bps / 1_000_000
-        if bw_mbps >= min_bw_mbps:
-            return True
-        else:
-            print(f"[WARN] Bandwidth below minimum threshold ({min_bw_mbps} Mbps)!")
+
+        #print(f"Elapsed = {elapsed} s; bw bps = {bw_bps}")
+        print(f"[INFO] ({host1_id}-{host2_id}) Current bandwidth = ({bw_mbps:.8f} Mbps. Max = {max_bw_mbps} Mbps)")
+
+        # Warn if usage is within 10% of max
+        if bw_mbps >= 0.9 * max_bw_mbps:
+            print(f"[WARN] Bandwidth usage is high: {bw_mbps:.2f} Mbps (≥ 90% of limit {max_bw_mbps} Mbps)")
+
+        if bw_mbps > max_bw_mbps:  
+            print(f"[WARN] Bandwidth exceeds cap! ({bw_mbps:.8f} Mbps > {max_bw_mbps} Mbps)")
             return False
+        else:
+            print(f"[OK] Bandwidth within limit ({bw_mbps:.8f} Mbps ≤ {max_bw_mbps} Mbps)")
+            return True
 
     def check_delay(self, intent):
         """Checks if a link's delay is within the acceptable limit."""
@@ -364,25 +379,56 @@ class IntentMonitor:
         except Exception as e:
             print(f"  -> ERROR: Failed to bring interfaces up for {host1_id}-{host2_id}: {e}")        
 
+
     def recover_link_params(self, intent):
-        """Resets the 'tc' queueing disciplines on the link."""
+        """
+        Resets the link parameters to *all* of its defined intents.
+        """
+        # Get the nodes and link
         node1_id, node2_id = intent['target']
+        target_link = tuple(sorted(intent['target'])) # Use sorted tuple for easy comparison
+
         node1 = self.net.get(node1_id)
         node2 = self.net.get(node2_id)
-        try:
-            links = self.net.linksBetween(node1, node2)
-            if not links:
-                print(f"  -> ERROR: Could not find link between {node1_id} and {node2_id}.")
-                return
-            link = links[0]
-            intf1, intf2 = link.intf1, link.intf2
-            print(f"  -> ACTION: Resetting TC qdisc rules on link {intf1.name} (at {node1_id}) and {intf2.name} (at {node2_id}).")
-            node1.cmd(f"tc qdisc del dev {intf1.name} root")
-            node2.cmd(f"tc qdisc del dev {intf2.name} root")
-            print(f"  -> INFO: TC rules on {intf1.name} and {intf2.name} reset to default.")
-        except Exception as e:
-            print(f"  -> ERROR: Failed to reset TC rules for {node1_id}-{node2_id}: {e}")
-            print(f"  -> INFO: This can happen if no rules were set. Usually safe to ignore.")
+
+        links = self.net.linksBetween(node1, node2)
+        if not links:
+            print(f"  -> ERROR: Could not find link between {node1_id} and {node2_id}.")
+            return
+
+        link = links[0]
+        intf1, intf2 = link.intf1, link.intf2
+        
+        # 1. Find ALL intents related to this link and build a param dict
+        link_params = {}
+        for i in self.intents:
+            # Check if the intent's target matches our link
+            if 'target' in i and tuple(sorted(i.get('target', ()))) == target_link:
+                if i['type'] == 'BANDWIDTH':
+                    link_params['bw'] = i['value']
+                elif i['type'] == 'DELAY':
+                    link_params['delay'] = i['value']
+                elif i['type'] == 'PACKET_LOSS':
+                    link_params['loss'] = i['value'] 
+                    
+        if not link_params:
+            # If no params are defined, reset the link to default (no rules)
+            print(f"  -> INFO: No defined params for link {target_link}. Resetting to default.")
+            try:
+                # We use tc qdisc del to be certain all rules are gone.
+                intf1.node.cmd(f"tc qdisc del dev {intf1.name} root")
+                intf2.node.cmd(f"tc qdisc del dev {intf2.name} root")
+            except Exception as e:
+                # This fails if no rules exist, which is fine.
+                print(f"  -> INFO: No existing TC rules to delete on {target_link}.") 
+            return
+
+        # 2. Apply all found parameters at once using keyword arguments
+        print(f"  -> ACTION: Re-applying all intents {link_params} to link {target_link}.")
+        for intf in [intf1, intf2]:
+            intf.config(**link_params)
+            
+        print(f"  -> INFO: Link parameters for {node1_id}-{node2_id} have been restored.")
 
     def recover_memory_usage(self, intent):
         """
