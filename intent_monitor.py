@@ -56,7 +56,6 @@ class IntentMonitor:
             'PACKET_LOSS': self.check_packet_loss,
             'CPU_USAGE': self.check_cpu_usage,
             'MEMORY_USAGE': self.check_memory_usage,
-            'LINK_UTILIZATION': self.check_link_utilization,
         }
         self.recovery_functions = {
             'CONNECTIVITY': self.recover_connectivity,
@@ -65,7 +64,6 @@ class IntentMonitor:
             'PACKET_LOSS': self.recover_link_params,
             'CPU_USAGE': self.recover_cpu_usage,
             'MEMORY_USAGE': self.recover_memory_usage,
-            'LINK_UTILIZATION': self.recover_traffic_routing,
         }
 
     def _register_plugin_functions(self):
@@ -349,22 +347,6 @@ class IntentMonitor:
             print(f"[ERROR] Could not parse Memory usage for {host_id}: {e}")
         return False
         
-    def check_link_utilization(self, intent):
-        """Checks the utilization of a link."""
-        host1_id, host2_id = intent['target']
-        host1 = self.net.get(host1_id)
-        max_util_bps = intent.get('value', 10) * 1_000_000
-        iface = host1.intfNames()[0]
-        tx_bytes_1 = int(host1.cmd(f"cat /sys/class/net/{iface}/statistics/tx_bytes").strip())
-        time.sleep(1)
-        tx_bytes_2 = int(host1.cmd(f"cat /sys/class/net/{iface}/statistics/tx_bytes").strip())
-        bits_per_sec = (tx_bytes_2 - tx_bytes_1) * 8
-        if bits_per_sec <= max_util_bps:
-            return True
-        else:
-            print(f"[WARN] Link utilization exceeded threshold ({max_util_bps/1e6:.2f} Mbps)!")
-            return False
-
     def recover_connectivity(self, intent):
         """Attempts to recover connectivity by ensuring host interfaces are 'UP'."""
         host1_id, host2_id = intent['target']
@@ -490,8 +472,3 @@ class IntentMonitor:
                     print(f"    {i+1}. PID: {parts[0]:<8} | %CPU: {parts[1]:<6} | COMMAND: {parts[2]}")
         except Exception as e:
             print(f"  -> ERROR: Failed to execute 'top' command on {host_id}: {e}")
-
-    def recover_traffic_routing(self, intent):
-        """Placeholder for rerouting traffic."""
-        print(f"    - ACTION: Placeholder for rerouting traffic related to {intent['target']}.")
-        pass
