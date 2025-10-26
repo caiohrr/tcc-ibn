@@ -8,7 +8,7 @@ from datetime import datetime
 from pathlib import Path
 
 # Assuming main.py is in the same directory or accessible in the path
-# We need the PluginManager and the new MonitorRecoveryPlugin interface
+# We need the PluginManager and the MonitorRecoveryPlugin interface
 from main import PluginManager, MonitorRecoveryPlugin 
 
 class IntentMonitor:
@@ -68,7 +68,7 @@ class IntentMonitor:
 
     def _register_plugin_functions(self):
         """Discovers and registers check/recovery functions from plugins."""
-        # Note: The 'MonitorRecoveryPlugin' type is defined in the updated main.py
+        # The 'MonitorRecoveryPlugin' type is defined in main.py
         for plugin in self.plugin_manager.monitor_recovery_plugins:
             print(f"  - Loading functions from monitor plugin: {plugin.get_name()}")
             # Add or override check functions
@@ -116,8 +116,7 @@ class IntentMonitor:
                     'status': 'UNKNOWN'
                 })
 
-        # --- Host Resource Intents (Example Structure) ---
-        # "HOSTS": [{ "ID": "h1", "MAX_CPU": 0.5, "MAX_RAM": 128 }]
+        # --- Host Resource Intents ---
         for host_data in self.topology.hosts:
             if host_data.get('max_cpu'): 
                 self.intents.append({
@@ -211,7 +210,6 @@ class IntentMonitor:
             
             print(f"✔ Intent monitoring report saved to '{report_path}'")
 
-            # --- PERMISSION FIX ---
             # If script was run with sudo, change ownership of the log file and directory
             # back to the original user to avoid permission issues.
             sudo_uid_str = os.environ.get('SUDO_UID')
@@ -228,7 +226,7 @@ class IntentMonitor:
         except Exception as e:
             print(f"✗ ERROR: Failed to export report: {e}")
         
-    # Monitoring functions
+# --- Monitoring functions ---
     
     def check_connectivity(self, intent):
         """Checks if two hosts can ping each other."""

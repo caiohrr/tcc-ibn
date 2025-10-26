@@ -1,13 +1,9 @@
-# main-v2.py
 import json
 import importlib
 import inspect
 from pathlib import Path
 from typing import List, Dict, Optional, Any, Protocol, Callable
 from abc import ABC, abstractmethod
-
-# Import the Intent Monitor
-# from intent_monitor import IntentMonitor # This is now imported in the generated script
 
 # ========================== Plugin System ==========================
 
@@ -105,7 +101,6 @@ class PluginManager:
         self.topology_plugins = []
         self.script_plugins = []
         self.component_plugins = {}
-        # === MODIFIED HERE ===
         self.monitor_recovery_plugins = [] 
         
         # Ensure plugins directory exists
@@ -134,7 +129,6 @@ class PluginManager:
                 
                 # Find all plugin classes in the module
                 for name, obj in inspect.getmembers(module):
-                    # === MODIFIED HERE (added MonitorRecoveryPlugin to the list) ===
                     if (inspect.isclass(obj) and 
                         issubclass(obj, PluginInterface) and 
                         obj not in [PluginInterface, TopologyPlugin, ScriptGeneratorPlugin, ComponentPlugin, MonitorRecoveryPlugin]):
@@ -150,7 +144,6 @@ class PluginManager:
                             self.script_plugins.append(plugin_instance)
                         elif isinstance(plugin_instance, ComponentPlugin):
                             self.component_plugins[plugin_name] = plugin_instance
-                        # === MODIFIED HERE ===
                         elif isinstance(plugin_instance, MonitorRecoveryPlugin):
                             self.monitor_recovery_plugins.append(plugin_instance)
                         
@@ -158,8 +151,6 @@ class PluginManager:
             
             except Exception as e:
                 print(f"✗ Failed to load plugin from {plugin_file.name}: {e}")
-    
-    # ... (rest of PluginManager class is unchanged) ...
 
     def get_plugin(self, name: str) -> Optional[PluginInterface]:
         """Get a specific plugin by name."""
