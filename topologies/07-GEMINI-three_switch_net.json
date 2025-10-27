@@ -1,0 +1,99 @@
+  "ID": "three_switch_net",
+  "VERSION": "1.0",
+  "DESCRIPTION": "Topology with three switches (s1, s2, s3), connecting 1, 2, and 3 hosts respectively. Includes a bandwidth limit for h1-s1.",
+  "MONITORING": {
+    "enabled": true,
+    "interval": 10,
+    "recovery_enabled": false
+  },
+  "COMPONENTS": {
+    "HOSTS": [
+      {
+        "ID": "h1",
+        "IP": "10.0.0.1/24"
+      },
+      {
+        "ID": "h2",
+        "IP": "10.0.0.2/24"
+      },
+      {
+        "ID": "h3",
+        "IP": "10.0.0.3/24"
+      },
+      {
+        "ID": "h4",
+        "IP": "10.0.0.4/24"
+      },
+      {
+        "ID": "h5",
+        "IP": "10.0.0.5/24"
+      },
+      {
+        "ID": "h6",
+        "IP": "10.0.0.6/24"
+      }
+    ],
+    "SWITCHES": [
+      {
+        "ID": "s1",
+        "TYPE": "OVSSwitch",
+        "PARAMS": {
+          "PROTOCOLS": "OpenFlow13"
+        }
+      },
+      {
+        "ID": "s2",
+        "TYPE": "OVSSwitch",
+        "PARAMS": {
+          "PROTOCOLS": "OpenFlow13"
+        }
+      },
+      {
+        "ID": "s3",
+        "TYPE": "OVSSwitch",
+        "PARAMS": {
+          "PROTOCOLS": "OpenFlow13"
+        }
+      }
+    ],
+    "CONTROLLERS": [
+      {
+        "ID": "c0",
+        "TYPE": "RemoteController",
+        "PARAMS": {
+          "IP": "127.0.0.1",
+          "PORT": 6653
+        }
+      }
+    ]
+  },
+  "CONNECTIONS": [
+    {
+      "ENDPOINTS": ["h1", "s1"],
+      "PARAMS": {
+        "BANDWIDTH": 100
+      }
+    },
+    {
+      "ENDPOINTS": ["h2", "s2"]
+    },
+    {
+      "ENDPOINTS": ["h3", "s2"]
+    },
+    {
+      "ENDPOINTS": ["h4", "s3"]
+    },
+    {
+      "ENDPOINTS": ["h5", "s3"]
+    },
+    {
+      "ENDPOINTS": ["h6", "s3"]
+    },
+    {
+      "ENDPOINTS": ["s1", "s2"]
+    },
+    {
+      "ENDPOINTS": ["s2", "s3"]
+    }
+  ]
+}
