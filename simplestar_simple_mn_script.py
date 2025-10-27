@@ -16,7 +16,7 @@ from intent_monitor import IntentMonitor
 def simplestar_simple_topology():
 
 	'Creates and configures the network topology.'
-	net = Mininet(controller=None, switch=OVSKernelSwitch, link=TCLink, waitConnected=False)
+	net = Mininet(controller=Controller, switch=OVSKernelSwitch, link=TCLink, waitConnected=False)
 
 	info('*** No controller defined. OVS will be configured for standalone mode.\n')
 

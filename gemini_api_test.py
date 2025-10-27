@@ -3,15 +3,13 @@ from google.genai import types
 from dotenv import load_dotenv
 import os
 
-load_dotenv()
+# Load .env only if not already set (so it doesn’t override GitHub Secrets)
+if not os.getenv("GEMINI_API_KEY"):
+    load_dotenv()
 
-api_key = os.environ.get("GOOGLE_API_KEY") 
-
+api_key = os.getenv("GEMINI_API_KEY")
 if not api_key:
-    api_key = os.environ.get("GEMINI_API_KEY")
-
-if not api_key:
-    raise ValueError("API key not found. Please set GOOGLE_API_KEY or GEMINI_API_KEY in your .env file.")
+    raise ValueError("API key not found in environment or .env file.")
 
 client = genai.Client(api_key=api_key)
 
@@ -48,7 +46,7 @@ You must follow the schema rules outlined below. You must also use the "Full Sch
         * `PARAMS`: (Object, Optional) Parameters for the switch (e.g., `{"PROTOCOLS": "OpenFlow13"}`).
     * **`CONTROLLERS`:** (List)
         * `ID`: (String) Controller identifier (e.g., "c0").
-        * `TYPE`: (String, Optional) The class to use (e.g., "RemoteController").
+        * `TYPE`: (String, Optional) The class to use (e.g., "Controller").
         * `PARAMS`: (Object, Optional) Parameters (e.g., `{"IP": "127.0.0.1", "PORT": 6653}`).
 
 4.  **`CONNECTIONS` Block:**
@@ -97,7 +95,7 @@ You must follow the schema rules outlined below. You must also use the "Full Sch
     "CONTROLLERS": [
       {
         "ID": "c0",
-        "TYPE": "RemoteController",
+        "TYPE": "Controller",
         "PARAMS": {
           "IP": "127.0.0.1",
           "PORT": 6653
