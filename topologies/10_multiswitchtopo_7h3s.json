@@ -1,0 +1,114 @@
+{
+  "ID": "MultiSwitchTopo_7H3S",
+  "VERSION": "1.0",
+  "DESCRIPTION": "A topology with 3 switches and 7 hosts. s1 is connected to h1, h2. s2 is connected to h3, h4. s3 is connected to h5, h6, h7. IPs increment by 10.",
+  "MONITORING": {
+    "enabled": false,
+    "interval": 15,
+    "recovery_enabled": false
+  },
+  "COMPONENTS": {
+    "HOSTS": [
+      {
+        "ID": "h1",
+        "IP": "10.0.0.10/24"
+      },
+      {
+        "ID": "h2",
+        "IP": "10.0.0.20/24"
+      },
+      {
+        "ID": "h3",
+        "IP": "10.0.0.30/24"
+      },
+      {
+        "ID": "h4",
+        "IP": "10.0.0.40/24"
+      },
+      {
+        "ID": "h5",
+        "IP": "10.0.0.50/24"
+      },
+      {
+        "ID": "h6",
+        "IP": "10.0.0.60/24"
+      },
+      {
+        "ID": "h7",
+        "IP": "10.0.0.70/24"
+      }
+    ],
+    "SWITCHES": [
+      {
+        "ID": "s1"
+      },
+      {
+        "ID": "s2"
+      },
+      {
+        "ID": "s3"
+      }
+    ],
+    "CONTROLLERS": [
+      {
+        "ID": "c0"
+      }
+    ]
+  },
+  "CONNECTIONS": [
+    {
+      "ENDPOINTS": [
+        "h1",
+        "s1"
+      ]
+    },
+    {
+      "ENDPOINTS": [
+        "h2",
+        "s1"
+      ]
+    },
+    {
+      "ENDPOINTS": [
+        "h3",
+        "s2"
+      ]
+    },
+    {
+      "ENDPOINTS": [
+        "h4",
+        "s2"
+      ]
+    },
+    {
+      "ENDPOINTS": [
+        "h5",
+        "s3"
+      ]
+    },
+    {
+      "ENDPOINTS": [
+        "h6",
+        "s3"
+      ]
+    },
+    {
+      "ENDPOINTS": [
+        "h7",
+        "s3"
+      ]
+    },
+    {
+      "ENDPOINTS": [
+        "s1",
+        "s2"
+      ]
+    },
+    {
+      "ENDPOINTS": [
+        "s2",
+        "s3"
+      ]
+    }
+  ]
+}
