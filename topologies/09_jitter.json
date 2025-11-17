@@ -1,0 +1,48 @@
+{
+    "ID": "Jitter",
+    "VERSION": "1.0",
+    "DESCRIPTION": "Uma topologia de exemplo",
+    "COMPONENTS": {
+        "HOSTS": [
+            {
+                "ID": "h1",
+                "IP": "192.168.1.1/24",
+                "MAC": "00:00:00:00:00:11"
+            },
+            {
+                "ID": "h2",
+                "IP": "192.168.1.2/24",
+                "MAC": "00:00:00:00:00:12"
+            }
+        ],
+        "SWITCHES": [
+            {
+                "ID": "s1",
+                "TYPE": "OVSSwitch",
+                "PARAMS": {
+                    "PROTOCOLS": "OpenFlow13"
+                }
+            }
+        ],
+        "CONTROLLERS": [
+            {
+                "ID": "c0",
+                "TYPE": "Controller",
+                "PARAMS": {
+                    "IP": "127.0.0.1",
+                    "PORT": 6653
+                }
+            }
+        ]
+    },
+    "CONNECTIONS": [
+        {
+            "ENDPOINTS": ["h1", "s1"],
+            "PARAMS": { "BANDWIDTH": 200, "DELAY": "2ms", "JITTER": 5 }
+        },
+        {
+            "ENDPOINTS": ["h2", "s1"],
+            "PARAMS": { "BANDWIDTH": 100, "DELAY": "3ms", "LOSS": 0.5, "JITTER": 10 }
+        }
+    ]
+}

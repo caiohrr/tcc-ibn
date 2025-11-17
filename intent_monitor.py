@@ -40,11 +40,11 @@ class IntentMonitor:
         self.plugin_manager = PluginManager(plugins_dir=Path("plugins"))
         self.check_functions = {}
         self.recovery_functions = {}
+
         self._register_default_functions()
         self._register_plugin_functions()
-        
-        # Parse intents from the topology file
         self._parse_intents()
+
         print(f"✔ Intent Monitor initialized with {len(self.intents)} intents.")
 
     def _register_default_functions(self):
@@ -94,44 +94,30 @@ class IntentMonitor:
 
         # --- Link Parameter Intents ---
         for conn in self.topology.connections:
-            endpoints = tuple(conn.get('ENDPOINTS', []))
             params = conn.get('PARAMS', {})
+            endpoints = tuple(conn.get('ENDPOINTS', []))
             
-            if params.get('BANDWIDTH'):
-                self.intents.append({
-                    'type': 'BANDWIDTH', 'target': endpoints, 'value': params['BANDWIDTH'],
-                    'description': f"Bandwidth <= {params['BANDWIDTH']} Mbps for link {endpoints[0]}-{endpoints[1]}",
-                    'status': 'UNKNOWN'
-                })
-            if params.get('DELAY'):
-                self.intents.append({
-                    'type': 'DELAY', 'target': endpoints, 'value': params['DELAY'],
-                    'description': f"Delay <= {params['DELAY']} for link {endpoints[0]}-{endpoints[1]}",
-                    'status': 'UNKNOWN'
-                })
-            if params.get('LOSS'):
-                self.intents.append({
-                    'type': 'PACKET_LOSS', 'target': endpoints, 'value': params['LOSS'],
-                    'description': f"Packet Loss <= {params['LOSS']}% for link {endpoints[0]}-{endpoints[1]}",
-                    'status': 'UNKNOWN'
-                })
+            for key, value in params.items():
+                if key in self.check_functions:
+                    self.intents.append({
+                        'type': key,
+                        'target': endpoints,
+                        'value': value,
+                        'description': f"{key} <= {value} for link {endpoints[0]}-{endpoints[1]}",
+                        'status': 'UNKNOWN'
+                    })
 
         # --- Host Resource Intents ---
         for host_data in self.topology.hosts:
-            if host_data.get('max_cpu'): 
-                self.intents.append({
-                    'type': 'CPU_USAGE', 'target': host_data['id'],
-                    'value': host_data['max_cpu'], 
-                    'description': f"CPU usage <= {host_data['max_cpu']*100}% for host {host_data['id']}",
-                    'status': 'UNKNOWN'
-                })
-            if host_data.get('max_ram'): 
-                self.intents.append({
-                    'type': 'MEMORY_USAGE', 'target': host_data['id'],
-                    'value': host_data['max_ram'],
-                    'description': f"Memory usage <= {host_data['max_ram']}MB for host {host_data['id']}",
-                    'status': 'UNKNOWN'
-                })
+            for key, value in host_data.items():
+                if key in self.check_functions:
+                    self.intents.append({
+                        'type': key,
+                        'target': host_data['id'],
+                        'value': value,
+                        'description': f"{key} <= {value} for host {host_data['id']}",
+                        'status': 'UNKNOWN'
+                    })
         
     def start_monitoring(self):
         """Starts the periodic intent monitoring process."""
@@ -162,7 +148,7 @@ class IntentMonitor:
                 continue
 
             try:
-                is_ok = check_function(intent)
+                is_ok = check_function(self, intent)
                 
                 if not is_ok:
                     intent['status'] = 'BROKEN'
@@ -174,7 +160,7 @@ class IntentMonitor:
                         recovery_function = self.recovery_functions.get(intent['type'])
                         if recovery_function:
                             print(f"    -> Attempting recovery for '{intent['type']}'...")
-                            recovery_function(intent)
+                            recovery_function(self, intent)
                         else:
                             print(f"    -> Warning: No recovery function found for intent type '{intent['type']}'")
                 else:
@@ -228,20 +214,20 @@ class IntentMonitor:
         
 # --- Monitoring functions ---
     
-    def check_connectivity(self, intent):
+    def check_connectivity(self, monitor, intent):
         """Checks if two hosts can ping each other."""
         host1_id, host2_id = intent['target']
-        host1 = self.net.get(host1_id)
-        host2 = self.net.get(host2_id)
+        host1 = monitor.net.get(host1_id)
+        host2 = monitor.net.get(host2_id)
         result = host1.cmd(f'ping -c 1 {host2.IP()}')
         is_successful = '0% packet loss' in result
         return is_successful
 
-    def check_bandwidth(self, intent):
+    def check_bandwidth(self, monitor, intent):
         """Checks if a link exceeds its configured bandwidth cap."""
         host1_id, host2_id = intent['target']
         max_bw_mbps = intent['value']
-        host1 = self.net.get(host1_id)
+        host1 = monitor.net.get(host1_id)
         iface = host1.intfNames()[0]
 
         # Measure tx bytes over a precise time window
@@ -269,13 +255,13 @@ class IntentMonitor:
             print(f"[OK] Bandwidth within limit ({bw_mbps:.8f} Mbps ≤ {max_bw_mbps} Mbps)")
             return True
 
-    def check_delay(self, intent):
+    def check_delay(self, monitor, intent):
         """Checks if a link's delay is within the acceptable limit."""
         host1_id, host2_id = intent['target']
         max_delay_match = re.match(r"(\d+(?:\.\d+)?)ms", intent['value'])
         max_delay = float(max_delay_match.group(1))
-        host1 = self.net.get(host1_id)
-        host2 = self.net.get(host2_id)
+        host1 = monitor.net.get(host1_id)
+        host2 = monitor.net.get(host2_id)
         result = host1.cmd(f'ping -c 3 {host2.IP()}')
         match = re.search(r'rtt .* = .*?/([\d.]+)/.* ms', result)
         if match:
@@ -289,12 +275,12 @@ class IntentMonitor:
             print(f"[ERROR] Could not parse ping output:\n{result}")
             return False
 
-    def check_packet_loss(self, intent):
+    def check_packet_loss(self, monitor, intent):
         """Checks if a link's packet loss is below the threshold."""
         host1_id, host2_id = intent['target']
         max_loss = intent['value']
-        host1 = self.net.get(host1_id)
-        host2 = self.net.get(host2_id)
+        host1 = monitor.net.get(host1_id)
+        host2 = monitor.net.get(host2_id)
         result = host1.cmd(f'ping -c 5 {host2.IP()}')
         match = re.search(r'(\d+)% packet loss', result)
         if match:
@@ -304,11 +290,11 @@ class IntentMonitor:
             print("[ERROR] Could not parse ping output")
         return False
     
-    def check_cpu_usage(self, intent):
+    def check_cpu_usage(self, monitor, intent):
         """Checks a host's CPU usage."""
         host_id = intent['target']
         max_cpu = intent.get('value', 80) * 100
-        host = self.net.get(host_id)
+        host = monitor.net.get(host_id)
         result = host.cmd("top -bn1 | grep 'Cpu(s)' | awk '{print $2}'")
         try:
             cpu_usage = float(result.strip().replace('%', ''))
@@ -321,12 +307,12 @@ class IntentMonitor:
             print(f"[ERROR] Could not parse CPU usage for {host_id}: {e}")
         return False
        
-    def check_memory_usage(self, intent):
+    def check_memory_usage(self, monitor, intent):
         """Checks a host's memory usage."""
         host_id = intent['target']
         max_ram_mb = intent.get('value') # This value is in MB from the topology
         
-        host = self.net.get(host_id)
+        host = monitor.net.get(host_id)
         
         result = host.cmd("free -m | grep 'Mem:' | awk '{print $3}'")
         
@@ -345,11 +331,11 @@ class IntentMonitor:
             print(f"[ERROR] Could not parse Memory usage for {host_id}: {e}")
         return False
         
-    def recover_connectivity(self, intent):
+    def recover_connectivity(self, monitor, intent):
         """Attempts to recover connectivity by ensuring host interfaces are 'UP'."""
         host1_id, host2_id = intent['target']
-        host1 = self.net.get(host1_id)
-        host2 = self.net.get(host2_id)
+        host1 = monitor.net.get(host1_id)
+        host2 = monitor.net.get(host2_id)
         try:
             iface1 = host1.intfNames()[0]
             iface2 = host2.intfNames()[0]
@@ -360,7 +346,7 @@ class IntentMonitor:
             print(f"  -> ERROR: Failed to bring interfaces up for {host1_id}-{host2_id}: {e}")        
 
 
-    def recover_link_params(self, intent):
+    def recover_link_params(self, monitor, intent):
         """
         Resets the link parameters to *all* of its defined intents.
         """
@@ -368,10 +354,10 @@ class IntentMonitor:
         node1_id, node2_id = intent['target']
         target_link = tuple(sorted(intent['target'])) # Use sorted tuple for easy comparison
 
-        node1 = self.net.get(node1_id)
-        node2 = self.net.get(node2_id)
+        node1 = monitor.net.get(node1_id)
+        node2 = monitor.net.get(node2_id)
 
-        links = self.net.linksBetween(node1, node2)
+        links = monitor.net.linksBetween(node1, node2)
         if not links:
             print(f"  -> ERROR: Could not find link between {node1_id} and {node2_id}.")
             return
@@ -381,7 +367,7 @@ class IntentMonitor:
         
         # 1. Find ALL intents related to this link and build a param dict
         link_params = {}
-        for i in self.intents:
+        for i in monitor.intents:
             # Check if the intent's target matches our link
             if 'target' in i and tuple(sorted(i.get('target', ()))) == target_link:
                 if i['type'] == 'BANDWIDTH':
@@ -410,7 +396,7 @@ class IntentMonitor:
             
         print(f"  -> INFO: Link parameters for {node1_id}-{node2_id} have been restored.")
 
-    def recover_memory_usage(self, intent):
+    def recover_memory_usage(self, monitor, intent):
         """
         Identifies the top 3 Memory-consuming processes on the host and
         prints a warning to the network operator. (Recovery for MEMORY_USAGE)
@@ -418,7 +404,7 @@ class IntentMonitor:
         host_id = intent['target']
         intent_type = intent['type']
         value = intent['value']
-        host = self.net.get(host_id)
+        host = monitor.net.get(host_id)
 
         print(f"  -> RECOVERY: High {intent_type} detected on host {host_id} (threshold: {value} MB).")
         print(f"  -> ACTION: Identifying top 3 Memory-consuming processes on {host_id}...")
@@ -452,10 +438,10 @@ class IntentMonitor:
         except Exception as e:
             print(f"  -> ERROR: Failed to execute 'top' command on {host_id}: {e}")
 
-    def recover_cpu_usage(self, intent):
+    def recover_cpu_usage(self, monitor, intent):
         """Identifies top CPU-consuming processes as a warning."""
         host_id = intent['target']
-        host = self.net.get(host_id)
+        host = monitor.net.get(host_id)
         print(f"  -> ACTION: Identifying top 3 CPU-consuming processes on {host_id}...")
         try:
             command = "top -bn1 | tail -n +8 | head -n 3 | awk '{print $1, $9, $12}'"
