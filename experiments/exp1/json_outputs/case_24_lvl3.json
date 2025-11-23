@@ -1,0 +1,40 @@
+{
+  "ID": "RemoteControllerNet",
+  "VERSION": "1.0",
+  "DESCRIPTION": "A simple network with two hosts, one switch, and a remote controller.",
+  "COMPONENTS": {
+    "HOSTS": [
+      {
+        "ID": "h1",
+        "IP": "10.0.0.1/24"
+      },
+      {
+        "ID": "h2",
+        "IP": "10.0.0.2/24"
+      }
+    ],
+    "SWITCHES": [
+      {
+        "ID": "s1"
+      }
+    ],
+    "CONTROLLERS": [
+      {
+        "ID": "c0",
+        "TYPE": "RemoteController",
+        "PARAMS": {
+          "IP": "127.0.0.1",
+          "PORT": 6653
+        }
+      }
+    ]
+  },
+  "CONNECTIONS": [
+    {
+      "ENDPOINTS": ["h1", "s1"]
+    },
+    {
+      "ENDPOINTS": ["h2", "s1"]
+    }
+  ]
+}

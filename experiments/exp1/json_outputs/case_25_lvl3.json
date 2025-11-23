@@ -1,0 +1,36 @@
+{
+  "ID": "CompleteTopology1",
+  "VERSION": "1.0",
+  "DESCRIPTION": "Topologia completa com monitoramento e link com QoS.",
+  "MONITORING": {
+    "enabled": true,
+    "interval": 10,
+    "recovery_enabled": true
+  },
+  "COMPONENTS": {
+    "HOSTS": [
+      {
+        "ID": "h1",
+        "MAX_CPU": 0.5
+      }
+    ],
+    "SWITCHES": [
+      {
+        "ID": "s1",
+        "TYPE": "OVSSwitch",
+        "PARAMS": {
+          "PROTOCOLS": "OpenFlow13"
+        }
+      }
+    ],
+    "CONTROLLERS": []
+  },
+  "CONNECTIONS": [
+    {
+      "ENDPOINTS": ["h1", "s1"],
+      "PARAMS": {
+        "BANDWIDTH": 100
+      }
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "ID": "RedeTeste",
+  "VERSION": "1.0",
+  "DESCRIPTION": "Uma rede básica com dois hosts e um switch.",
+  "COMPONENTS": {
+    "HOSTS": [
+      {
+        "ID": "h1",
+        "IP": "10.0.0.1/24"
+      },
+      {
+        "ID": "h2",
+        "IP": "10.0.0.2/24"
+      }
+    ],
+    "SWITCHES": [
+      {
+        "ID": "s1",
+        "TYPE": "OVSSwitch",
+        "PARAMS": {
+          "PROTOCOLS": "OpenFlow13"
+        }
+      }
+    ],
+    "CONTROLLERS": [
+      {
+        "ID": "c0",
+        "TYPE": "RemoteController",
+        "PARAMS": {
+          "IP": "127.0.0.1",
+          "PORT": 6653
+        }
+      }
+    ]
+  },
+  "CONNECTIONS": [
+    {
+      "ENDPOINTS": ["h1", "s1"],
+      "PARAMS": {
+        "BANDWIDTH": 100
+      }
+    },
+    {
+      "ENDPOINTS": ["h2", "s1"],
+      "PARAMS": {
+        "BANDWIDTH": 100
+      }
+    },
+    {
+      "ENDPOINTS": ["s1", "c0"]
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "ID": "ThreeHostsToSwitch",
+  "VERSION": "1.0",
+  "DESCRIPTION": "Connects three hosts (h1, h2, h3) to a single switch (s1).",
+  "MONITORING": {
+    "enabled": true,
+    "interval": 5,
+    "recovery_enabled": false
+  },
+  "COMPONENTS": {
+    "HOSTS": [
+      {
+        "ID": "h1",
+        "IP": "10.0.0.1/24",
+        "MAX_CPU": 0.7
+      },
+      {
+        "ID": "h2",
+        "IP": "10.0.0.2/24",
+        "MAX_RAM": 512
+      },
+      {
+        "ID": "h3",
+        "IP": "10.0.0.3/24"
+      }
+    ],
+    "SWITCHES": [
+      {
+        "ID": "s1",
+        "TYPE": "OVSSwitch",
+        "PARAMS": {
+          "PROTOCOLS": "OpenFlow13"
+        }
+      }
+    ],
+    "CONTROLLERS": [
+      {
+        "ID": "c0",
+        "TYPE": "RemoteController",
+        "PARAMS": {
+          "IP": "127.0.0.1",
+          "PORT": 6653
+        }
+      }
+    ]
+  },
+  "CONNECTIONS": [
+    {
+      "ENDPOINTS": ["h1", "s1"],
+      "PARAMS": {
+        "BANDWIDTH": 100,
+        "DELAY": "10ms"
+      }
+    },
+    {
+      "ENDPOINTS": ["h2", "s1"],
+      "PARAMS": {
+        "BANDWIDTH": 50,
+        "LOSS": 0.5
+      }
+    },
+    {
+      "ENDPOINTS": ["h3", "s1"]
+    }
+  ]
+}

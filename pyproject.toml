@@ -11,4 +11,5 @@ dependencies = [
     "google-genai>=1.46.0",
     "mininet>=2.3.0.dev6",
     "pygame>=2.6.1",
+    "python-dotenv>=1.2.1",
 ]

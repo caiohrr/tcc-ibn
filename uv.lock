@@ -961,6 +961,7 @@ dependencies = [
     { name = "google-genai" },
     { name = "mininet" },
     { name = "pygame" },
+    { name = "python-dotenv" },
 ]
 
 [package.metadata]
@@ -971,6 +972,7 @@ requires-dist = [
     { name = "google-genai", specifier = ">=1.46.0" },
     { name = "mininet", specifier = ">=2.3.0.dev6" },
     { name = "pygame", specifier = ">=2.6.1" },
+    { name = "python-dotenv", specifier = ">=1.2.1" },
 ]
 
 [[package]]
