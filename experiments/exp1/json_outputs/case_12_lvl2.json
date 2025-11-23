@@ -1,7 +1,7 @@
 {
-  "ID": "TwoHostOneSwitch",
+  "ID": "SimpleHostSwitchNet",
   "VERSION": "1.0",
-  "DESCRIPTION": "A simple network with two hosts (h1, h2) connected to a single switch (s1).",
+  "DESCRIPTION": "A basic network with two hosts (h1, h2) connected to a single switch (s1).",
   "MONITORING": {
     "enabled": true,
     "interval": 5,

@@ -1,5 +1,5 @@
 {
-  "ID": "point_to_point_h1_h2",
+  "ID": "PointToPoint",
   "VERSION": "1.0",
   "DESCRIPTION": "A simple point-to-point topology connecting h1 directly to h2.",
   "MONITORING": {
@@ -12,14 +12,12 @@
       {
         "ID": "h1",
         "IP": "10.0.0.1/24",
-        "MAC": "00:00:00:00:00:01",
         "MAX_CPU": 0.7,
         "MAX_RAM": 512
       },
       {
         "ID": "h2",
-        "IP": "10.0.0.2/24",
-        "MAC": "00:00:00:00:00:02"
+        "IP": "10.0.0.2/24"
       }
     ],
     "SWITCHES": [],
@@ -30,8 +28,7 @@
       "ENDPOINTS": ["h1", "h2"],
       "PARAMS": {
         "BANDWIDTH": 100,
-        "DELAY": "1ms",
-        "LOSS": 0.1
+        "DELAY": "1ms"
       }
     }
   ]

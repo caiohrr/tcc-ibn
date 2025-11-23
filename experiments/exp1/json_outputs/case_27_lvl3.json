@@ -1,7 +1,7 @@
 {
   "ID": "VoIPTestNet",
   "VERSION": "1.0",
-  "DESCRIPTION": "Network topology for VoIP testing with specific link parameters and host CPU priority.",
+  "DESCRIPTION": "Rede para teste de VoIP com links de 100Mbps e 5ms de delay, monitoramento ativado e h1 com prioridade de CPU (max 0.9).",
   "MONITORING": {
     "enabled": true,
     "interval": 5,
@@ -17,10 +17,6 @@
       {
         "ID": "h2",
         "IP": "10.0.0.2/24"
-      },
-      {
-        "ID": "h3",
-        "IP": "10.0.0.3/24"
       }
     ],
     "SWITCHES": [
@@ -53,13 +49,6 @@
     },
     {
       "ENDPOINTS": ["h2", "s1"],
-      "PARAMS": {
-        "BANDWIDTH": 100,
-        "DELAY": "5ms"
-      }
-    },
-    {
-      "ENDPOINTS": ["h3", "s1"],
       "PARAMS": {
         "BANDWIDTH": 100,
         "DELAY": "5ms"

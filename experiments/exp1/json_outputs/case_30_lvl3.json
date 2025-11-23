@@ -1,11 +1,11 @@
 {
-  "ID": "three_hosts_to_one_switch",
+  "ID": "HighAvailabilityNet",
   "VERSION": "1.0",
-  "DESCRIPTION": "A simple topology connecting three hosts (h1, h2, h3) to a single switch (s1).",
+  "DESCRIPTION": "Ambiente de alta disponibilidade com monitoramento agressivo (intervalo 2s, com recuperação).",
   "MONITORING": {
     "enabled": true,
-    "interval": 5,
-    "recovery_enabled": false
+    "interval": 2,
+    "recovery_enabled": true
   },
   "COMPONENTS": {
     "HOSTS": [
@@ -13,16 +13,15 @@
         "ID": "h1",
         "IP": "10.0.0.1/24",
         "MAC": "00:00:00:00:00:01",
-        "MAX_CPU": 0.7
+        "MAX_CPU": 0.7,
+        "MAX_RAM": 512
       },
       {
         "ID": "h2",
         "IP": "10.0.0.2/24",
-        "MAX_RAM": 512
-      },
-      {
-        "ID": "h3",
-        "IP": "10.0.0.3/24"
+        "MAC": "00:00:00:00:00:02",
+        "MAX_CPU": 0.6,
+        "MAX_RAM": 256
       }
     ],
     "SWITCHES": [
@@ -50,21 +49,19 @@
       "ENDPOINTS": ["h1", "s1"],
       "PARAMS": {
         "BANDWIDTH": 100,
-        "DELAY": "1ms"
+        "DELAY": "2ms",
+        "LOSS": 0.5
       }
     },
     {
       "ENDPOINTS": ["h2", "s1"],
       "PARAMS": {
         "BANDWIDTH": 100,
-        "LOSS": 0.5
+        "DELAY": "2ms"
       }
     },
     {
-      "ENDPOINTS": ["h3", "s1"],
-      "PARAMS": {
-        "BANDWIDTH": 100
-      }
+      "ENDPOINTS": ["s1", "c0"]
     }
   ]
 }

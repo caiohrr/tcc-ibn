@@ -1,7 +1,7 @@
 {
-  "ID": "OVSKernelSwitch_Net",
+  "ID": "TwoHostOneSwitch",
   "VERSION": "1.0",
-  "DESCRIPTION": "A simple network with an OVSKernelSwitch connected to two hosts. Monitoring is enabled for alerts only.",
+  "DESCRIPTION": "A simple network with two hosts (h1, h2) connected to a single switch (s1).",
   "MONITORING": {
     "enabled": true,
     "interval": 5,
@@ -20,8 +20,7 @@
     ],
     "SWITCHES": [
       {
-        "ID": "s1",
-        "TYPE": "OVSKernelSwitch"
+        "ID": "s1"
       }
     ],
     "CONTROLLERS": [

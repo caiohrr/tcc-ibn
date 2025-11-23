@@ -1,27 +1,23 @@
 {
-  "ID": "OVSKernelSwitch_Net",
+  "ID": "simple_h1_s1_link",
   "VERSION": "1.0",
-  "DESCRIPTION": "A simple network with an OVSKernelSwitch connected to two hosts. Monitoring is enabled for alerts only.",
+  "DESCRIPTION": "Host h1 connected to switch s1 with 2% packet loss.",
   "MONITORING": {
     "enabled": true,
-    "interval": 5,
+    "interval": 10,
     "recovery_enabled": false
   },
   "COMPONENTS": {
     "HOSTS": [
       {
         "ID": "h1",
-        "IP": "10.0.0.1/24"
-      },
-      {
-        "ID": "h2",
-        "IP": "10.0.0.2/24"
+        "IP": "10.0.0.1/24",
+        "MAX_RAM": 256
       }
     ],
     "SWITCHES": [
       {
-        "ID": "s1",
-        "TYPE": "OVSKernelSwitch"
+        "ID": "s1"
       }
     ],
     "CONTROLLERS": [
@@ -37,10 +33,10 @@
   },
   "CONNECTIONS": [
     {
-      "ENDPOINTS": ["h1", "s1"]
-    },
-    {
-      "ENDPOINTS": ["h2", "s1"]
+      "ENDPOINTS": ["h1", "s1"],
+      "PARAMS": {
+        "LOSS": 2
+      }
     }
   ]
 }

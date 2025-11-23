@@ -1,7 +1,7 @@
 {
-  "ID": "three_hosts_to_one_switch",
+  "ID": "StarTopology",
   "VERSION": "1.0",
-  "DESCRIPTION": "A simple topology connecting three hosts (h1, h2, h3) to a single switch (s1).",
+  "DESCRIPTION": "A simple star topology connecting a server and a client to a core switch.",
   "MONITORING": {
     "enabled": true,
     "interval": 5,
@@ -10,24 +10,21 @@
   "COMPONENTS": {
     "HOSTS": [
       {
-        "ID": "h1",
-        "IP": "10.0.0.1/24",
-        "MAC": "00:00:00:00:00:01",
-        "MAX_CPU": 0.7
+        "ID": "servidor",
+        "IP": "10.0.0.10/24",
+        "MAC": "00:00:00:00:00:0A",
+        "MAX_CPU": 0.7,
+        "MAX_RAM": 1024
       },
       {
-        "ID": "h2",
-        "IP": "10.0.0.2/24",
-        "MAX_RAM": 512
-      },
-      {
-        "ID": "h3",
-        "IP": "10.0.0.3/24"
+        "ID": "cliente",
+        "IP": "10.0.0.20/24",
+        "MAC": "00:00:00:00:00:14"
       }
     ],
     "SWITCHES": [
       {
-        "ID": "s1",
+        "ID": "core",
         "TYPE": "OVSSwitch",
         "PARAMS": {
           "PROTOCOLS": "OpenFlow13"
@@ -47,23 +44,17 @@
   },
   "CONNECTIONS": [
     {
-      "ENDPOINTS": ["h1", "s1"],
+      "ENDPOINTS": ["servidor", "core"],
       "PARAMS": {
-        "BANDWIDTH": 100,
+        "BANDWIDTH": 1000,
         "DELAY": "1ms"
       }
     },
     {
-      "ENDPOINTS": ["h2", "s1"],
+      "ENDPOINTS": ["cliente", "core"],
       "PARAMS": {
         "BANDWIDTH": 100,
         "LOSS": 0.5
-      }
-    },
-    {
-      "ENDPOINTS": ["h3", "s1"],
-      "PARAMS": {
-        "BANDWIDTH": 100
       }
     }
   ]

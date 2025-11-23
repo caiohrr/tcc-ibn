@@ -175,6 +175,7 @@ def clean_json_response(text):
     cleaned = re.sub(r"```", "", cleaned)
     return cleaned.strip()
 
+
 def run_experiment():
     print(f"--- Iniciando Experimento 1: {len(DATASET)} Casos de Teste ---\n")
     
@@ -183,72 +184,91 @@ def run_experiment():
     for case_id, level, prompt in DATASET:
         print(f"Processando Caso {case_id} (Nível {level})... ", end="", flush=True)
         
-        start_time = time.time()
+        # Loop de tentativa (Retry Logic)
+        max_retries = 3
+        retry_delay = 20  # Segundos para esperar se der erro 429
         
-        try:
-            # Chamada à API
-            response = client.models.generate_content(
-                model="gemini-2.5-flash",
-                config=types.GenerateContentConfig(
-                    system_instruction=SYSTEM_INSTRUCTION,
-                    temperature=0.2 # Baixa temperatura para maior determinismo no JSON
-                ),
-                contents=prompt
-            )
-            
-            end_time = time.time()
-            duration_ms = round((end_time - start_time) * 1000, 2)
-            
-            # Processamento da Saída
-            raw_text = response.text
-            json_text = clean_json_response(raw_text)
-            
-            # Validação Sintática Básica
-            is_valid_json = False
+        for attempt in range(max_retries):
+            start_time = time.time()
             try:
-                parsed_json = json.loads(json_text)
-                is_valid_json = True
-            except json.JSONDecodeError:
+                # Chamada à API
+                response = client.models.generate_content(
+                    model="gemini-2.5-flash",
+                    config=types.GenerateContentConfig(
+                        system_instruction=SYSTEM_INSTRUCTION,
+                        temperature=0.2 
+                    ),
+                    contents=prompt
+                )
+                
+                # --- SUCESSO ---
+                end_time = time.time()
+                duration_ms = round((end_time - start_time) * 1000, 2)
+                
+                raw_text = response.text
+                json_text = clean_json_response(raw_text)
+                
                 is_valid_json = False
-            
-            # Salvar JSON individual
-            filename = f"case_{case_id}_lvl{level}.json"
-            with open(JSON_DIR / filename, "w", encoding="utf-8") as f:
-                f.write(json_text)
-            
-            status = "SUCESSO" if is_valid_json else "ERRO JSON"
-            print(f"[{status}] - {duration_ms}ms")
-            
-            results.append({
-                "ID": case_id,
-                "Nivel": level,
-                "Prompt": prompt,
-                "Tempo_ms": duration_ms,
-                "JSON_Valido": "Sim" if is_valid_json else "Não",
-                "Arquivo": filename
-            })
-            
-            # Pausa curta para evitar rate limiting agressivo (opcional)
-            time.sleep(1)
+                try:
+                    parsed_json = json.loads(json_text)
+                    is_valid_json = True
+                except json.JSONDecodeError:
+                    is_valid_json = False
+                
+                # Formatação correta com zeros (ex: case_01)
+                filename = f"case_{case_id:02d}_lvl{level}.json"
+                
+                with open(JSON_DIR / filename, "w", encoding="utf-8") as f:
+                    f.write(json_text)
+                
+                status = "SUCESSO" if is_valid_json else "ERRO JSON"
+                print(f"[{status}] - {duration_ms}ms")
+                
+                results.append({
+                    "ID": case_id,
+                    "Nivel": level,
+                    "Prompt": prompt,
+                    "Tempo_ms": duration_ms,
+                    "JSON_Valido": "Sim" if is_valid_json else "Não",
+                    "Arquivo": filename
+                })
+                
+                # Pausa de segurança entre sucessos (para não estourar o limite de novo)
+                time.sleep(4) 
+                break # Sai do loop de retry e vai para o próximo caso
 
-        except Exception as e:
-            print(f"[FALHA API] - {e}")
-            results.append({
-                "ID": case_id,
-                "Nivel": level,
-                "Prompt": prompt,
-                "Tempo_ms": 0,
-                "JSON_Valido": f"Erro API: {str(e)}",
-                "Arquivo": "N/A"
-            })
+            except Exception as e:
+                # Se for erro de cota (429), espera e tenta de novo
+                if "429" in str(e) or "RESOURCE_EXHAUSTED" in str(e):
+                    if attempt < max_retries - 1:
+                        print(f"\n   [COTA EXCEDIDA] Aguardando {retry_delay}s antes de tentar novamente...", end="", flush=True)
+                        time.sleep(retry_delay)
+                        print(" Retomando.")
+                        continue # Tenta de novo
+                    else:
+                        print(f"[FALHA FINAL APÓS RETRIES] - {e}")
+                else:
+                    # Se for outro erro, falha imediatamente
+                    print(f"[FALHA API] - {e}")
+                
+                # Registra o erro se esgotou as tentativas
+                if attempt == max_retries - 1 or "429" not in str(e):
+                    results.append({
+                        "ID": case_id,
+                        "Nivel": level,
+                        "Prompt": prompt,
+                        "Tempo_ms": 0,
+                        "JSON_Valido": f"Erro API: {str(e)}",
+                        "Arquivo": "N/A"
+                    })
+                    break
 
-    # Gerar Relatório CSV
+    # Gerar Relatório CSV (mantido igual)
     csv_file = OUTPUT_DIR / "report_summary.csv"
     with open(csv_file, "w", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=["ID", "Nivel", "Prompt", "Tempo_ms", "JSON_Valido", "Arquivo", "Acuracia_Semantica", "Obs"])
         writer.writeheader()
         for res in results:
-            # Adicionamos colunas vazias para preenchimento manual posterior
             res["Acuracia_Semantica"] = "" 
             res["Obs"] = ""
             writer.writerow(res)
@@ -256,6 +276,7 @@ def run_experiment():
     print(f"\n--- Experimento Concluído ---")
     print(f"JSONs salvos em: {JSON_DIR.absolute()}")
     print(f"Relatório salvo em: {csv_file.absolute()}")
+
 
 if __name__ == "__main__":
     run_experiment()

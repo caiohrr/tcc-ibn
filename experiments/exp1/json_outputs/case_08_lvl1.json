@@ -1,11 +1,11 @@
 {
   "ID": "StarTopology",
   "VERSION": "1.0",
-  "DESCRIPTION": "A simple star topology connecting a server and a client to a core switch.",
+  "DESCRIPTION": "A star topology connecting 'servidor' and 'cliente' to a 'core' switch.",
   "MONITORING": {
     "enabled": true,
     "interval": 5,
-    "recovery_enabled": false
+    "recovery_enabled": true
   },
   "COMPONENTS": {
     "HOSTS": [
@@ -19,7 +19,7 @@
       {
         "ID": "cliente",
         "IP": "10.0.0.20/24",
-        "MAC": "00:00:00:00:00:14"
+        "MAC": "00:00:00:00:00:0B"
       }
     ],
     "SWITCHES": [
@@ -46,15 +46,16 @@
     {
       "ENDPOINTS": ["servidor", "core"],
       "PARAMS": {
-        "BANDWIDTH": 1000,
-        "DELAY": "1ms"
+        "BANDWIDTH": 100,
+        "DELAY": "2ms",
+        "LOSS": 0.1
       }
     },
     {
       "ENDPOINTS": ["cliente", "core"],
       "PARAMS": {
-        "BANDWIDTH": 100,
-        "LOSS": 0.5
+        "BANDWIDTH": 50,
+        "DELAY": "5ms"
       }
     }
   ]

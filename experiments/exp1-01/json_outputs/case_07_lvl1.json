@@ -1,7 +1,7 @@
 {
-  "ID": "three_hosts_to_one_switch",
+  "ID": "SimpleHostSwitchNet",
   "VERSION": "1.0",
-  "DESCRIPTION": "A simple topology connecting three hosts (h1, h2, h3) to a single switch (s1).",
+  "DESCRIPTION": "A simple network with one host (h1) connected to one switch (s1).",
   "MONITORING": {
     "enabled": true,
     "interval": 5,
@@ -13,16 +13,8 @@
         "ID": "h1",
         "IP": "10.0.0.1/24",
         "MAC": "00:00:00:00:00:01",
-        "MAX_CPU": 0.7
-      },
-      {
-        "ID": "h2",
-        "IP": "10.0.0.2/24",
+        "MAX_CPU": 0.7,
         "MAX_RAM": 512
-      },
-      {
-        "ID": "h3",
-        "IP": "10.0.0.3/24"
       }
     ],
     "SWITCHES": [
@@ -50,20 +42,8 @@
       "ENDPOINTS": ["h1", "s1"],
       "PARAMS": {
         "BANDWIDTH": 100,
-        "DELAY": "1ms"
-      }
-    },
-    {
-      "ENDPOINTS": ["h2", "s1"],
-      "PARAMS": {
-        "BANDWIDTH": 100,
-        "LOSS": 0.5
-      }
-    },
-    {
-      "ENDPOINTS": ["h3", "s1"],
-      "PARAMS": {
-        "BANDWIDTH": 100
+        "DELAY": "1ms",
+        "LOSS": 0.1
       }
     }
   ]
