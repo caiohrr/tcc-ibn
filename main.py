@@ -1,4 +1,6 @@
 import json
+import sys
+import argparse 
 import importlib
 import inspect
 from pathlib import Path
@@ -639,26 +641,48 @@ def load_json_file(file_path: Path) -> Dict:
 
 # ========================== Main Function ==========================
 
+
 def main():
-    """Main function to execute the script."""
+    """Main function to execute the script with CLI arguments."""
+    
+    # 1. Configuração do Argument Parser
+    parser = argparse.ArgumentParser(description="Gera script Mininet a partir de topologia JSON.")
+    
+    # Argumento obrigatório: Caminho do arquivo de entrada
+    parser.add_argument("input_file", type=str, help="Caminho relativo ou absoluto para o arquivo JSON de topologia")
+    
+    # Argumento opcional: Caminho do arquivo de saída (-o ou --output)
+    parser.add_argument("-o", "--output", type=str, help="Caminho/Nome do arquivo de saída Python (opcional)", default=None)
+    
+    args = parser.parse_args()
+    
     try:
         # Initialize plugin manager
         plugin_manager = PluginManager()
         
-        # Get topology file
-        dir_path = Path() / "topologies"
-        prefix = input("Enter topology name: ")
+        # 2. Tratamento do arquivo de entrada
+        input_path = Path(args.input_file)
         
-        matching_file = find_matching_file(dir_path, prefix)
-        print(f"Found file: {matching_file}\n")
+        if not input_path.exists():
+            print(f"Error: O arquivo de entrada '{input_path}' não foi encontrado.")
+            sys.exit(1)
+            
+        print(f"Loading topology from: {input_path}\n")
         
         # Load and parse topology
-        json_data = load_json_file(matching_file)
+        # Nota: Removemos find_matching_file pois agora passamos o caminho exato
+        json_data = load_json_file(input_path)
         topology = Topology(json_data, plugin_manager)
         topology.print_details()
         
+        # 3. Tratamento do arquivo de saída
+        if args.output:
+            output_filename = args.output
+        else:
+            # Mantém o comportamento padrão se -o não for informado
+            output_filename = f"{topology.id}_mn_script.py"
+        
         # Generate Mininet script
-        output_filename = f"{topology.id}_mn_script.py"
         generator = MininetScriptGenerator(plugin_manager)
         generator.generate(topology, output_filename)
         
