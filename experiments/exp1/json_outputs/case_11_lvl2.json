@@ -1,0 +1,162 @@
+{
+  "ID": "TwelveHostStar",
+  "VERSION": "1.0",
+  "DESCRIPTION": "A star topology with 12 hosts connected to a single switch, demonstrating different link speeds. Hosts h1-h6 are 'Legacy' with 10Mbps links, and h7-h12 are 'Modern' with 1Gbps links.",
+  "MONITORING": {
+    "enabled": true,
+    "interval": 5,
+    "recovery_enabled": false
+  },
+  "COMPONENTS": {
+    "HOSTS": [
+      {
+        "ID": "h1",
+        "IP": "10.0.0.1/24",
+        "MAC": "00:00:00:00:00:01",
+        "MAX_CPU": 0.2,
+        "MAX_RAM": 128
+      },
+      {
+        "ID": "h2",
+        "IP": "10.0.0.2/24",
+        "MAC": "00:00:00:00:00:02",
+        "MAX_CPU": 0.3
+      },
+      {
+        "ID": "h3",
+        "IP": "10.0.0.3/24",
+        "MAC": "00:00:00:00:00:03"
+      },
+      {
+        "ID": "h4",
+        "IP": "10.0.0.4/24",
+        "MAC": "00:00:00:00:00:04"
+      },
+      {
+        "ID": "h5",
+        "IP": "10.0.0.5/24",
+        "MAC": "00:00:00:00:00:05"
+      },
+      {
+        "ID": "h6",
+        "IP": "10.0.0.6/24",
+        "MAC": "00:00:00:00:00:06"
+      },
+      {
+        "ID": "h7",
+        "IP": "10.0.0.7/24",
+        "MAC": "00:00:00:00:00:07",
+        "MAX_RAM": 512
+      },
+      {
+        "ID": "h8",
+        "IP": "10.0.0.8/24",
+        "MAC": "00:00:00:00:00:08"
+      },
+      {
+        "ID": "h9",
+        "IP": "10.0.0.9/24",
+        "MAC": "00:00:00:00:00:09"
+      },
+      {
+        "ID": "h10",
+        "IP": "10.0.0.10/24",
+        "MAC": "00:00:00:00:00:0A"
+      },
+      {
+        "ID": "h11",
+        "IP": "10.0.0.11/24",
+        "MAC": "00:00:00:00:00:0B"
+      },
+      {
+        "ID": "h12",
+        "IP": "10.0.0.12/24",
+        "MAC": "00:00:00:00:00:0C"
+      }
+    ],
+    "SWITCHES": [
+      {
+        "ID": "s1",
+        "TYPE": "OVSSwitch",
+        "PARAMS": {
+          "PROTOCOLS": "OpenFlow13"
+        }
+      }
+    ],
+    "CONTROLLERS": []
+  },
+  "CONNECTIONS": [
+    {
+      "ENDPOINTS": ["h1", "s1"],
+      "PARAMS": {
+        "BANDWIDTH": 10
+      }
+    },
+    {
+      "ENDPOINTS": ["h2", "s1"],
+      "PARAMS": {
+        "BANDWIDTH": 10
+      }
+    },
+    {
+      "ENDPOINTS": ["h3", "s1"],
+      "PARAMS": {
+        "BANDWIDTH": 10
+      }
+    },
+    {
+      "ENDPOINTS": ["h4", "s1"],
+      "PARAMS": {
+        "BANDWIDTH": 10
+      }
+    },
+    {
+      "ENDPOINTS": ["h5", "s1"],
+      "PARAMS": {
+        "BANDWIDTH": 10
+      }
+    },
+    {
+      "ENDPOINTS": ["h6", "s1"],
+      "PARAMS": {
+        "BANDWIDTH": 10
+      }
+    },
+    {
+      "ENDPOINTS": ["h7", "s1"],
+      "PARAMS": {
+        "BANDWIDTH": 1000
+      }
+    },
+    {
+      "ENDPOINTS": ["h8", "s1"],
+      "PARAMS": {
+        "BANDWIDTH": 1000
+      }
+    },
+    {
+      "ENDPOINTS": ["h9", "s1"],
+      "PARAMS": {
+        "BANDWIDTH": 1000
+      }
+    },
+    {
+      "ENDPOINTS": ["h10", "s1"],
+      "PARAMS": {
+        "BANDWIDTH": 1000
+      }
+    },
+    {
+      "ENDPOINTS": ["h11", "s1"],
+      "PARAMS": {
+        "BANDWIDTH": 1000
+      }
+    },
+    {
+      "ENDPOINTS": ["h12", "s1"],
+      "PARAMS": {
+        "BANDWIDTH": 1000
+      }
+    }
+  ]
+}

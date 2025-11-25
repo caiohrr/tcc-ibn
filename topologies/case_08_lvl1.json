@@ -1,0 +1,31 @@
+{
+  "ID": "simple_server_client_net",
+  "VERSION": "1.0",
+  "DESCRIPTION": "A simple network connecting a server and a client to a core switch.",
+  "COMPONENTS": {
+    "HOSTS": [
+      {
+        "ID": "servidor",
+        "IP": "10.0.0.10/24"
+      },
+      {
+        "ID": "cliente",
+        "IP": "10.0.0.20/24"
+      }
+    ],
+    "SWITCHES": [
+      {
+        "ID": "core"
+      }
+    ],
+    "CONTROLLERS": []
+  },
+  "CONNECTIONS": [
+    {
+      "ENDPOINTS": ["servidor", "core"]
+    },
+    {
+      "ENDPOINTS": ["cliente", "core"]
+    }
+  ]
+}

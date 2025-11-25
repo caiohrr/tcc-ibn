@@ -1,46 +1,86 @@
 {
-  "ID": "OVSKernelSwitch_Net",
+  "ID": "32_hosts_2_switches_mac_rules",
   "VERSION": "1.0",
-  "DESCRIPTION": "A simple network with an OVSKernelSwitch connected to two hosts. Monitoring is enabled for alerts only.",
+  "DESCRIPTION": "Topology with 32 hosts divided between two switches. Hosts on s1 have even MACs, hosts on s2 have odd MACs. Monitoring enabled.",
   "MONITORING": {
     "enabled": true,
-    "interval": 5,
+    "interval": 10,
     "recovery_enabled": false
   },
   "COMPONENTS": {
     "HOSTS": [
-      {
-        "ID": "h1",
-        "IP": "10.0.0.1/24"
-      },
-      {
-        "ID": "h2",
-        "IP": "10.0.0.2/24"
-      }
+      { "ID": "h1", "IP": "10.0.0.1/24", "MAC": "00:00:00:00:00:02" },
+      { "ID": "h2", "IP": "10.0.0.2/24", "MAC": "00:00:00:00:00:04" },
+      { "ID": "h3", "IP": "10.0.0.3/24", "MAC": "00:00:00:00:00:06" },
+      { "ID": "h4", "IP": "10.0.0.4/24", "MAC": "00:00:00:00:00:08" },
+      { "ID": "h5", "IP": "10.0.0.5/24", "MAC": "00:00:00:00:00:0A" },
+      { "ID": "h6", "IP": "10.0.0.6/24", "MAC": "00:00:00:00:00:0C" },
+      { "ID": "h7", "IP": "10.0.0.7/24", "MAC": "00:00:00:00:00:0E" },
+      { "ID": "h8", "IP": "10.0.0.8/24", "MAC": "00:00:00:00:00:10" },
+      { "ID": "h9", "IP": "10.0.0.9/24", "MAC": "00:00:00:00:00:12" },
+      { "ID": "h10", "IP": "10.0.0.10/24", "MAC": "00:00:00:00:00:14" },
+      { "ID": "h11", "IP": "10.0.0.11/24", "MAC": "00:00:00:00:00:16" },
+      { "ID": "h12", "IP": "10.0.0.12/24", "MAC": "00:00:00:00:00:18" },
+      { "ID": "h13", "IP": "10.0.0.13/24", "MAC": "00:00:00:00:00:1A" },
+      { "ID": "h14", "IP": "10.0.0.14/24", "MAC": "00:00:00:00:00:1C" },
+      { "ID": "h15", "IP": "10.0.0.15/24", "MAC": "00:00:00:00:00:1E" },
+      { "ID": "h16", "IP": "10.0.0.16/24", "MAC": "00:00:00:00:00:20" },
+      { "ID": "h17", "IP": "10.0.0.17/24", "MAC": "00:00:00:00:00:01" },
+      { "ID": "h18", "IP": "10.0.0.18/24", "MAC": "00:00:00:00:00:03" },
+      { "ID": "h19", "IP": "10.0.0.19/24", "MAC": "00:00:00:00:00:05" },
+      { "ID": "h20", "IP": "10.0.0.20/24", "MAC": "00:00:00:00:00:07" },
+      { "ID": "h21", "IP": "10.0.0.21/24", "MAC": "00:00:00:00:00:09" },
+      { "ID": "h22", "IP": "10.0.0.22/24", "MAC": "00:00:00:00:00:0B" },
+      { "ID": "h23", "IP": "10.0.0.23/24", "MAC": "00:00:00:00:00:0D" },
+      { "ID": "h24", "IP": "10.0.0.24/24", "MAC": "00:00:00:00:00:0F" },
+      { "ID": "h25", "IP": "10.0.0.25/24", "MAC": "00:00:00:00:00:11" },
+      { "ID": "h26", "IP": "10.0.0.26/24", "MAC": "00:00:00:00:00:13" },
+      { "ID": "h27", "IP": "10.0.0.27/24", "MAC": "00:00:00:00:00:15" },
+      { "ID": "h28", "IP": "10.0.0.28/24", "MAC": "00:00:00:00:00:17" },
+      { "ID": "h29", "IP": "10.0.0.29/24", "MAC": "00:00:00:00:00:19" },
+      { "ID": "h30", "IP": "10.0.0.30/24", "MAC": "00:00:00:00:00:1B" },
+      { "ID": "h31", "IP": "10.0.0.31/24", "MAC": "00:00:00:00:00:1D" },
+      { "ID": "h32", "IP": "10.0.0.32/24", "MAC": "00:00:00:00:00:1F" }
     ],
     "SWITCHES": [
-      {
-        "ID": "s1",
-        "TYPE": "OVSKernelSwitch"
-      }
+      { "ID": "s1", "TYPE": "OVSSwitch" },
+      { "ID": "s2", "TYPE": "OVSSwitch" }
     ],
-    "CONTROLLERS": [
-      {
-        "ID": "c0",
-        "TYPE": "RemoteController",
-        "PARAMS": {
-          "IP": "127.0.0.1",
-          "PORT": 6653
-        }
-      }
-    ]
+    "CONTROLLERS": []
   },
   "CONNECTIONS": [
-    {
-      "ENDPOINTS": ["h1", "s1"]
-    },
-    {
-      "ENDPOINTS": ["h2", "s1"]
-    }
+    { "ENDPOINTS": ["s1", "s2"] },
+    { "ENDPOINTS": ["h1", "s1"] },
+    { "ENDPOINTS": ["h2", "s1"] },
+    { "ENDPOINTS": ["h3", "s1"] },
+    { "ENDPOINTS": ["h4", "s1"] },
+    { "ENDPOINTS": ["h5", "s1"] },
+    { "ENDPOINTS": ["h6", "s1"] },
+    { "ENDPOINTS": ["h7", "s1"] },
+    { "ENDPOINTS": ["h8", "s1"] },
+    { "ENDPOINTS": ["h9", "s1"] },
+    { "ENDPOINTS": ["h10", "s1"] },
+    { "ENDPOINTS": ["h11", "s1"] },
+    { "ENDPOINTS": ["h12", "s1"] },
+    { "ENDPOINTS": ["h13", "s1"] },
+    { "ENDPOINTS": ["h14", "s1"] },
+    { "ENDPOINTS": ["h15", "s1"] },
+    { "ENDPOINTS": ["h16", "s1"] },
+    { "ENDPOINTS": ["h17", "s2"] },
+    { "ENDPOINTS": ["h18", "s2"] },
+    { "ENDPOINTS": ["h19", "s2"] },
+    { "ENDPOINTS": ["h20", "s2"] },
+    { "ENDPOINTS": ["h21", "s2"] },
+    { "ENDPOINTS": ["h22", "s2"] },
+    { "ENDPOINTS": ["h23", "s2"] },
+    { "ENDPOINTS": ["h24", "s2"] },
+    { "ENDPOINTS": ["h25", "s2"] },
+    { "ENDPOINTS": ["h26", "s2"] },
+    { "ENDPOINTS": ["h27", "s2"] },
+    { "ENDPOINTS": ["h28", "s2"] },
+    { "ENDPOINTS": ["h29", "s2"] },
+    { "ENDPOINTS": ["h30", "s2"] },
+    { "ENDPOINTS": ["h31", "s2"] },
+    { "ENDPOINTS": ["h32", "s2"] }
   ]
 }

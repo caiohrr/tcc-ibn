@@ -1,0 +1,29 @@
+{
+  "ID": "h1_s1_connection",
+  "VERSION": "1.0",
+  "DESCRIPTION": "Connects h1 to s1 with specified bandwidth and delay.",
+  "COMPONENTS": {
+    "HOSTS": [
+      {
+        "ID": "h1",
+        "IP": "10.0.0.1/24"
+      }
+    ],
+    "SWITCHES": [
+      {
+        "ID": "s1",
+        "TYPE": "OVSSwitch"
+      }
+    ],
+    "CONTROLLERS": []
+  },
+  "CONNECTIONS": [
+    {
+      "ENDPOINTS": ["h1", "s1"],
+      "PARAMS": {
+        "BANDWIDTH": 50,
+        "DELAY": "5ms"
+      }
+    }
+  ]
+}

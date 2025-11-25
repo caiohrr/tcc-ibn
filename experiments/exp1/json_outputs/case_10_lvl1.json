@@ -1,7 +1,12 @@
 {
-  "ID": "RedeTeste",
+  "ID": "simple_10_hosts_net",
   "VERSION": "1.0",
-  "DESCRIPTION": "Uma rede básica com dois hosts e um switch.",
+  "DESCRIPTION": "A simple network with 10 hosts connected to a single switch s1. Monitoring is enabled for reporting only.",
+  "MONITORING": {
+    "enabled": true,
+    "interval": 5,
+    "recovery_enabled": false
+  },
   "COMPONENTS": {
     "HOSTS": [
       {
@@ -11,6 +16,38 @@
       {
         "ID": "h2",
         "IP": "10.0.0.2/24"
+      },
+      {
+        "ID": "h3",
+        "IP": "10.0.0.3/24"
+      },
+      {
+        "ID": "h4",
+        "IP": "10.0.0.4/24"
+      },
+      {
+        "ID": "h5",
+        "IP": "10.0.0.5/24"
+      },
+      {
+        "ID": "h6",
+        "IP": "10.0.0.6/24"
+      },
+      {
+        "ID": "h7",
+        "IP": "10.0.0.7/24"
+      },
+      {
+        "ID": "h8",
+        "IP": "10.0.0.8/24"
+      },
+      {
+        "ID": "h9",
+        "IP": "10.0.0.9/24"
+      },
+      {
+        "ID": "h10",
+        "IP": "10.0.0.10/24"
       }
     ],
     "SWITCHES": [
@@ -26,6 +63,30 @@
     },
     {
       "ENDPOINTS": ["h2", "s1"]
+    },
+    {
+      "ENDPOINTS": ["h3", "s1"]
+    },
+    {
+      "ENDPOINTS": ["h4", "s1"]
+    },
+    {
+      "ENDPOINTS": ["h5", "s1"]
+    },
+    {
+      "ENDPOINTS": ["h6", "s1"]
+    },
+    {
+      "ENDPOINTS": ["h7", "s1"]
+    },
+    {
+      "ENDPOINTS": ["h8", "s1"]
+    },
+    {
+      "ENDPOINTS": ["h9", "s1"]
+    },
+    {
+      "ENDPOINTS": ["h10", "s1"]
     }
   ]
 }

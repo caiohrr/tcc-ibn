@@ -1,58 +1,216 @@
 {
-  "ID": "VoIPTestNet",
+  "ID": "25_hosts_on_s1_challenge",
   "VERSION": "1.0",
-  "DESCRIPTION": "Rede para teste de VoIP com links de 100Mbps e 5ms de delay, monitoramento ativado e h1 com prioridade de CPU (max 0.9).",
-  "MONITORING": {
-    "enabled": true,
-    "interval": 5,
-    "recovery_enabled": true
-  },
+  "DESCRIPTION": "Topology with 25 hosts connected to a single switch s1, with specific IP addressing (10.0.X.1/24) and 50% CPU limit for all hosts.",
   "COMPONENTS": {
     "HOSTS": [
       {
         "ID": "h1",
-        "IP": "10.0.0.1/24",
-        "MAX_CPU": 0.9
+        "IP": "10.0.1.1/24",
+        "MAX_CPU": 0.5
       },
       {
         "ID": "h2",
-        "IP": "10.0.0.2/24"
+        "IP": "10.0.2.1/24",
+        "MAX_CPU": 0.5
+      },
+      {
+        "ID": "h3",
+        "IP": "10.0.3.1/24",
+        "MAX_CPU": 0.5
+      },
+      {
+        "ID": "h4",
+        "IP": "10.0.4.1/24",
+        "MAX_CPU": 0.5
+      },
+      {
+        "ID": "h5",
+        "IP": "10.0.5.1/24",
+        "MAX_CPU": 0.5
+      },
+      {
+        "ID": "h6",
+        "IP": "10.0.6.1/24",
+        "MAX_CPU": 0.5
+      },
+      {
+        "ID": "h7",
+        "IP": "10.0.7.1/24",
+        "MAX_CPU": 0.5
+      },
+      {
+        "ID": "h8",
+        "IP": "10.0.8.1/24",
+        "MAX_CPU": 0.5
+      },
+      {
+        "ID": "h9",
+        "IP": "10.0.9.1/24",
+        "MAX_CPU": 0.5
+      },
+      {
+        "ID": "h10",
+        "IP": "10.0.10.1/24",
+        "MAX_CPU": 0.5
+      },
+      {
+        "ID": "h11",
+        "IP": "10.0.11.1/24",
+        "MAX_CPU": 0.5
+      },
+      {
+        "ID": "h12",
+        "IP": "10.0.12.1/24",
+        "MAX_CPU": 0.5
+      },
+      {
+        "ID": "h13",
+        "IP": "10.0.13.1/24",
+        "MAX_CPU": 0.5
+      },
+      {
+        "ID": "h14",
+        "IP": "10.0.14.1/24",
+        "MAX_CPU": 0.5
+      },
+      {
+        "ID": "h15",
+        "IP": "10.0.15.1/24",
+        "MAX_CPU": 0.5
+      },
+      {
+        "ID": "h16",
+        "IP": "10.0.16.1/24",
+        "MAX_CPU": 0.5
+      },
+      {
+        "ID": "h17",
+        "IP": "10.0.17.1/24",
+        "MAX_CPU": 0.5
+      },
+      {
+        "ID": "h18",
+        "IP": "10.0.18.1/24",
+        "MAX_CPU": 0.5
+      },
+      {
+        "ID": "h19",
+        "IP": "10.0.19.1/24",
+        "MAX_CPU": 0.5
+      },
+      {
+        "ID": "h20",
+        "IP": "10.0.20.1/24",
+        "MAX_CPU": 0.5
+      },
+      {
+        "ID": "h21",
+        "IP": "10.0.21.1/24",
+        "MAX_CPU": 0.5
+      },
+      {
+        "ID": "h22",
+        "IP": "10.0.22.1/24",
+        "MAX_CPU": 0.5
+      },
+      {
+        "ID": "h23",
+        "IP": "10.0.23.1/24",
+        "MAX_CPU": 0.5
+      },
+      {
+        "ID": "h24",
+        "IP": "10.0.24.1/24",
+        "MAX_CPU": 0.5
+      },
+      {
+        "ID": "h25",
+        "IP": "10.0.25.1/24",
+        "MAX_CPU": 0.5
       }
     ],
     "SWITCHES": [
       {
-        "ID": "s1",
-        "TYPE": "OVSSwitch",
-        "PARAMS": {
-          "PROTOCOLS": "OpenFlow13"
-        }
-      }
-    ],
-    "CONTROLLERS": [
-      {
-        "ID": "c0",
-        "TYPE": "RemoteController",
-        "PARAMS": {
-          "IP": "127.0.0.1",
-          "PORT": 6653
-        }
+        "ID": "s1"
       }
     ]
   },
   "CONNECTIONS": [
     {
-      "ENDPOINTS": ["h1", "s1"],
-      "PARAMS": {
-        "BANDWIDTH": 100,
-        "DELAY": "5ms"
-      }
+      "ENDPOINTS": ["h1", "s1"]
     },
     {
-      "ENDPOINTS": ["h2", "s1"],
-      "PARAMS": {
-        "BANDWIDTH": 100,
-        "DELAY": "5ms"
-      }
+      "ENDPOINTS": ["h2", "s1"]
+    },
+    {
+      "ENDPOINTS": ["h3", "s1"]
+    },
+    {
+      "ENDPOINTS": ["h4", "s1"]
+    },
+    {
+      "ENDPOINTS": ["h5", "s1"]
+    },
+    {
+      "ENDPOINTS": ["h6", "s1"]
+    },
+    {
+      "ENDPOINTS": ["h7", "s1"]
+    },
+    {
+      "ENDPOINTS": ["h8", "s1"]
+    },
+    {
+      "ENDPOINTS": ["h9", "s1"]
+    },
+    {
+      "ENDPOINTS": ["h10", "s1"]
+    },
+    {
+      "ENDPOINTS": ["h11", "s1"]
+    },
+    {
+      "ENDPOINTS": ["h12", "s1"]
+    },
+    {
+      "ENDPOINTS": ["h13", "s1"]
+    },
+    {
+      "ENDPOINTS": ["h14", "s1"]
+    },
+    {
+      "ENDPOINTS": ["h15", "s1"]
+    },
+    {
+      "ENDPOINTS": ["h16", "s1"]
+    },
+    {
+      "ENDPOINTS": ["h17", "s1"]
+    },
+    {
+      "ENDPOINTS": ["h18", "s1"]
+    },
+    {
+      "ENDPOINTS": ["h19", "s1"]
+    },
+    {
+      "ENDPOINTS": ["h20", "s1"]
+    },
+    {
+      "ENDPOINTS": ["h21", "s1"]
+    },
+    {
+      "ENDPOINTS": ["h22", "s1"]
+    },
+    {
+      "ENDPOINTS": ["h23", "s1"]
+    },
+    {
+      "ENDPOINTS": ["h24", "s1"]
+    },
+    {
+      "ENDPOINTS": ["h25", "s1"]
     }
   ]
 }

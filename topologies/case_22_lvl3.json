@@ -1,0 +1,24 @@
+{
+  "ID": "heavy_server_net",
+  "VERSION": "1.0",
+  "DESCRIPTION": "Topology with a heavy server host h1 connected to s1.",
+  "COMPONENTS": {
+    "HOSTS": [
+      {
+        "ID": "h1",
+        "IP": "10.0.0.1/24",
+        "MAX_CPU": 0.8
+      }
+    ],
+    "SWITCHES": [
+      {
+        "ID": "s1"
+      }
+    ]
+  },
+  "CONNECTIONS": [
+    {
+      "ENDPOINTS": ["h1", "s1"]
+    }
+  ]
+}

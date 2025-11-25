@@ -1,0 +1,35 @@
+{
+  "ID": "simple_h1_s1_net",
+  "VERSION": "1.0",
+  "DESCRIPTION": "Host h1 connected to switch s1 with monitoring enabled.",
+  "MONITORING": {
+    "enabled": true,
+    "interval": 10,
+    "recovery_enabled": true
+  },
+  "COMPONENTS": {
+    "HOSTS": [
+      {
+        "ID": "h1",
+        "MAX_CPU": 0.5
+      }
+    ],
+    "SWITCHES": [
+      {
+        "ID": "s1",
+        "PARAMS": {
+          "PROTOCOLS": "OpenFlow13"
+        }
+      }
+    ],
+    "CONTROLLERS": []
+  },
+  "CONNECTIONS": [
+    {
+      "ENDPOINTS": ["h1", "s1"],
+      "PARAMS": {
+        "BANDWIDTH": 100
+      }
+    }
+  ]
+}

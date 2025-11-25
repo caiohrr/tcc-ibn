@@ -12,4 +12,5 @@ dependencies = [
     "mininet>=2.3.0.dev6",
     "pygame>=2.6.1",
     "python-dotenv>=1.2.1",
+    "seaborn>=0.13.2",
 ]

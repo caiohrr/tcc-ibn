@@ -1,49 +1,68 @@
 {
-  "ID": "StarTopologyWithRemoteController",
+  "ID": "Ring_3Groups_24Hosts",
   "VERSION": "1.0",
-  "DESCRIPTION": "A simple star topology with two hosts connected to a single switch, managed by a remote controller. Monitoring with recovery is enabled.",
-  "MONITORING": {
-    "enabled": true,
-    "interval": 10,
-    "recovery_enabled": true
-  },
+  "DESCRIPTION": "Topology with 3 groups of 8 hosts, each group connected to a switch with specific link intents. Switches are connected in a ring.",
   "COMPONENTS": {
     "HOSTS": [
-      {
-        "ID": "h1",
-        "IP": "10.0.0.1/24"
-      },
-      {
-        "ID": "h2",
-        "IP": "10.0.0.2/24"
-      }
+      { "ID": "h1", "IP": "10.0.0.1/24" },
+      { "ID": "h2", "IP": "10.0.0.2/24" },
+      { "ID": "h3", "IP": "10.0.0.3/24" },
+      { "ID": "h4", "IP": "10.0.0.4/24" },
+      { "ID": "h5", "IP": "10.0.0.5/24" },
+      { "ID": "h6", "IP": "10.0.0.6/24" },
+      { "ID": "h7", "IP": "10.0.0.7/24" },
+      { "ID": "h8", "IP": "10.0.0.8/24" },
+      { "ID": "h9", "IP": "10.0.0.9/24" },
+      { "ID": "h10", "IP": "10.0.0.10/24" },
+      { "ID": "h11", "IP": "10.0.0.11/24" },
+      { "ID": "h12", "IP": "10.0.0.12/24" },
+      { "ID": "h13", "IP": "10.0.0.13/24" },
+      { "ID": "h14", "IP": "10.0.0.14/24" },
+      { "ID": "h15", "IP": "10.0.0.15/24" },
+      { "ID": "h16", "IP": "10.0.0.16/24" },
+      { "ID": "h17", "IP": "10.0.0.17/24" },
+      { "ID": "h18", "IP": "10.0.0.18/24" },
+      { "ID": "h19", "IP": "10.0.0.19/24" },
+      { "ID": "h20", "IP": "10.0.0.20/24" },
+      { "ID": "h21", "IP": "10.0.0.21/24" },
+      { "ID": "h22", "IP": "10.0.0.22/24" },
+      { "ID": "h23", "IP": "10.0.0.23/24" },
+      { "ID": "h24", "IP": "10.0.0.24/24" }
     ],
     "SWITCHES": [
-      {
-        "ID": "s1",
-        "TYPE": "OVSSwitch",
-        "PARAMS": {
-          "PROTOCOLS": "OpenFlow13"
-        }
-      }
+      { "ID": "s1", "TYPE": "OVSSwitch" },
+      { "ID": "s2", "TYPE": "OVSSwitch" },
+      { "ID": "s3", "TYPE": "OVSSwitch" }
     ],
-    "CONTROLLERS": [
-      {
-        "ID": "c0",
-        "TYPE": "RemoteController",
-        "PARAMS": {
-          "IP": "127.0.0.1",
-          "PORT": 6653
-        }
-      }
-    ]
+    "CONTROLLERS": []
   },
   "CONNECTIONS": [
-    {
-      "ENDPOINTS": ["h1", "s1"]
-    },
-    {
-      "ENDPOINTS": ["h2", "s1"]
-    }
+    { "ENDPOINTS": ["h1", "s1"], "PARAMS": { "DELAY": "2ms" } },
+    { "ENDPOINTS": ["h2", "s1"], "PARAMS": { "DELAY": "2ms" } },
+    { "ENDPOINTS": ["h3", "s1"], "PARAMS": { "DELAY": "2ms" } },
+    { "ENDPOINTS": ["h4", "s1"], "PARAMS": { "DELAY": "2ms" } },
+    { "ENDPOINTS": ["h5", "s1"], "PARAMS": { "DELAY": "2ms" } },
+    { "ENDPOINTS": ["h6", "s1"], "PARAMS": { "DELAY": "2ms" } },
+    { "ENDPOINTS": ["h7", "s1"], "PARAMS": { "DELAY": "2ms" } },
+    { "ENDPOINTS": ["h8", "s1"], "PARAMS": { "DELAY": "2ms" } },
+    { "ENDPOINTS": ["h9", "s2"], "PARAMS": { "BANDWIDTH": 1000 } },
+    { "ENDPOINTS": ["h10", "s2"], "PARAMS": { "BANDWIDTH": 1000 } },
+    { "ENDPOINTS": ["h11", "s2"], "PARAMS": { "BANDWIDTH": 1000 } },
+    { "ENDPOINTS": ["h12", "s2"], "PARAMS": { "BANDWIDTH": 1000 } },
+    { "ENDPOINTS": ["h13", "s2"], "PARAMS": { "BANDWIDTH": 1000 } },
+    { "ENDPOINTS": ["h14", "s2"], "PARAMS": { "BANDWIDTH": 1000 } },
+    { "ENDPOINTS": ["h15", "s2"], "PARAMS": { "BANDWIDTH": 1000 } },
+    { "ENDPOINTS": ["h16", "s2"], "PARAMS": { "BANDWIDTH": 1000 } },
+    { "ENDPOINTS": ["h17", "s3"], "PARAMS": { "BANDWIDTH": 1 } },
+    { "ENDPOINTS": ["h18", "s3"], "PARAMS": { "BANDWIDTH": 1 } },
+    { "ENDPOINTS": ["h19", "s3"], "PARAMS": { "BANDWIDTH": 1 } },
+    { "ENDPOINTS": ["h20", "s3"], "PARAMS": { "BANDWIDTH": 1 } },
+    { "ENDPOINTS": ["h21", "s3"], "PARAMS": { "BANDWIDTH": 1 } },
+    { "ENDPOINTS": ["h22", "s3"], "PARAMS": { "BANDWIDTH": 1 } },
+    { "ENDPOINTS": ["h23", "s3"], "PARAMS": { "BANDWIDTH": 1 } },
+    { "ENDPOINTS": ["h24", "s3"], "PARAMS": { "BANDWIDTH": 1 } },
+    { "ENDPOINTS": ["s1", "s2"] },
+    { "ENDPOINTS": ["s2", "s3"] },
+    { "ENDPOINTS": ["s3", "s1"] }
   ]
 }

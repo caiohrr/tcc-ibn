@@ -1,31 +1,96 @@
 {
-  "ID": "SimpleNet1",
+  "ID": "eight_hosts_to_s1_loss_test",
   "VERSION": "1.0",
-  "DESCRIPTION": "A very simple network with one host and one switch.",
+  "DESCRIPTION": "Uma rede com 8 hosts conectados a um único switch (s1), com 1% de perda de pacotes em todos os links para teste de robustez.",
   "COMPONENTS": {
     "HOSTS": [
       {
         "ID": "h1",
         "IP": "10.0.0.1/24"
+      },
+      {
+        "ID": "h2",
+        "IP": "10.0.0.2/24"
+      },
+      {
+        "ID": "h3",
+        "IP": "10.0.0.3/24"
+      },
+      {
+        "ID": "h4",
+        "IP": "10.0.0.4/24"
+      },
+      {
+        "ID": "h5",
+        "IP": "10.0.0.5/24"
+      },
+      {
+        "ID": "h6",
+        "IP": "10.0.0.6/24"
+      },
+      {
+        "ID": "h7",
+        "IP": "10.0.0.7/24"
+      },
+      {
+        "ID": "h8",
+        "IP": "10.0.0.8/24"
       }
     ],
     "SWITCHES": [
       {
         "ID": "s1",
-        "TYPE": "OVSSwitch",
-        "PARAMS": {
-          "PROTOCOLS": "OpenFlow13"
-        }
+        "TYPE": "OVSSwitch"
       }
-    ],
-    "CONTROLLERS": []
+    ]
   },
   "CONNECTIONS": [
     {
       "ENDPOINTS": ["h1", "s1"],
       "PARAMS": {
-        "BANDWIDTH": 100,
-        "DELAY": "1ms"
+        "LOSS": 1
+      }
+    },
+    {
+      "ENDPOINTS": ["h2", "s1"],
+      "PARAMS": {
+        "LOSS": 1
+      }
+    },
+    {
+      "ENDPOINTS": ["h3", "s1"],
+      "PARAMS": {
+        "LOSS": 1
+      }
+    },
+    {
+      "ENDPOINTS": ["h4", "s1"],
+      "PARAMS": {
+        "LOSS": 1
+      }
+    },
+    {
+      "ENDPOINTS": ["h5", "s1"],
+      "PARAMS": {
+        "LOSS": 1
+      }
+    },
+    {
+      "ENDPOINTS": ["h6", "s1"],
+      "PARAMS": {
+        "LOSS": 1
+      }
+    },
+    {
+      "ENDPOINTS": ["h7", "s1"],
+      "PARAMS": {
+        "LOSS": 1
+      }
+    },
+    {
+      "ENDPOINTS": ["h8", "s1"],
+      "PARAMS": {
+        "LOSS": 1
       }
     }
   ]

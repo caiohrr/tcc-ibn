@@ -1,0 +1,392 @@
+{
+  "ID": "large_network_30_hosts",
+  "VERSION": "1.0",
+  "DESCRIPTION": "Network with 30 hosts. Critical servers (multiples of 5) have high CPU/RAM/Bandwidth. Clients have lower CPU/Bandwidth.",
+  "MONITORING": {
+    "enabled": true,
+    "interval": 15,
+    "recovery_enabled": true
+  },
+  "COMPONENTS": {
+    "HOSTS": [
+      {
+        "ID": "h1",
+        "IP": "10.0.0.1/24",
+        "MAC": "00:00:00:00:00:01",
+        "MAX_CPU": 0.2
+      },
+      {
+        "ID": "h2",
+        "IP": "10.0.0.2/24",
+        "MAC": "00:00:00:00:00:02",
+        "MAX_CPU": 0.2
+      },
+      {
+        "ID": "h3",
+        "IP": "10.0.0.3/24",
+        "MAC": "00:00:00:00:00:03",
+        "MAX_CPU": 0.2
+      },
+      {
+        "ID": "h4",
+        "IP": "10.0.0.4/24",
+        "MAC": "00:00:00:00:00:04",
+        "MAX_CPU": 0.2
+      },
+      {
+        "ID": "h5",
+        "IP": "10.0.0.5/24",
+        "MAC": "00:00:00:00:00:05",
+        "MAX_CPU": 1.0,
+        "MAX_RAM": 2048
+      },
+      {
+        "ID": "h6",
+        "IP": "10.0.0.6/24",
+        "MAC": "00:00:00:00:00:06",
+        "MAX_CPU": 0.2
+      },
+      {
+        "ID": "h7",
+        "IP": "10.0.0.7/24",
+        "MAC": "00:00:00:00:00:07",
+        "MAX_CPU": 0.2
+      },
+      {
+        "ID": "h8",
+        "IP": "10.0.0.8/24",
+        "MAC": "00:00:00:00:00:08",
+        "MAX_CPU": 0.2
+      },
+      {
+        "ID": "h9",
+        "IP": "10.0.0.9/24",
+        "MAC": "00:00:00:00:00:09",
+        "MAX_CPU": 0.2
+      },
+      {
+        "ID": "h10",
+        "IP": "10.0.0.10/24",
+        "MAC": "00:00:00:00:00:0a",
+        "MAX_CPU": 1.0,
+        "MAX_RAM": 2048
+      },
+      {
+        "ID": "h11",
+        "IP": "10.0.0.11/24",
+        "MAC": "00:00:00:00:00:0b",
+        "MAX_CPU": 0.2
+      },
+      {
+        "ID": "h12",
+        "IP": "10.0.0.12/24",
+        "MAC": "00:00:00:00:00:0c",
+        "MAX_CPU": 0.2
+      },
+      {
+        "ID": "h13",
+        "IP": "10.0.0.13/24",
+        "MAC": "00:00:00:00:00:0d",
+        "MAX_CPU": 0.2
+      },
+      {
+        "ID": "h14",
+        "IP": "10.0.0.14/24",
+        "MAC": "00:00:00:00:00:0e",
+        "MAX_CPU": 0.2
+      },
+      {
+        "ID": "h15",
+        "IP": "10.0.0.15/24",
+        "MAC": "00:00:00:00:00:0f",
+        "MAX_CPU": 1.0,
+        "MAX_RAM": 2048
+      },
+      {
+        "ID": "h16",
+        "IP": "10.0.0.16/24",
+        "MAC": "00:00:00:00:00:10",
+        "MAX_CPU": 0.2
+      },
+      {
+        "ID": "h17",
+        "IP": "10.0.0.17/24",
+        "MAC": "00:00:00:00:00:11",
+        "MAX_CPU": 0.2
+      },
+      {
+        "ID": "h18",
+        "IP": "10.0.0.18/24",
+        "MAC": "00:00:00:00:00:12",
+        "MAX_CPU": 0.2
+      },
+      {
+        "ID": "h19",
+        "IP": "10.0.0.19/24",
+        "MAC": "00:00:00:00:00:13",
+        "MAX_CPU": 0.2
+      },
+      {
+        "ID": "h20",
+        "IP": "10.0.0.20/24",
+        "MAC": "00:00:00:00:00:14",
+        "MAX_CPU": 1.0,
+        "MAX_RAM": 2048
+      },
+      {
+        "ID": "h21",
+        "IP": "10.0.0.21/24",
+        "MAC": "00:00:00:00:00:15",
+        "MAX_CPU": 0.2
+      },
+      {
+        "ID": "h22",
+        "IP": "10.0.0.22/24",
+        "MAC": "00:00:00:00:00:16",
+        "MAX_CPU": 0.2
+      },
+      {
+        "ID": "h23",
+        "IP": "10.0.0.23/24",
+        "MAC": "00:00:00:00:00:17",
+        "MAX_CPU": 0.2
+      },
+      {
+        "ID": "h24",
+        "IP": "10.0.0.24/24",
+        "MAC": "00:00:00:00:00:18",
+        "MAX_CPU": 0.2
+      },
+      {
+        "ID": "h25",
+        "IP": "10.0.0.25/24",
+        "MAC": "00:00:00:00:00:19",
+        "MAX_CPU": 1.0,
+        "MAX_RAM": 2048
+      },
+      {
+        "ID": "h26",
+        "IP": "10.0.0.26/24",
+        "MAC": "00:00:00:00:00:1a",
+        "MAX_CPU": 0.2
+      },
+      {
+        "ID": "h27",
+        "IP": "10.0.0.27/24",
+        "MAC": "00:00:00:00:00:1b",
+        "MAX_CPU": 0.2
+      },
+      {
+        "ID": "h28",
+        "IP": "10.0.0.28/24",
+        "MAC": "00:00:00:00:00:1c",
+        "MAX_CPU": 0.2
+      },
+      {
+        "ID": "h29",
+        "IP": "10.0.0.29/24",
+        "MAC": "00:00:00:00:00:1d",
+        "MAX_CPU": 0.2
+      },
+      {
+        "ID": "h30",
+        "IP": "10.0.0.30/24",
+        "MAC": "00:00:00:00:00:1e",
+        "MAX_CPU": 1.0,
+        "MAX_RAM": 2048
+      }
+    ],
+    "SWITCHES": [
+      {
+        "ID": "s1",
+        "TYPE": "OVSSwitch",
+        "PARAMS": {
+          "PROTOCOLS": "OpenFlow13"
+        }
+      }
+    ],
+    "CONTROLLERS": []
+  },
+  "CONNECTIONS": [
+    {
+      "ENDPOINTS": ["h1", "s1"],
+      "PARAMS": {
+        "BANDWIDTH": 10
+      }
+    },
+    {
+      "ENDPOINTS": ["h2", "s1"],
+      "PARAMS": {
+        "BANDWIDTH": 10
+      }
+    },
+    {
+      "ENDPOINTS": ["h3", "s1"],
+      "PARAMS": {
+        "BANDWIDTH": 10
+      }
+    },
+    {
+      "ENDPOINTS": ["h4", "s1"],
+      "PARAMS": {
+        "BANDWIDTH": 10
+      }
+    },
+    {
+      "ENDPOINTS": ["h5", "s1"],
+      "PARAMS": {
+        "BANDWIDTH": 1000
+      }
+    },
+    {
+      "ENDPOINTS": ["h6", "s1"],
+      "PARAMS": {
+        "BANDWIDTH": 10
+      }
+    },
+    {
+      "ENDPOINTS": ["h7", "s1"],
+      "PARAMS": {
+        "BANDWIDTH": 10
+      }
+    },
+    {
+      "ENDPOINTS": ["h8", "s1"],
+      "PARAMS": {
+        "BANDWIDTH": 10
+      }
+    },
+    {
+      "ENDPOINTS": ["h9", "s1"],
+      "PARAMS": {
+        "BANDWIDTH": 10
+      }
+    },
+    {
+      "ENDPOINTS": ["h10", "s1"],
+      "PARAMS": {
+        "BANDWIDTH": 1000
+      }
+    },
+    {
+      "ENDPOINTS": ["h11", "s1"],
+      "PARAMS": {
+        "BANDWIDTH": 10
+      }
+    },
+    {
+      "ENDPOINTS": ["h12", "s1"],
+      "PARAMS": {
+        "BANDWIDTH": 10
+      }
+    },
+    {
+      "ENDPOINTS": ["h13", "s1"],
+      "PARAMS": {
+        "BANDWIDTH": 10
+      }
+    },
+    {
+      "ENDPOINTS": ["h14", "s1"],
+      "PARAMS": {
+        "BANDWIDTH": 10
+      }
+    },
+    {
+      "ENDPOINTS": ["h15", "s1"],
+      "PARAMS": {
+        "BANDWIDTH": 1000
+      }
+    },
+    {
+      "ENDPOINTS": ["h16", "s1"],
+      "PARAMS": {
+        "BANDWIDTH": 10
+      }
+    },
+    {
+      "ENDPOINTS": ["h17", "s1"],
+      "PARAMS": {
+        "BANDWIDTH": 10
+      }
+    },
+    {
+      "ENDPOINTS": ["h18", "s1"],
+      "PARAMS": {
+        "BANDWIDTH": 10
+      }
+    },
+    {
+      "ENDPOINTS": ["h19", "s1"],
+      "PARAMS": {
+        "BANDWIDTH": 10
+      }
+    },
+    {
+      "ENDPOINTS": ["h20", "s1"],
+      "PARAMS": {
+        "BANDWIDTH": 1000
+      }
+    },
+    {
+      "ENDPOINTS": ["h21", "s1"],
+      "PARAMS": {
+        "BANDWIDTH": 10
+      }
+    },
+    {
+      "ENDPOINTS": ["h22", "s1"],
+      "PARAMS": {
+        "BANDWIDTH": 10
+      }
+    },
+    {
+      "ENDPOINTS": ["h23", "s1"],
+      "PARAMS": {
+        "BANDWIDTH": 10
+      }
+    },
+    {
+      "ENDPOINTS": ["h24", "s1"],
+      "PARAMS": {
+        "BANDWIDTH": 10
+      }
+    },
+    {
+      "ENDPOINTS": ["h25", "s1"],
+      "PARAMS": {
+        "BANDWIDTH": 1000
+      }
+    },
+    {
+      "ENDPOINTS": ["h26", "s1"],
+      "PARAMS": {
+        "BANDWIDTH": 10
+      }
+    },
+    {
+      "ENDPOINTS": ["h27", "s1"],
+      "PARAMS": {
+        "BANDWIDTH": 10
+      }
+    },
+    {
+      "ENDPOINTS": ["h28", "s1"],
+      "PARAMS": {
+        "BANDWIDTH": 10
+      }
+    },
+    {
+      "ENDPOINTS": ["h29", "s1"],
+      "PARAMS": {
+        "BANDWIDTH": 10
+      }
+    },
+    {
+      "ENDPOINTS": ["h30", "s1"],
+      "PARAMS": {
+        "BANDWIDTH": 1000
+      }
+    }
+  ]
+}

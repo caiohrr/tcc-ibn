@@ -1,0 +1,49 @@
+{
+  "ID": "RemoteControllerNet",
+  "VERSION": "1.0",
+  "DESCRIPTION": "A network with a remote controller (c0) managing a single switch (s1) connected to two hosts (h1, h2).",
+  "MONITORING": {
+    "enabled": false,
+    "interval": 10,
+    "recovery_enabled": false
+  },
+  "COMPONENTS": {
+    "HOSTS": [
+      {
+        "ID": "h1",
+        "IP": "10.0.0.1/24"
+      },
+      {
+        "ID": "h2",
+        "IP": "10.0.0.2/24"
+      }
+    ],
+    "SWITCHES": [
+      {
+        "ID": "s1",
+        "TYPE": "OVSSwitch",
+        "PARAMS": {
+          "PROTOCOLS": "OpenFlow13"
+        }
+      }
+    ],
+    "CONTROLLERS": [
+      {
+        "ID": "c0",
+        "TYPE": "RemoteController",
+        "PARAMS": {
+          "IP": "127.0.0.1",
+          "PORT": 6653
+        }
+      }
+    ]
+  },
+  "CONNECTIONS": [
+    {
+      "ENDPOINTS": ["h1", "s1"]
+    },
+    {
+      "ENDPOINTS": ["h2", "s1"]
+    }
+  ]
+}

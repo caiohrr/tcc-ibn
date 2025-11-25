@@ -1,0 +1,217 @@
+{
+  "ID": "twenty_hosts_single_switch",
+  "VERSION": "1.0",
+  "DESCRIPTION": "A network with 20 hosts connected to a single switch, with varying delays.",
+  "COMPONENTS": {
+    "HOSTS": [
+      {
+        "ID": "h1",
+        "IP": "10.0.0.1/24"
+      },
+      {
+        "ID": "h2",
+        "IP": "10.0.0.2/24"
+      },
+      {
+        "ID": "h3",
+        "IP": "10.0.0.3/24"
+      },
+      {
+        "ID": "h4",
+        "IP": "10.0.0.4/24"
+      },
+      {
+        "ID": "h5",
+        "IP": "10.0.0.5/24"
+      },
+      {
+        "ID": "h6",
+        "IP": "10.0.0.6/24"
+      },
+      {
+        "ID": "h7",
+        "IP": "10.0.0.7/24"
+      },
+      {
+        "ID": "h8",
+        "IP": "10.0.0.8/24"
+      },
+      {
+        "ID": "h9",
+        "IP": "10.0.0.9/24"
+      },
+      {
+        "ID": "h10",
+        "IP": "10.0.0.10/24"
+      },
+      {
+        "ID": "h11",
+        "IP": "10.0.0.11/24"
+      },
+      {
+        "ID": "h12",
+        "IP": "10.0.0.12/24"
+      },
+      {
+        "ID": "h13",
+        "IP": "10.0.0.13/24"
+      },
+      {
+        "ID": "h14",
+        "IP": "10.0.0.14/24"
+      },
+      {
+        "ID": "h15",
+        "IP": "10.0.0.15/24"
+      },
+      {
+        "ID": "h16",
+        "IP": "10.0.0.16/24"
+      },
+      {
+        "ID": "h17",
+        "IP": "10.0.0.17/24"
+      },
+      {
+        "ID": "h18",
+        "IP": "10.0.0.18/24"
+      },
+      {
+        "ID": "h19",
+        "IP": "10.0.0.19/24"
+      },
+      {
+        "ID": "h20",
+        "IP": "10.0.0.20/24"
+      }
+    ],
+    "SWITCHES": [
+      {
+        "ID": "s1",
+        "TYPE": "OVSSwitch"
+      }
+    ]
+  },
+  "CONNECTIONS": [
+    {
+      "ENDPOINTS": ["h1", "s1"],
+      "PARAMS": {
+        "DELAY": "5ms"
+      }
+    },
+    {
+      "ENDPOINTS": ["h2", "s1"],
+      "PARAMS": {
+        "DELAY": "5ms"
+      }
+    },
+    {
+      "ENDPOINTS": ["h3", "s1"],
+      "PARAMS": {
+        "DELAY": "5ms"
+      }
+    },
+    {
+      "ENDPOINTS": ["h4", "s1"],
+      "PARAMS": {
+        "DELAY": "5ms"
+      }
+    },
+    {
+      "ENDPOINTS": ["h5", "s1"],
+      "PARAMS": {
+        "DELAY": "5ms"
+      }
+    },
+    {
+      "ENDPOINTS": ["h6", "s1"],
+      "PARAMS": {
+        "DELAY": "5ms"
+      }
+    },
+    {
+      "ENDPOINTS": ["h7", "s1"],
+      "PARAMS": {
+        "DELAY": "5ms"
+      }
+    },
+    {
+      "ENDPOINTS": ["h8", "s1"],
+      "PARAMS": {
+        "DELAY": "5ms"
+      }
+    },
+    {
+      "ENDPOINTS": ["h9", "s1"],
+      "PARAMS": {
+        "DELAY": "5ms"
+      }
+    },
+    {
+      "ENDPOINTS": ["h10", "s1"],
+      "PARAMS": {
+        "DELAY": "5ms"
+      }
+    },
+    {
+      "ENDPOINTS": ["h11", "s1"],
+      "PARAMS": {
+        "DELAY": "50ms"
+      }
+    },
+    {
+      "ENDPOINTS": ["h12", "s1"],
+      "PARAMS": {
+        "DELAY": "50ms"
+      }
+    },
+    {
+      "ENDPOINTS": ["h13", "s1"],
+      "PARAMS": {
+        "DELAY": "50ms"
+      }
+    },
+    {
+      "ENDPOINTS": ["h14", "s1"],
+      "PARAMS": {
+        "DELAY": "50ms"
+      }
+    },
+    {
+      "ENDPOINTS": ["h15", "s1"],
+      "PARAMS": {
+        "DELAY": "50ms"
+      }
+    },
+    {
+      "ENDPOINTS": ["h16", "s1"],
+      "PARAMS": {
+        "DELAY": "50ms"
+      }
+    },
+    {
+      "ENDPOINTS": ["h17", "s1"],
+      "PARAMS": {
+        "DELAY": "50ms"
+      }
+    },
+    {
+      "ENDPOINTS": ["h18", "s1"],
+      "PARAMS": {
+        "DELAY": "50ms"
+      }
+    },
+    {
+      "ENDPOINTS": ["h19", "s1"],
+      "PARAMS": {
+        "DELAY": "50ms"
+      }
+    },
+    {
+      "ENDPOINTS": ["h20", "s1"],
+      "PARAMS": {
+        "DELAY": "50ms"
+      }
+    }
+  ]
+}

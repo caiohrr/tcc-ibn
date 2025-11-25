@@ -1,0 +1,27 @@
+{
+  "ID": "simple_h1_s1_loss",
+  "VERSION": "1.0",
+  "DESCRIPTION": "Host h1 connected to s1 with 2% link loss.",
+  "COMPONENTS": {
+    "HOSTS": [
+      {
+        "ID": "h1",
+        "IP": "10.0.0.1/24",
+        "MAX_RAM": 256
+      }
+    ],
+    "SWITCHES": [
+      {
+        "ID": "s1"
+      }
+    ]
+  },
+  "CONNECTIONS": [
+    {
+      "ENDPOINTS": ["h1", "s1"],
+      "PARAMS": {
+        "LOSS": 2
+      }
+    }
+  ]
+}

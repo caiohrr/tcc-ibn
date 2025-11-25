@@ -1,58 +1,94 @@
 {
-  "ID": "LinearTopology",
+  "ID": "linear_3_switches_6_hosts",
   "VERSION": "1.0",
-  "DESCRIPTION": "A simple linear topology with two hosts connected to one switch.",
-  "MONITORING": {
-    "enabled": true,
-    "interval": 5,
-    "recovery_enabled": false
-  },
+  "DESCRIPTION": "A linear network with 3 switches (s1, s2, s3) in series, and 2 hosts connected to each switch. All links have a 10ms delay.",
   "COMPONENTS": {
     "HOSTS": [
       {
-        "ID": "hA",
-        "IP": "10.0.0.1/24",
-        "MAX_CPU": 0.7
+        "ID": "h1",
+        "IP": "10.0.0.1/24"
       },
       {
-        "ID": "hB",
-        "IP": "10.0.0.2/24",
-        "MAX_RAM": 512
+        "ID": "h2",
+        "IP": "10.0.0.2/24"
+      },
+      {
+        "ID": "h3",
+        "IP": "10.0.0.3/24"
+      },
+      {
+        "ID": "h4",
+        "IP": "10.0.0.4/24"
+      },
+      {
+        "ID": "h5",
+        "IP": "10.0.0.5/24"
+      },
+      {
+        "ID": "h6",
+        "IP": "10.0.0.6/24"
       }
     ],
     "SWITCHES": [
       {
-        "ID": "s1",
-        "TYPE": "OVSSwitch",
-        "PARAMS": {
-          "PROTOCOLS": "OpenFlow13"
-        }
+        "ID": "s1"
+      },
+      {
+        "ID": "s2"
+      },
+      {
+        "ID": "s3"
       }
     ],
-    "CONTROLLERS": [
-      {
-        "ID": "c0",
-        "TYPE": "RemoteController",
-        "PARAMS": {
-          "IP": "127.0.0.1",
-          "PORT": 6653
-        }
-      }
-    ]
+    "CONTROLLERS": []
   },
   "CONNECTIONS": [
     {
-      "ENDPOINTS": ["hA", "s1"],
+      "ENDPOINTS": ["h1", "s1"],
       "PARAMS": {
-        "BANDWIDTH": 100,
-        "DELAY": "1ms"
+        "DELAY": "10ms"
       }
     },
     {
-      "ENDPOINTS": ["hB", "s1"],
+      "ENDPOINTS": ["h2", "s1"],
       "PARAMS": {
-        "BANDWIDTH": 50,
-        "LOSS": 0.5
+        "DELAY": "10ms"
+      }
+    },
+    {
+      "ENDPOINTS": ["s1", "s2"],
+      "PARAMS": {
+        "DELAY": "10ms"
+      }
+    },
+    {
+      "ENDPOINTS": ["h3", "s2"],
+      "PARAMS": {
+        "DELAY": "10ms"
+      }
+    },
+    {
+      "ENDPOINTS": ["h4", "s2"],
+      "PARAMS": {
+        "DELAY": "10ms"
+      }
+    },
+    {
+      "ENDPOINTS": ["s2", "s3"],
+      "PARAMS": {
+        "DELAY": "10ms"
+      }
+    },
+    {
+      "ENDPOINTS": ["h5", "s3"],
+      "PARAMS": {
+        "DELAY": "10ms"
+      }
+    },
+    {
+      "ENDPOINTS": ["h6", "s3"],
+      "PARAMS": {
+        "DELAY": "10ms"
       }
     }
   ]

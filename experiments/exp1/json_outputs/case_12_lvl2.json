@@ -1,45 +1,142 @@
 {
-  "ID": "SimpleHostSwitchNet",
+  "ID": "core_switch_topology",
   "VERSION": "1.0",
-  "DESCRIPTION": "A basic network with two hosts (h1, h2) connected to a single switch (s1).",
-  "MONITORING": {
-    "enabled": true,
-    "interval": 5,
-    "recovery_enabled": false
-  },
+  "DESCRIPTION": "Topology with 15 hosts, 3 switches (5 hosts per switch). Switch 1 is core and its hosts have 80% CPU priority.",
   "COMPONENTS": {
     "HOSTS": [
       {
-        "ID": "h1",
-        "IP": "10.0.0.1/24"
+        "ID": "h1_1",
+        "IP": "10.0.0.1/24",
+        "MAX_CPU": 0.8
       },
       {
-        "ID": "h2",
-        "IP": "10.0.0.2/24"
+        "ID": "h1_2",
+        "IP": "10.0.0.2/24",
+        "MAX_CPU": 0.8
+      },
+      {
+        "ID": "h1_3",
+        "IP": "10.0.0.3/24",
+        "MAX_CPU": 0.8
+      },
+      {
+        "ID": "h1_4",
+        "IP": "10.0.0.4/24",
+        "MAX_CPU": 0.8
+      },
+      {
+        "ID": "h1_5",
+        "IP": "10.0.0.5/24",
+        "MAX_CPU": 0.8
+      },
+      {
+        "ID": "h2_1",
+        "IP": "10.0.1.1/24"
+      },
+      {
+        "ID": "h2_2",
+        "IP": "10.0.1.2/24"
+      },
+      {
+        "ID": "h2_3",
+        "IP": "10.0.1.3/24"
+      },
+      {
+        "ID": "h2_4",
+        "IP": "10.0.1.4/24"
+      },
+      {
+        "ID": "h2_5",
+        "IP": "10.0.1.5/24"
+      },
+      {
+        "ID": "h3_1",
+        "IP": "10.0.2.1/24"
+      },
+      {
+        "ID": "h3_2",
+        "IP": "10.0.2.2/24"
+      },
+      {
+        "ID": "h3_3",
+        "IP": "10.0.2.3/24"
+      },
+      {
+        "ID": "h3_4",
+        "IP": "10.0.2.4/24"
+      },
+      {
+        "ID": "h3_5",
+        "IP": "10.0.2.5/24"
       }
     ],
     "SWITCHES": [
       {
-        "ID": "s1"
+        "ID": "s1",
+        "TYPE": "OVSSwitch"
+      },
+      {
+        "ID": "s2",
+        "TYPE": "OVSSwitch"
+      },
+      {
+        "ID": "s3",
+        "TYPE": "OVSSwitch"
       }
     ],
-    "CONTROLLERS": [
-      {
-        "ID": "c0",
-        "TYPE": "RemoteController",
-        "PARAMS": {
-          "IP": "127.0.0.1",
-          "PORT": 6653
-        }
-      }
-    ]
+    "CONTROLLERS": []
   },
   "CONNECTIONS": [
     {
-      "ENDPOINTS": ["h1", "s1"]
+      "ENDPOINTS": ["h1_1", "s1"]
     },
     {
-      "ENDPOINTS": ["h2", "s1"]
+      "ENDPOINTS": ["h1_2", "s1"]
+    },
+    {
+      "ENDPOINTS": ["h1_3", "s1"]
+    },
+    {
+      "ENDPOINTS": ["h1_4", "s1"]
+    },
+    {
+      "ENDPOINTS": ["h1_5", "s1"]
+    },
+    {
+      "ENDPOINTS": ["h2_1", "s2"]
+    },
+    {
+      "ENDPOINTS": ["h2_2", "s2"]
+    },
+    {
+      "ENDPOINTS": ["h2_3", "s2"]
+    },
+    {
+      "ENDPOINTS": ["h2_4", "s2"]
+    },
+    {
+      "ENDPOINTS": ["h2_5", "s2"]
+    },
+    {
+      "ENDPOINTS": ["h3_1", "s3"]
+    },
+    {
+      "ENDPOINTS": ["h3_2", "s3"]
+    },
+    {
+      "ENDPOINTS": ["h3_3", "s3"]
+    },
+    {
+      "ENDPOINTS": ["h3_4", "s3"]
+    },
+    {
+      "ENDPOINTS": ["h3_5", "s3"]
+    },
+    {
+      "ENDPOINTS": ["s1", "s2"]
+    },
+    {
+      "ENDPOINTS": ["s1", "s3"]
     }
   ]
 }

@@ -1,0 +1,42 @@
+{
+  "ID": "SimpleDelayNet",
+  "VERSION": "1.0",
+  "DESCRIPTION": "A basic network with a host, a switch, and a connection with a 10ms delay.",
+  "MONITORING": {
+    "enabled": true,
+    "interval": 5,
+    "recovery_enabled": false
+  },
+  "COMPONENTS": {
+    "HOSTS": [
+      {
+        "ID": "h1",
+        "IP": "10.0.0.1/24"
+      }
+    ],
+    "SWITCHES": [
+      {
+        "ID": "s1",
+        "TYPE": "OVSSwitch"
+      }
+    ],
+    "CONTROLLERS": [
+      {
+        "ID": "c0",
+        "TYPE": "RemoteController",
+        "PARAMS": {
+          "IP": "127.0.0.1",
+          "PORT": 6653
+        }
+      }
+    ]
+  },
+  "CONNECTIONS": [
+    {
+      "ENDPOINTS": ["h1", "s1"],
+      "PARAMS": {
+        "DELAY": "10ms"
+      }
+    }
+  ]
+}

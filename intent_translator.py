@@ -46,7 +46,7 @@ You must follow the schema rules outlined below. You must also use the "Full Sch
         * `ID`: (String) Switch identifier (e.g., "s1").
         * `TYPE`: (String, Optional) The class to use (e.g., "OVSSwitch", "OVSKernelSwitch").
         * `PARAMS`: (Object, Optional) Parameters for the switch (e.g., `{"PROTOCOLS": "OpenFlow13"}`).
-    * **`CONTROLLERS`:** (List)
+    * **`CONTROLLERS`:** (List, Optional)
         * `ID`: (String) Controller identifier (e.g., "c0").
         * `TYPE`: (String, Optional) The class to use (e.g., "RemoteController").
         * `PARAMS`: (Object, Optional) Parameters (e.g., `{"IP": "127.0.0.1", "PORT": 6653}`).
@@ -122,6 +122,10 @@ You must follow the schema rules outlined below. You must also use the "Full Sch
     }
   ]
 }
+
+
+You must not define a controller in the JSON unless that is explicitely mentioned.
+
 """
 
 user_prompt = input("Enter your prompt here: ")

@@ -1,0 +1,36 @@
+{
+  "ID": "SimpleNet",
+  "VERSION": "1.0",
+  "DESCRIPTION": "A simple network with one OVSKernelSwitch and two hosts, with monitoring enabled but recovery disabled.",
+  "MONITORING": {
+    "enabled": true,
+    "interval": 5,
+    "recovery_enabled": false
+  },
+  "COMPONENTS": {
+    "HOSTS": [
+      {
+        "ID": "h1",
+        "IP": "10.0.0.1/24"
+      },
+      {
+        "ID": "h2",
+        "IP": "10.0.0.2/24"
+      }
+    ],
+    "SWITCHES": [
+      {
+        "ID": "s1",
+        "TYPE": "OVSKernelSwitch"
+      }
+    ]
+  },
+  "CONNECTIONS": [
+    {
+      "ENDPOINTS": ["h1", "s1"]
+    },
+    {
+      "ENDPOINTS": ["h2", "s1"]
+    }
+  ]
+}

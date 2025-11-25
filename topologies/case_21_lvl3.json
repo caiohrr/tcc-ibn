@@ -1,0 +1,36 @@
+{
+  "ID": "MonitoredNet",
+  "VERSION": "1.0",
+  "DESCRIPTION": "A simple monitored network with two hosts and one switch.",
+  "MONITORING": {
+    "enabled": true,
+    "interval": 5,
+    "recovery_enabled": true
+  },
+  "COMPONENTS": {
+    "HOSTS": [
+      {
+        "ID": "h1",
+        "IP": "10.0.0.1/24"
+      },
+      {
+        "ID": "h2",
+        "IP": "10.0.0.2/24"
+      }
+    ],
+    "SWITCHES": [
+      {
+        "ID": "s1"
+      }
+    ],
+    "CONTROLLERS": []
+  },
+  "CONNECTIONS": [
+    {
+      "ENDPOINTS": ["h1", "s1"]
+    },
+    {
+      "ENDPOINTS": ["h2", "s1"]
+    }
+  ]
+}

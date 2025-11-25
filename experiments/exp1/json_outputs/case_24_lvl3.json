@@ -1,0 +1,56 @@
+{
+  "ID": "BinaryTreeTopology",
+  "VERSION": "1.0",
+  "DESCRIPTION": "A binary tree topology with 7 switches and 12 hosts (3 per leaf switch).",
+  "MONITORING": {
+    "enabled": true,
+    "interval": 10,
+    "recovery_enabled": true
+  },
+  "COMPONENTS": {
+    "HOSTS": [
+      { "ID": "h1", "IP": "10.0.0.1/24" },
+      { "ID": "h2", "IP": "10.0.0.2/24" },
+      { "ID": "h3", "IP": "10.0.0.3/24" },
+      { "ID": "h4", "IP": "10.0.0.4/24" },
+      { "ID": "h5", "IP": "10.0.0.5/24" },
+      { "ID": "h6", "IP": "10.0.0.6/24" },
+      { "ID": "h7", "IP": "10.0.0.7/24" },
+      { "ID": "h8", "IP": "10.0.0.8/24" },
+      { "ID": "h9", "IP": "10.0.0.9/24" },
+      { "ID": "h10", "IP": "10.0.0.10/24" },
+      { "ID": "h11", "IP": "10.0.0.11/24" },
+      { "ID": "h12", "IP": "10.0.0.12/24" }
+    ],
+    "SWITCHES": [
+      { "ID": "s1" },
+      { "ID": "s2" },
+      { "ID": "s3" },
+      { "ID": "s4" },
+      { "ID": "s5" },
+      { "ID": "s6" },
+      { "ID": "s7" }
+    ],
+    "CONTROLLERS": []
+  },
+  "CONNECTIONS": [
+    { "ENDPOINTS": ["s1", "s2"] },
+    { "ENDPOINTS": ["s1", "s3"] },
+    { "ENDPOINTS": ["s2", "s4"] },
+    { "ENDPOINTS": ["s2", "s5"] },
+    { "ENDPOINTS": ["s3", "s6"] },
+    { "ENDPOINTS": ["s3", "s7"] },
+    { "ENDPOINTS": ["h1", "s4"] },
+    { "ENDPOINTS": ["h2", "s4"] },
+    { "ENDPOINTS": ["h3", "s4"] },
+    { "ENDPOINTS": ["h4", "s5"] },
+    { "ENDPOINTS": ["h5", "s5"] },
+    { "ENDPOINTS": ["h6", "s5"] },
+    { "ENDPOINTS": ["h7", "s6"] },
+    { "ENDPOINTS": ["h8", "s6"] },
+    { "ENDPOINTS": ["h9", "s6"] },
+    { "ENDPOINTS": ["h10", "s7"] },
+    { "ENDPOINTS": ["h11", "s7"] },
+    { "ENDPOINTS": ["h12", "s7"] }
+  ]
+}

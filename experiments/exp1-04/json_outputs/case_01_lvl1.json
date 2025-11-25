@@ -1,0 +1,31 @@
+{
+  "ID": "simple_h2s1",
+  "VERSION": "1.0",
+  "DESCRIPTION": "Two hosts (h1, h2) connected to a single switch (s1).",
+  "COMPONENTS": {
+    "HOSTS": [
+      {
+        "ID": "h1",
+        "IP": "10.0.0.1/24"
+      },
+      {
+        "ID": "h2",
+        "IP": "10.0.0.2/24"
+      }
+    ],
+    "SWITCHES": [
+      {
+        "ID": "s1"
+      }
+    ],
+    "CONTROLLERS": []
+  },
+  "CONNECTIONS": [
+    {
+      "ENDPOINTS": ["h1", "s1"]
+    },
+    {
+      "ENDPOINTS": ["h2", "s1"]
+    }
+  ]
+}

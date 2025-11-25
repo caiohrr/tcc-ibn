@@ -1,0 +1,58 @@
+{
+  "ID": "VoIPTestNet",
+  "VERSION": "1.0",
+  "DESCRIPTION": "Rede para teste de VoIP com links de 100Mbps e 5ms de delay, monitoramento ativado e h1 com prioridade de CPU (max 0.9).",
+  "MONITORING": {
+    "enabled": true,
+    "interval": 5,
+    "recovery_enabled": true
+  },
+  "COMPONENTS": {
+    "HOSTS": [
+      {
+        "ID": "h1",
+        "IP": "10.0.0.1/24",
+        "MAX_CPU": 0.9
+      },
+      {
+        "ID": "h2",
+        "IP": "10.0.0.2/24"
+      }
+    ],
+    "SWITCHES": [
+      {
+        "ID": "s1",
+        "TYPE": "OVSSwitch",
+        "PARAMS": {
+          "PROTOCOLS": "OpenFlow13"
+        }
+      }
+    ],
+    "CONTROLLERS": [
+      {
+        "ID": "c0",
+        "TYPE": "RemoteController",
+        "PARAMS": {
+          "IP": "127.0.0.1",
+          "PORT": 6653
+        }
+      }
+    ]
+  },
+  "CONNECTIONS": [
+    {
+      "ENDPOINTS": ["h1", "s1"],
+      "PARAMS": {
+        "BANDWIDTH": 100,
+        "DELAY": "5ms"
+      }
+    },
+    {
+      "ENDPOINTS": ["h2", "s1"],
+      "PARAMS": {
+        "BANDWIDTH": 100,
+        "DELAY": "5ms"
+      }
+    }
+  ]
+}

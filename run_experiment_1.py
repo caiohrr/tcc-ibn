@@ -29,6 +29,10 @@ You are a network topology assistant. Your task is to generate a new network top
 
 You must follow the schema rules outlined below. You must also use the "Full Schema Template" as a reference for the structure. You must only output the raw JSON, with no other text, comments, or explanations.
 
+*You must not add a controller to the JSON unless it is explicitely defined.*
+
+*You must not add connection parameters (e.g. Delay) unless explicitely defined.*
+
 ### Schema Rules
 
 1.  **Top-Level Keys:**
@@ -132,41 +136,42 @@ You must follow the schema rules outlined below. You must also use the "Full Sch
 }
 """
 
-# --- Dataset de Intenções ---
 DATASET = [
-    # Nível 1
-    (1, 1, "Crie uma rede simples com dois hosts, h1 e h2, conectados a um único switch s1."),
-    (2, 1, "Quero uma topologia linear onde o host A conecta ao switch 1, e o host B conecta ao switch 1."),
-    (3, 1, "Conecte três hosts (h1, h2, h3) ao switch s1."),
-    (4, 1, "Gere uma rede com um switch central s1 e quatro hosts conectados a ele."),
-    (5, 1, "Crie uma topologia ponto-a-ponto conectando h1 diretamente a h2."),
-    (6, 1, "Adicione dois switches, s1 e s2, interligados. Conecte h1 em s1 e h2 em s2."),
-    (7, 1, "Uma rede simples contendo apenas o switch s1 e o host h1."),
-    (8, 1, "Conecte o host 'servidor' ao switch 'core' e o host 'cliente' ao switch 'core'."),
-    (9, 1, "Preciso de uma topologia com 2 hosts e 1 switch, sem configurações especiais."),
-    (10, 1, "Defina uma rede básica chamada RedeTeste com versão 1.0 contendo h1, h2 e s1."),
-    # Nível 2
-    (11, 2, "Conecte h1 e h2 ao switch s1. O link entre h1 e s1 deve ter 100Mbps de banda."),
-    (12, 2, "Crie uma rede onde h1 tem o IP 10.0.0.1/24 e h2 tem o IP 10.0.0.2/24, ambos ligados ao s1."),
-    (13, 2, "Quero uma conexão entre h1 e s1 com um atraso de 10ms."),
-    (14, 2, "Conecte h1 ao s1 com 50Mbps de banda e 5ms de delay."),
-    (15, 2, "Defina uma topologia onde o link entre h1 e s1 tenha 1% de perda de pacotes."),
-    (16, 2, "O host h1 (192.168.0.5) deve conectar ao s1. O link deve ter 1000Mbps."),
-    (17, 2, "Configure uma rede com h1 e h2. A conexão do h1 deve ter 20ms de latência e a do h2 10ms."),
-    (18, 2, "Conecte h1 a s1 com banda de 10Mbps e perda de 0.5%."),
-    (19, 2, "Crie uma rede com h1 e h2. Todos os links devem ter 100Mbps de largura de banda."),
-    (20, 2, "Host h1 com mac 00:00:00:00:00:01 conectado ao s1 com delay de 2ms."),
-    # Nível 3
-    (21, 3, "Crie uma rede monitorada. Ative o monitoramento com intervalo de 5 segundos e recuperação automática. Conecte h1 e h2 ao s1."),
-    (22, 3, "O host h1 é um servidor pesado. Defina o uso máximo de CPU dele para 80% (0.8) e conecte-o ao s1."),
-    (23, 3, "Preciso limitar a memória do h1 para 512MB. Conecte-o ao s1."),
-    (24, 3, "Configure um controlador remoto c0 no IP 127.0.0.1 porta 6653 controlando o switch s1 que conecta h1 e h2."),
-    (25, 3, "Topologia completa: ative o monitoramento a cada 10s. Host h1 (CPU máx 50%) conectado ao s1 (OpenFlow13) com link de 100Mbps."),
-    (26, 3, "Conecte h1 e h2 ao s1. Configure um controlador remoto e habilite a recuperação de falhas no monitoramento."),
-    (27, 3, "Crie uma rede para teste de VoIP: links com 100Mbps e 5ms de delay, monitoramento ativado e h1 com prioridade de CPU (max 0.9)."),
-    (28, 3, "Switch s1 do tipo OVSKernelSwitch conectado a h1 e h2. Defina o monitoramento como ativado mas sem recuperação automática (apenas alerta)."),
-    (29, 3, "Host h1 com 256MB de RAM e IP 10.0.0.1 conectado ao s1. O link deve ter perda de 2%."),
-    (30, 3, "Ambiente de alta disponibilidade: Controlador c0, monitoramento agressivo (intervalo 2s, com recuperação), h1 e h2 conectados ao s1.")
+    # Nível 1: Topologias Estruturadas (Médio Porte)
+    (1, 1, "Crie uma topologia estrela com um switch central s1 e 8 hosts (h1 a h8) conectados a ele. Todas as conexões devem ter 100Mbps de banda."),
+    (2, 1, "Gere uma rede linear com 3 switches (s1, s2, s3) conectados em série. Conecte 2 hosts em cada switch. Defina o delay de todos os links para 10ms."),
+    (3, 1, "Preciso de uma rede com 10 hosts conectados ao switch s1. Os hosts h1 a h5 devem ter o IP na sub-rede 10.0.1.0/24 e os hosts h6 a h10 na sub-rede 10.0.2.0/24."),
+    (4, 1, "Configure uma rede com 6 hosts e 1 switch. Habilite o monitoramento com intervalo de 5 segundos e recuperação automática para garantir conectividade."),
+    (5, 1, "Crie uma rede com 5 hosts. O host h1 é o servidor e deve ter MAX_CPU de 1.0 (100%) e 1024MB de RAM. Os outros (h2-h5) devem ter CPU limitada a 20%."),
+    (6, 1, "Topologia com dois switches, s1 e s2. Conecte h1, h2, h3 em s1 e h4, h5, h6 em s2. O link entre os switches deve ser de alta velocidade (1000Mbps)."),
+    (7, 1, "Gere uma rede com 8 hosts ligados ao s1. Todos os links devem ter 1% de perda de pacotes simulada para teste de robustez."),
+    (8, 1, "Conecte 4 hosts ao s1. Configure um controlador remoto no IP 192.168.56.1, porta 6633. Todos os hosts devem ter 512MB de RAM."),
+    (9, 1, "Crie uma rede em anel com 4 switches (s1-s2-s3-s4-s1). Conecte um host em cada switch. Defina a banda dos links entre switches como 500Mbps."),
+    (10, 1, "Rede simples com 10 hosts no switch s1. Porém, quero que o monitoramento esteja ativado apenas para reportar falhas, sem tentar recuperar (recovery_enabled false)."),
+
+    # Nível 2: Segmentação e Regras Condicionais
+    (11, 2, "Crie uma rede com 12 hosts conectados ao switch s1. Os primeiros 6 hosts são 'Legacy' e devem ter links de 10Mbps. Os últimos 6 são 'Modern' com links de 1Gbps."),
+    (12, 2, "Gere uma topologia com 15 hosts divididos em 3 switches (5 por switch). O Switch 1 é o Core e seus hosts devem ter prioridade de CPU (80%). Os outros não têm limite."),
+    (13, 2, "Topologia DataCenter: 2 switches Core (s1, s2) interligados. 8 hosts no s1 e 8 hosts no s2. Todos os hosts do s1 devem ter 2048MB de RAM. Os do s2 apenas 512MB."),
+    (14, 2, "Crie uma rede com 20 hosts em um único switch. Os hosts com ID de h1 a h10 devem ter atraso de 5ms. Os hosts de h11 a h20 devem ter atraso de 50ms."),
+    (15, 2, "Sistema de Vigilância: 10 câmeras (h1-h10) e 1 servidor (h11) no switch s1. As câmeras têm banda limitada a 5Mbps. O servidor tem banda de 1000Mbps e CPU livre."),
+    (16, 2, "Rede com 16 hosts. Divida-os em 4 switches (s1, s2, s3, s4). Ative o monitoramento com intervalo agressivo (2s). Apenas os hosts do s1 precisam de limite de memória (256MB)."),
+    (17, 2, "Conecte 10 hosts ao s1. Configure IPs sequenciais começando de 192.168.0.10 até 192.168.0.19. O link de todos deve ter 0.5% de perda."),
+    (18, 2, "Simulação VoIP: 14 hosts no switch s1. Hosts pares devem ter configuração de Jitter simulado (Delay 20ms). Hosts ímpares devem ter conexão perfeita (Delay 1ms)."),
+    (19, 2, "Rede de 18 hosts distribuídos em 2 switches. O link entre os switches deve ser gargalo (10Mbps). Os links dos hosts devem ser rápidos (100Mbps). Monitoramento ligado."),
+    (20, 2, "Crie uma rede com 12 hosts. Hosts h1, h5 e h9 são gateways e precisam de MACs fixos (00:00:00:00:00:01, etc). O restante pode ser automático."),
+
+    # Nível 3: Lógica Abstrata e Alta Escala
+    (21, 3, "Gostaria de uma rede com um total de 30 hosts. Eles devem ser conectados em 3 switches, dividindo igualmente entre a quantidade de switches. No primeiro grupo, defina uma largura de banda maxima de 256 MB para todas as conexoes. No segundo, limite o cpu em 75%. Para o ultimo, as maquinas de numrero par devem ter sua memoria limitada em 100MB."),
+    (22, 3, "Crie uma simulação de escritório com 40 hosts divididos em 4 departamentos (4 switches). Departamento A (h1-h10) precisa de alta CPU (90%). Departamento B (h11-h20) precisa de alta RAM (1024MB). Departamentos C e D são padrão. Todos conectados a um switch central s_core."),
+    (23, 3, "Gere uma rede massiva com 50 hosts conectados a um switch s1. A cada 10 hosts, o link deve ter uma degradação diferente: 1-10 (0% loss), 11-20 (1% loss), 21-30 (2% loss), e assim por diante."),
+    (24, 3, "Topologia em Árvore Binária: Switch Raiz conecta a 2 switches, que conectam a mais 2 cada (Total 7 switches). Coloque 3 hosts em cada switch da ponta (folhas). Total de 12 hosts. Monitoramento com recuperação ativado."),
+    (25, 3, "Rede com 30 hosts. Os hosts com ID múltiplo de 5 (h5, h10, etc.) são servidores críticos: CPU 100%, RAM 2048MB e Link 1Gbps. O restante são clientes com CPU 20% e Link 10Mbps."),
+    (26, 3, "Crie 3 grupos de 8 hosts (Total 24). Grupo 1 (Switch 1) é 'Voz' (Delay 2ms). Grupo 2 (Switch 2) é 'Dados' (Banda 1000Mbps). Grupo 3 (Switch 3) é 'IoT' (Banda 1Mbps). Conecte os 3 switches em anel."),
+    (27, 3, "Desafio de endereçamento: 25 hosts no switch s1. O IP deve seguir a regra: 10.0.X.1, onde X é o número do host (ex: h1 = 10.0.1.1, h25 = 10.0.25.1). Limite a CPU de todos em 50%."),
+    (28, 3, "Rede com 32 hosts divididos em 2 switches. No primeiro switch, todos os hosts devem ter MAC terminando em número par. No segundo switch, MAC terminando em ímpar. Monitoramento a cada 10s."),
+    (29, 3, "Crie uma rede com 20 hosts onde a largura de banda decresce. h1 tem 100Mbps, h2 tem 95Mbps, h3 tem 90Mbps... até h20. Conectados ao s1."),
+    (30, 3, "Cenário de Falha em Cascata: 30 hosts, 3 switches em cadeia. O switch do meio (s2) tem 10 hosts e deve ter seus links configurados com 50% de perda de pacotes (simulando falha). Os switches das pontas (s1, s3) funcionam normal.")
 ]
 
 def clean_json_response(text):
@@ -196,7 +201,7 @@ def run_experiment():
                     model="gemini-2.5-flash",
                     config=types.GenerateContentConfig(
                         system_instruction=SYSTEM_INSTRUCTION,
-                        temperature=0.2 
+                        temperature=0.1
                     ),
                     contents=prompt
                 )
